@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.example.tiggle.program.adapter.out.persistence.ProgramEntity;
-import org.example.tiggle.program.adapter.out.persistence.ProgramImageEntity;
+import com.gamja.tiggle.program.adapter.out.persistence.ProgramEntity;
+import com.gamja.tiggle.program.adapter.out.persistence.ProgramImageEntity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
