@@ -24,7 +24,7 @@ public enum BaseResponseStatus {
      * 3000: 프로그램
      */
 
-    NOT_FOUND_PROGRAM(false, 3100, "프로그램이 존재하지 않습니다.");
+    NOT_FOUND_PROGRAM(false, 3100, "프로그램이 존재하지 않습니다."),
 
     /**
      * 4000: 결제
@@ -37,6 +37,11 @@ public enum BaseResponseStatus {
     /**
      * 6000: 교환
      */
+
+    /**
+     * 7000: 공연장, 구역, 좌석
+     */
+    NOT_FOUND_SECTION(false,7000,"구역이 존재하지 않습니다.");
 
 
     private final boolean isSuccess;
