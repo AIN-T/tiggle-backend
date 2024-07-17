@@ -28,6 +28,7 @@ public class VerifyPaymentController {
 
         try {
             String accessToken = verifyPaymentUseCase.getToken(command);
+            verifyPaymentUseCase.compareDB(command, accessToken);
         } catch (BaseException e) {
             return new BaseResponse(e.getStatus());
         }

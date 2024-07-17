@@ -6,4 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface VerifyPaymentUseCase {
     String getToken(VerifyPaymentCommand command) throws BaseException;
+
+    void compareDB(VerifyPaymentCommand command, String accessToken) throws BaseException;
 }
