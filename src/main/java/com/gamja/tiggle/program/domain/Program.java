@@ -11,7 +11,7 @@ import java.util.List;
 
 @Builder
 @Getter
-public class Program extends BaseEntity {
+public class Program{
     private Long id;
     private String programName;
     private String programInfo;
