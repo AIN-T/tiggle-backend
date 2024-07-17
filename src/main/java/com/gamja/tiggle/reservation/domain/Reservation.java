@@ -1,6 +1,9 @@
 package com.gamja.tiggle.reservation.domain;
 
+import com.gamja.tiggle.program.domain.Program;
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
+import com.gamja.tiggle.seat.domain.Seat;
+import com.gamja.tiggle.times.domain.Times;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Builder;
@@ -12,10 +15,10 @@ public class Reservation {
 
     private Long reservationId;
 
-//    private Program program;
+    private Program program;
 //    private User user;
-//    private Seat seat;
-//    private Times times;
+    private Seat seat;
+    private Times times;
 
     private String ticketNumber;
     private String payMethod;
