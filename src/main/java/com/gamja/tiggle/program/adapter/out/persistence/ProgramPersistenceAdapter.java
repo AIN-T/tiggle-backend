@@ -1,26 +1,36 @@
 package com.gamja.tiggle.program.adapter.out.persistence;
 
+import com.gamja.tiggle.category.adapter.out.persistence.CategoryEntity;
+import com.gamja.tiggle.category.adapter.out.persistence.JpaCategoryRepository;
+import com.gamja.tiggle.common.BaseException;
+import com.gamja.tiggle.common.BaseResponseStatus;
 import lombok.RequiredArgsConstructor;
-import org.example.tiggle.common.annotation.PersistenceAdapter;
-import org.example.tiggle.program.application.port.out.CreateProgramPort;
-import org.example.tiggle.program.application.port.out.DeleteProgramPort;
-import org.example.tiggle.program.domain.Program;
+import com.gamja.tiggle.common.annotation.PersistenceAdapter;
+import com.gamja.tiggle.program.application.port.out.CreateProgramPort;
+import com.gamja.tiggle.program.domain.Program;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class ProgramPersistenceAdapter implements CreateProgramPort, DeleteProgramPort {
+public class ProgramPersistenceAdapter implements CreateProgramPort {
     private final JpaProgramRepository jpaProgramRepository;
     private final JpaProgramImageRepository jpaProgramImageRepository;
+    private final JpaCategoryRepository jpaCategoryRepository;
 
     @Override
-    public void createProgram(Program program) {
+    public void createProgram(Program program) throws BaseException {
+
+        CategoryEntity category = jpaCategoryRepository.findById(program.getCategoryIdx())
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAIL));
+
         ProgramEntity entity = ProgramEntity.builder()
+                .categoryEntity(category)
                 .programName(program.getProgramName())
                 .programInfo(program.getProgramInfo())
                 .programStartDate(program.getProgramStartDate())
                 .programEndDate(program.getProgramEndDate())
                 .build();
         jpaProgramRepository.save(entity);
+
 
         for (String uploadFilePath : program.getImageUrls()) {
             ProgramImageEntity programImageEntity = ProgramImageEntity.builder()
@@ -29,13 +39,7 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, DeleteProgr
                     .build();
             jpaProgramImageRepository.save(programImageEntity);
         }
+
     }
 
-    @Override
-    public void deleteProgram(Program program) {
-        ProgramEntity entity = ProgramEntity.builder()
-                .id(program.getId())
-                .build();
-        jpaProgramRepository.delete(entity);
-    }
 }

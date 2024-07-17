@@ -1,8 +1,9 @@
 package com.gamja.tiggle.program.domain;
 
+import com.gamja.tiggle.category.domain.Category;
 import lombok.Builder;
 import lombok.Getter;
-import org.example.tiggle.common.BaseEntity;
+import com.gamja.tiggle.common.BaseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ public class Program extends BaseEntity {
     private LocalDateTime reservationOpenDate;
     private LocalDateTime reservationCloseDate;
 
+    private Long categoryIdx;
     private List<String> imageUrls;
 
     private Integer age;
@@ -27,8 +29,5 @@ public class Program extends BaseEntity {
 
     private LocalDateTime programStartDate;
     private LocalDateTime programEndDate;
-
-    // Location - name 받아오기 ()
-    // Category - categoryName 받아오기 (1 : N)
 
 }

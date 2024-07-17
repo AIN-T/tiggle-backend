@@ -2,7 +2,7 @@ package com.gamja.tiggle.program.adapter.out.cloud;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import org.example.tiggle.program.application.port.out.S3UploadPort;
+import com.gamja.tiggle.program.application.port.out.S3UploadPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
