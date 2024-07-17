@@ -21,7 +21,7 @@ public class GetTimesController {
 
     @GetMapping("/{id}/seq")
     public BaseResponse<List<GetTimesResponse>> getTimes(@PathVariable Long id)  {
-        List<GetTimesResponse> list = null;
+        List<GetTimesResponse> list;
         try {
             list = getList(id);
         } catch (BaseException e) {
