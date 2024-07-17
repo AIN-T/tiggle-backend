@@ -1,13 +1,13 @@
 package com.gamja.tiggle.program.adapter.in.web;
 
 import lombok.RequiredArgsConstructor;
-import org.example.tiggle.common.BaseException;
-import org.example.tiggle.common.BaseResponse;
-import org.example.tiggle.common.BaseResponseStatus;
-import org.example.tiggle.common.annotation.WebAdapter;
-import org.example.tiggle.program.adapter.in.web.request.CreateProgramRequest;
-import org.example.tiggle.program.application.port.in.CreateProgramCommand;
-import org.example.tiggle.program.application.port.in.CreateProgramUseCase;
+import com.gamja.tiggle.common.BaseException;
+import com.gamja.tiggle.common.BaseResponse;
+import com.gamja.tiggle.common.BaseResponseStatus;
+import com.gamja.tiggle.common.annotation.WebAdapter;
+import com.gamja.tiggle.program.adapter.in.web.request.CreateProgramRequest;
+import com.gamja.tiggle.program.application.port.in.CreateProgramCommand;
+import com.gamja.tiggle.program.application.port.in.CreateProgramUseCase;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,6 +30,7 @@ public class CreateProgramController {
                 .programStartDate(request.getProgramStartDate())
                 .programEndDate(request.getProgramEndDate())
                 .imageFiles(files)
+                .categoryIdx(request.getCategoryIdx())
                 .build();
 
         createUseCase.createProgram(command);

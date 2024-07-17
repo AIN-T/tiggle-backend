@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 public class CreateProgramCommand {
     private String programName;
+    private Long categoryIdx;
     private String programInfo;
     private LocalDateTime reservationOpenDate;
     private LocalDateTime reservationCloseDate;

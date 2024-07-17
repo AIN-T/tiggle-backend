@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.example.tiggle.category.adapter.out.persistence.CategoryEntity;
+import com.gamja.tiggle.category.adapter.out.persistence.CategoryEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -33,8 +33,7 @@ public class ProgramEntity {
     @OneToMany(mappedBy = "programEntity", fetch = FetchType.LAZY)
     List<ProgramImageEntity> programImageEntities = new ArrayList<>();
     // Category N : 1
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
-
 }

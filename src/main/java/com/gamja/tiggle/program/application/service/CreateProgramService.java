@@ -1,28 +1,27 @@
 package com.gamja.tiggle.program.application.service;
 
+import com.gamja.tiggle.category.application.service.CreateCategoryService;
+import com.gamja.tiggle.category.domain.Category;
+import com.gamja.tiggle.common.BaseException;
 import lombok.RequiredArgsConstructor;
-import org.example.tiggle.common.annotation.UseCase;
-import org.example.tiggle.program.application.port.in.CreateProgramCommand;
-import org.example.tiggle.program.application.port.in.CreateProgramUseCase;
-import org.example.tiggle.program.application.port.in.DeleteProgramCommand;
-import org.example.tiggle.program.application.port.in.DeleteProgramUseCase;
-import org.example.tiggle.program.application.port.out.CreateProgramPort;
-import org.example.tiggle.program.application.port.out.DeleteProgramPort;
-import org.example.tiggle.program.application.port.out.S3UploadPort;
-import org.example.tiggle.program.domain.Program;
+import com.gamja.tiggle.common.annotation.UseCase;
+import com.gamja.tiggle.program.application.port.in.CreateProgramCommand;
+import com.gamja.tiggle.program.application.port.in.CreateProgramUseCase;
+import com.gamja.tiggle.program.application.port.out.CreateProgramPort;
+import com.gamja.tiggle.program.application.port.out.S3UploadPort;
+import com.gamja.tiggle.program.domain.Program;
 
 import java.util.List;
 
 @UseCase
 @RequiredArgsConstructor
-public class CreateProgramService implements CreateProgramUseCase,DeleteProgramUseCase {
+public class CreateProgramService implements CreateProgramUseCase {
     private final CreateProgramPort createPersistencePort;
-    private final DeleteProgramPort deletePersistencePort;
     private final S3UploadPort s3UploadPort;
 
 
     @Override
-    public void createProgram(CreateProgramCommand command){
+    public void createProgram(CreateProgramCommand command) throws BaseException {
         List<String> uploadFilePaths = s3UploadPort.uploadProductImages(command.getImageFiles());
 
         Program program = Program.builder()
@@ -36,16 +35,10 @@ public class CreateProgramService implements CreateProgramUseCase,DeleteProgramU
                 .programStartDate(command.getProgramStartDate())
                 .programEndDate(command.getProgramEndDate())
                 .imageUrls(uploadFilePaths)
+                .categoryIdx(command.getCategoryIdx())
                 .build();
         createPersistencePort.createProgram(program);
     }
 
-    @Override
-    public void deleteProgram(DeleteProgramCommand command) {
-        Program program = Program.builder()
-                .id(command.getId())
-                .build();
-        deletePersistencePort.deleteProgram(program);
-    }
 
 }
