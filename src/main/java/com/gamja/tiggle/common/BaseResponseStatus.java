@@ -8,17 +8,41 @@ import lombok.Getter;
 @Getter
 public enum BaseResponseStatus {
 
-    FAIL(false,500,"요청 실패"),
+    FAIL(false, 500, "요청 실패"),
 
 
     /**
      * 1000 : 요청 성공
      */
-    SUCCESS(true, 1000, "요청에 성공하였습니다.");
+    SUCCESS(true, 1000, "요청에 성공하였습니다."),
+
+    /**
+     * 2000: 유저
+     */
+
+    /**
+     * 3000: 프로그램
+     */
+
+    NOT_FOUND_PROGRAM(false, 3100, "프로그램이 존재하지 않습니다.");
+
+    /**
+     * 4000: 결제
+     */
+
+    /**
+     * 5000: 예매
+     */
+
+    /**
+     * 6000: 교환
+     */
+
 
     private final boolean isSuccess;
     private final int code;
     private final String message;
+
 
     private BaseResponseStatus(boolean isSuccess, int code, String message) {
         this.isSuccess = isSuccess;
