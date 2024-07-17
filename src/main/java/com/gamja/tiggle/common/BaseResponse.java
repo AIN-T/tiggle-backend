@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import static org.example.tiggle.common.BaseResponseStatus.SUCCESS;
+import static com.gamja.tiggle.common.BaseResponseStatus.SUCCESS;
 
 @Getter
 @AllArgsConstructor
