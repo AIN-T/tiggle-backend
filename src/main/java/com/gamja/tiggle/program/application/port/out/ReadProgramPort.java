@@ -10,4 +10,6 @@ public interface ReadProgramPort {
     List<Program> readProgramAll(Program program) throws BaseException;
     List<Program> readRealTimeAll(LocalDateTime currentDateTime) throws BaseException;
 
+    Program getProgramDetail(Long id) throws BaseException;
+
 }

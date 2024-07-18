@@ -101,7 +101,9 @@ public class ReadProgramController {
     private static GetProgramDetailResponse from(Program program) {
         // TODO 가격 정보
         return GetProgramDetailResponse.builder()
-//                .pricesList()
+                .runtime(program.getRuntime())
+                .age(program.getAge())
+                .programName(program.getProgramName())
                 .imageUrls(program.getImageUrls())
                 .locationId(program.getLocationId())
                 .programEndDate(program.getProgramEndDate())

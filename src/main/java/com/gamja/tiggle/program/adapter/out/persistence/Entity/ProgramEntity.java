@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name ="program")
+@Table(name = "program")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,6 +23,9 @@ public class ProgramEntity {
 
     private String programName;
     private String programInfo;
+
+    private int age;
+    private int runtime;
 
     private LocalDateTime reservationOpenDate;
     private LocalDateTime programStartDate;
@@ -36,6 +39,9 @@ public class ProgramEntity {
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private LocationEntity locationEntity;
 
 
     public ProgramEntity(Long id) {

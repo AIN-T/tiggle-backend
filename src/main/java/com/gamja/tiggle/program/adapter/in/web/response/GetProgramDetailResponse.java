@@ -12,11 +12,10 @@ public class GetProgramDetailResponse {
 
     private String programName;
     private Long locationId;
+    private int age;
     private LocalDateTime programStartDate;
     private LocalDateTime programEndDate;
     private int runtime;
     private List<String> imageUrls;
     private String programInfo;
-    private List<PriceResponse> pricesList;
-
 }
