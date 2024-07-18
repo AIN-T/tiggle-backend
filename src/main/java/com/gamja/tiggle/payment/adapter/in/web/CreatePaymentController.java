@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CreatePaymentController {
     private final CreatePaymentUseCase createPaymentUseCase;
-    //private final PaymentPersistenceOutputAdapter;
 
     @PostMapping
     BaseResponse create(@RequestBody CreatePaymentRequest request) { //, @AuthenticationPrincipal CustomUserDetails customUserDetails)
