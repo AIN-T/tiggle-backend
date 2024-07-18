@@ -1,7 +1,7 @@
 package com.gamja.tiggle.reservation.adapter.out.persistence;
 
 import com.gamja.tiggle.common.annotation.PersistenceAdapter;
-import com.gamja.tiggle.program.adapter.out.persistence.ProgramEntity;
+import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.SeatEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.TimesEntity;
@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class saveReservationAdapter implements SaveReservationPort {
+public class SaveReservationAdapter implements SaveReservationPort {
 
     private final ReservationRepository reservationRepository;
 
@@ -26,9 +26,9 @@ public class saveReservationAdapter implements SaveReservationPort {
 
     private static ReservationEntity from(Reservation reservation) {
         return ReservationEntity.builder()
-                .program(new ProgramEntity(reservation.getProgramId()))
-                .times(new TimesEntity(reservation.getTimesId()))
-                .seat(new SeatEntity(reservation.getSeatId()))
+                .programEntity(new ProgramEntity(reservation.getProgramId()))
+                .timesEntity(new TimesEntity(reservation.getTimesId()))
+                .seatEntity(new SeatEntity(reservation.getSeatId()))
                 .status(ReservationType.IN_PROGRESS)
                 .build();
     }
