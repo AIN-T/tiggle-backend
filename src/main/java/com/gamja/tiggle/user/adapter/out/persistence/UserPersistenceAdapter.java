@@ -14,6 +14,34 @@ public class UserPersistenceAdapter implements UserPersistencePort {
     private final EmailVerifyRepository emailVerifyRepository;
 
     @Override
+    public void verifyUser(String email) throws BaseException {
+        UserEntity result = jpaUserRepository.findByEmail(email);
+        if (result!=null){
+            UserEntity entity = UserEntity.builder()
+                    .id(result.getId())
+                    .email(result.getEmail())
+                    .name(result.getName())
+                    .password(result.getPassword())
+                    .loginType(result.getLoginType())
+                    .role("ROLE_USER")
+                    .enable(true)
+                    .status(result.getStatus())
+                    .region_1depth_name(result.getRegion_1depth_name())
+                    .region_2depth_name(result.getRegion_2depth_name())
+                    .region_3depth_name(result.getRegion_3depth_name())
+                    .region_4depth_name(result.getRegion_4depth_name())
+                    .createdAt(result.getCreatedAt())
+                    .build();
+
+            entity.verifiedAt();
+
+            jpaUserRepository.save(entity);
+        }
+
+
+    }
+
+    @Override
     public void saveUser(User user) throws BaseException {
         UserEntity entity = UserEntity.builder()
                 .name(user.getName())

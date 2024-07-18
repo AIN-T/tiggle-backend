@@ -1,6 +1,7 @@
 package com.gamja.tiggle.user.adapter.out.verify;
 
 import com.gamja.tiggle.common.BaseException;
+import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.user.adapter.out.persistence.EmailVerify;
 import com.gamja.tiggle.user.adapter.out.persistence.EmailVerifyRepository;
 import com.gamja.tiggle.user.adapter.out.persistence.JpaUserRepository;
@@ -25,7 +26,7 @@ public class EmailVerifyAdapter implements EmailVerifyPort {
         message.setTo(user.getEmail());
         message.setSubject("[내 사이트] 가입 환영");
         String uuid = UUID.randomUUID().toString();
-        message.setText("http://localhost:8080/user/verify="+user.getEmail()+"&uuid="+uuid);
+        message.setText("http://localhost:8080/user/verify?email="+user.getEmail()+"&uuid="+uuid);
         emailSender.send(message);
 
         return uuid;
@@ -39,6 +40,18 @@ public class EmailVerifyAdapter implements EmailVerifyPort {
                 .build();
 
         emailVerifyRepository.save(emailVerify);
+    }
+
+    @Override
+    public EmailVerify findByEmail(String email) throws BaseException {
+        EmailVerify result = emailVerifyRepository.findByEmail(email);
+        if (result != null){
+            return result;
+        }
+        else {
+            throw new BaseException(BaseResponseStatus.BAD_REQUEST);
+        }
+
     }
 }
 
