@@ -2,14 +2,13 @@ package com.gamja.tiggle.program.domain;
 
 import lombok.Builder;
 import lombok.Getter;
-import com.gamja.tiggle.common.BaseEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
 @Getter
-public class Program extends BaseEntity {
+public class Program {
     private Long id;
     private Long categoryId;
     private String programName;
