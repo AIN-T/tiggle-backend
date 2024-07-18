@@ -6,13 +6,13 @@ import lombok.*;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Date;
-import com.gamja.tiggle.reservation.domain.Reservation;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "payment")
 public class PaymentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class PaymentEntity {
     private Integer ticketPrice;
     private Integer usePoint;
     private Integer fee;
-    private String string;
+    private String payType;
     private Boolean verify;
 
     //@ManyToOne
@@ -31,7 +31,7 @@ public class PaymentEntity {
 
     @OneToOne
     @JoinColumn(name = "reservation_id")
-    private ReservationEntity reservation;
+    private ReservationEntity reservationEntity;
 
     @Column(updatable = false, nullable = false)
     private Date createdAt;

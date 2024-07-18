@@ -12,5 +12,6 @@ public class VerifyData {
     private Integer canceled;
 
     private String country;
+
     private Integer totalPrice;
 }

@@ -6,7 +6,7 @@ import com.gamja.tiggle.payment.domain.Payment;
 public interface PaymentPersistencePort {
     void savePayment(Payment payment) throws BaseException;
 
-    Payment searchPayment(Payment payment) throws BaseException;
+    Payment searchPayment(Long id) throws BaseException;
 
     void verify(Payment payment) throws BaseException;
 }

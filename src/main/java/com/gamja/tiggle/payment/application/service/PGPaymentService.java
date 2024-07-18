@@ -29,11 +29,8 @@ public class PGPaymentService implements VerifyPaymentUseCase {
         VerifyData data = portOnePort.findByPaymentId(accessToken, paymentId);
 
         Boolean verified = false;
-        Payment payment = Payment.builder()
-                .reservationId(command.getReservationId())
-                        .build();
-         Payment paymentSearched = paymentPersistencePort.searchPayment(payment);
-         //Reservation reservationSearched = reservationPersistence.searchReservation()
+         Payment paymentSearched = paymentPersistencePort.searchPayment(command.getReservationId());
+         //Reservation reservationSearched = reservationPersistencePort.searchReservation()
 
         // 정상 결제 검증
         if (data.getStatus().equals("PAID")&&data.getPayId().equals(command.getPaymentId())&&data.getCanceled() == 0) {
@@ -52,8 +49,7 @@ public class PGPaymentService implements VerifyPaymentUseCase {
                 else {
                     //throw BaseException(BaseResponseStatus.결제 취소 실패);
                 }
-
-                //throw BaseException(BaseResponseStatus.잘못된 결제 데이터로 결제 진행);
+                //throw BaseException(BaseResponseStatus.잘못된 결제 데이터로 결제 정상 취소);
             }
         }
 
