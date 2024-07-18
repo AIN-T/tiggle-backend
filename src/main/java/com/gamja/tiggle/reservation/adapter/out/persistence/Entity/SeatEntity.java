@@ -22,4 +22,8 @@ public class SeatEntity {
     private SectionEntity section;
 
     private int seatNumber;
+
+    public SeatEntity(Long id) {
+        this.id = id;
+    }
 }

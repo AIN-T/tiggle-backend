@@ -13,10 +13,10 @@ public class Reservation {
 
     private Long reservationId;
 
-    private Program program;
+    private Long programId;
 //    private User user;
-    private Seat seat;
-    private Times times;
+    private Long seatId;
+    private Long timesId;
 
     private String ticketNumber;
     private String payMethod;
