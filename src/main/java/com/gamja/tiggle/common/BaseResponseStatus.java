@@ -45,9 +45,10 @@ public enum BaseResponseStatus {
      */
 
     /**
-     * 7000: 공연장, 구역, 좌석
+     * 7000: 공연장, 구역, 좌석, 등급
      */
     NOT_FOUND_SECTION(false,7000,"구역이 존재하지 않습니다."),
+    NOT_FOUND_PRICE(false,7001,"등급별 가격 정보가 존재하지 않습니다."),
 
     /**
      * 8000: 공통 에러

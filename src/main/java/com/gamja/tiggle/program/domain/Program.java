@@ -11,6 +11,7 @@ import java.util.List;
 public class Program {
     private Long id;
     private Long categoryId;
+    private Long locationId;
     private String programName;
     private String programInfo;
 

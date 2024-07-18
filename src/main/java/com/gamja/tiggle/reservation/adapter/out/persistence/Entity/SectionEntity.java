@@ -1,7 +1,7 @@
 package com.gamja.tiggle.reservation.adapter.out.persistence.Entity;
 
-import com.gamja.tiggle.program.adapter.out.persistence.GradeEntity;
-import com.gamja.tiggle.program.adapter.out.persistence.LocationEntity;
+import com.gamja.tiggle.program.adapter.out.persistence.Entity.GradeEntity;
+import com.gamja.tiggle.program.adapter.out.persistence.Entity.LocationEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

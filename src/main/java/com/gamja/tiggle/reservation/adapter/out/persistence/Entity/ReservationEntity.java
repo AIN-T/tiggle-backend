@@ -1,6 +1,6 @@
 package com.gamja.tiggle.reservation.adapter.out.persistence.Entity;
 
-import com.gamja.tiggle.program.adapter.out.persistence.ProgramEntity;
+import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramEntity;
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,16 +22,16 @@ public class ReservationEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private ProgramEntity program;
+    private ProgramEntity programEntity;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    private UserEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private SeatEntity seat;
+    private SeatEntity seatEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private TimesEntity times;
+    private TimesEntity timesEntity;
 
     private String ticketNumber;
     private String payMethod;

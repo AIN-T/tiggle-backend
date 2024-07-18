@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<ReservationEntity, Long> {
 
-    Optional<ReservationEntity> findBySeatId(Long seatId);
+    Optional<ReservationEntity> findBySeatEntityId(Long seatId);
 
 }

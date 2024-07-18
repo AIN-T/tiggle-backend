@@ -22,7 +22,7 @@ public class VerifySeatAdapter implements VerifySeatPort {
     @Override
     public void verifySeat(Seat seat) throws BaseException {
 
-        Optional<ReservationEntity> verifiedSeat = reservationRepository.findBySeatId(seat.getId());
+        Optional<ReservationEntity> verifiedSeat = reservationRepository.findBySeatEntityId(seat.getId());
         if (verifiedSeat.isPresent() && verifiedSeat.get().getStatus() != ReservationType.AVAILABLE) {
             throw new BaseException(BaseResponseStatus.ALREADY_CHOSEN_SEAT);
         }

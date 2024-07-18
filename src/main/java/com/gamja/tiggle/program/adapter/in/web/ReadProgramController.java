@@ -4,12 +4,12 @@ import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponse;
 import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.WebAdapter;
+import com.gamja.tiggle.program.adapter.in.web.response.GetProgramDetailResponse;
 import com.gamja.tiggle.program.adapter.in.web.response.ReadProgramResponse;
 import com.gamja.tiggle.program.application.port.in.ReadProgramCommand;
 import com.gamja.tiggle.program.application.port.in.ReadProgramUseCase;
 import com.gamja.tiggle.program.domain.Program;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +27,7 @@ public class ReadProgramController {
     // Category 종류 별로 Program 조회
     @GetMapping("/readCategory")
     public BaseResponse<List<ReadProgramResponse>> readProgram(@RequestParam Long categoryId) {
-        try{
+        try {
             ReadProgramCommand command = ReadProgramCommand.builder()
                     .categoryId(categoryId)
                     .build();
@@ -55,7 +55,7 @@ public class ReadProgramController {
     // 실시간 Program 조회
     @GetMapping("/readRealTime")
     public BaseResponse<List<ReadProgramResponse>> readRealTime(@RequestParam(required = false) LocalDateTime currentDateTime) {
-        try{
+        try {
             // 현재 시간이 없을 경우 기본적으로 현재 시간을 사용
             if (currentDateTime == null) {
                 currentDateTime = LocalDateTime.now();
@@ -81,7 +81,35 @@ public class ReadProgramController {
         } catch (BaseException e) {
             return new BaseResponse<>(BaseResponseStatus.FAIL, null);
         }
-
     }
 
+    @GetMapping
+    public BaseResponse<GetProgramDetailResponse> GetProgramDetail(@RequestParam Long id) {
+
+        try {
+            Program program = readUseCase.GetProgramDetail(id);
+            GetProgramDetailResponse getProgramDetailResponse = from(program);
+            return new BaseResponse<>(getProgramDetailResponse);
+
+        } catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
+
+    // 비즈니스 로직
+
+    private static GetProgramDetailResponse from(Program program) {
+        // TODO 가격 정보
+        return GetProgramDetailResponse.builder()
+                .runtime(program.getRuntime())
+                .age(program.getAge())
+                .programName(program.getProgramName())
+                .imageUrls(program.getImageUrls())
+                .locationId(program.getLocationId())
+                .programEndDate(program.getProgramEndDate())
+                .programStartDate(program.getProgramStartDate())
+                .programInfo(program.getProgramInfo())
+                .runtime(program.getRuntime())
+                .build();
+    }
 }
