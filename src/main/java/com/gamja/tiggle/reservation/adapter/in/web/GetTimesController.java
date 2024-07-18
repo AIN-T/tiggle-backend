@@ -4,7 +4,7 @@ import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponse;
 import com.gamja.tiggle.common.annotation.WebAdapter;
 import com.gamja.tiggle.reservation.adapter.in.web.response.GetTimesResponse;
-import com.gamja.tiggle.reservation.application.in.GetTimesUseCase;
+import com.gamja.tiggle.reservation.application.port.in.GetTimesUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

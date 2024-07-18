@@ -1,7 +1,9 @@
 package com.gamja.tiggle.reservation.adapter.out.persistence;
 
 import com.gamja.tiggle.common.annotation.PersistenceAdapter;
-import com.gamja.tiggle.reservation.application.out.GetTimesPort;
+import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.TimesEntity;
+import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.TimesRepository;
+import com.gamja.tiggle.reservation.application.port.out.GetTimesPort;
 import com.gamja.tiggle.reservation.domain.Times;
 import lombok.RequiredArgsConstructor;
 
