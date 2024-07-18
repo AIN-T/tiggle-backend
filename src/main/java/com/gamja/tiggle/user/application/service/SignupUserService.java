@@ -1,8 +1,10 @@
 package com.gamja.tiggle.user.application.service;
 
-import com.gamja.tiggle.payment.application.port.out.PaymentPersistencePort;
+import com.gamja.tiggle.common.BaseException;
+import com.gamja.tiggle.user.adapter.out.persistence.EmailVerify;
 import com.gamja.tiggle.user.application.port.in.SignupUserCommand;
 import com.gamja.tiggle.user.application.port.in.SignupUserUseCase;
+import com.gamja.tiggle.user.application.port.out.EmailVerifyPort;
 import com.gamja.tiggle.user.application.port.out.UserPersistencePort;
 import com.gamja.tiggle.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +14,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SignupUserService implements SignupUserUseCase {
     private final UserPersistencePort userPersistencePort;
+    private final EmailVerifyPort emailVerifyPort;
 
     @Override
-    public void signup(SignupUserCommand command) {
+    public String signup(SignupUserCommand command) throws BaseException {
         User user = User.builder()
 
                 .name(command.getName())
@@ -31,5 +34,9 @@ public class SignupUserService implements SignupUserUseCase {
                 .build();
 
         userPersistencePort.saveUser(user);
+        String uuid = emailVerifyPort.sendEmail(user);
+        emailVerifyPort.saveVerify(user.getEmail(), uuid);
+
+        return uuid;
     }
 }

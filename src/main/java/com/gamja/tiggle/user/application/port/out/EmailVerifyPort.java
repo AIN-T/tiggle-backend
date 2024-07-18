@@ -5,7 +5,9 @@ import com.gamja.tiggle.user.domain.User;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface UserPersistencePort {
-    void saveUser(User user) throws BaseException;
+public interface EmailVerifyPort {
+    String sendEmail(User user) throws BaseException;
+
+    void saveVerify(String email, String uuid);
 }
 

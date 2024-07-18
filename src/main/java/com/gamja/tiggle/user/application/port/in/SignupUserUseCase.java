@@ -1,5 +1,7 @@
 package com.gamja.tiggle.user.application.port.in;
 
+import com.gamja.tiggle.common.BaseException;
+
 public interface SignupUserUseCase {
-    void signup(SignupUserCommand command);
+    String signup(SignupUserCommand command) throws BaseException;
 }

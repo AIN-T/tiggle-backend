@@ -1,5 +1,7 @@
 package com.gamja.tiggle.user.adapter.out.persistence;
 
+import com.gamja.tiggle.common.BaseException;
+import com.gamja.tiggle.user.application.port.out.EmailVerifyPort;
 import com.gamja.tiggle.user.application.port.out.UserPersistencePort;
 import com.gamja.tiggle.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -9,9 +11,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserPersistenceAdapter implements UserPersistencePort {
     private final JpaUserRepository jpaUserRepository;
+    private final EmailVerifyRepository emailVerifyRepository;
 
     @Override
-    public void saveUser(User user) {
+    public void saveUser(User user) throws BaseException {
         UserEntity entity = UserEntity.builder()
                 .name(user.getName())
                 .email(user.getEmail())
