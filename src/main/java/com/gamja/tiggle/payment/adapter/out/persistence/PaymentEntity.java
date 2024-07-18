@@ -1,10 +1,12 @@
 package com.gamja.tiggle.payment.adapter.out.persistence;
 
+import com.gamja.tiggle.reservation.adapter.out.persistence.ReservationEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Date;
+import com.gamja.tiggle.reservation.domain.Reservation;
 
 @Entity
 @Getter
@@ -27,9 +29,9 @@ public class PaymentEntity {
     //@JoinColumn(name = "user_id")
     //private User user;
 
-    //@OneToOne
-    //@JoinColumn(name = "reservation_id")
-    //private Reservation reservation;
+    @OneToOne
+    @JoinColumn(name = "reservation_id")
+    private ReservationEntity reservation;
 
     @Column(updatable = false, nullable = false)
     private Date createdAt;
