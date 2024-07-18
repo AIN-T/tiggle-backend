@@ -28,7 +28,7 @@ public class VerifyPaymentController {
                 .build();
 
         try {
-            String accessToken = verifyPaymentUseCase.getToken(command);
+            String accessToken = verifyPaymentUseCase.getToken();
             verifyPaymentUseCase.compareDB(command, accessToken);
         } catch (BaseException e) {
             return new BaseResponse(e.getStatus());
