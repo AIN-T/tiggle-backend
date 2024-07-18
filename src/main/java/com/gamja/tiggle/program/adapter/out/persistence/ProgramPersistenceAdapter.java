@@ -1,10 +1,9 @@
 package com.gamja.tiggle.program.adapter.out.persistence;
 
-import com.gamja.tiggle.category.adapter.out.persistence.CategoryEntity;
-import com.gamja.tiggle.category.adapter.out.persistence.JpaCategoryRepository;
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponseStatus;
 
+import com.gamja.tiggle.program.application.port.out.ProgramPort;
 import com.gamja.tiggle.program.application.port.out.ReadProgramPort;
 import lombok.RequiredArgsConstructor;
 import com.gamja.tiggle.common.annotation.PersistenceAdapter;
@@ -17,8 +16,7 @@ import java.util.stream.Collectors;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-
-public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgramPort {
+public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgramPort, ProgramPort {
     private final JpaProgramRepository jpaProgramRepository;
     private final JpaProgramImageRepository jpaProgramImageRepository;
     private final JpaCategoryRepository jpaCategoryRepository;
@@ -51,7 +49,6 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
     }
 
     @Override
-
     public List<Program> readProgramAll(Program program) throws BaseException {
 
         List<ProgramEntity> result = jpaProgramRepository.findAllByCategoryEntity(program.getCategoryId());
@@ -91,7 +88,8 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
         return programs;
     }
 
-  public boolean existProgram(Long id) {
+    @Override
+    public boolean existProgram(Long id) {
         return jpaProgramRepository.existsById(id);
 
     }

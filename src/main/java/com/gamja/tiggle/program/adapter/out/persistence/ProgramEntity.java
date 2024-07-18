@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import com.gamja.tiggle.category.adapter.out.persistence.CategoryEntity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
