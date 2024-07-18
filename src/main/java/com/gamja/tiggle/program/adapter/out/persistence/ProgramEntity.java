@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import com.gamja.tiggle.category.adapter.out.persistence.CategoryEntity;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -25,6 +24,8 @@ public class ProgramEntity {
 
     private String programName;
     private String programInfo;
+
+    private LocalDateTime reservationOpenDate;
     private LocalDateTime programStartDate;
     private LocalDateTime programEndDate;
 
@@ -36,4 +37,5 @@ public class ProgramEntity {
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
+
 }

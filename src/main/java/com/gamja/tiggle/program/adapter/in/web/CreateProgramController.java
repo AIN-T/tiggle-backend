@@ -18,7 +18,7 @@ public class CreateProgramController {
     private final CreateProgramUseCase createUseCase;
 
     @PostMapping("/create")
-    public BaseResponse<String> create(@RequestPart CreateProgramRequest request, @RequestPart MultipartFile[] files) throws BaseException {
+    public BaseResponse<String> create(@RequestPart CreateProgramRequest request, @RequestPart MultipartFile[] files) {
         CreateProgramCommand command = CreateProgramCommand.builder()
                 .programName(request.getProgramName())
                 .programInfo(request.getProgramInfo())
@@ -30,12 +30,14 @@ public class CreateProgramController {
                 .programStartDate(request.getProgramStartDate())
                 .programEndDate(request.getProgramEndDate())
                 .imageFiles(files)
-                .categoryIdx(request.getCategoryIdx())
+                .categoryId(request.getCategoryId())
                 .build();
+        try {
+            createUseCase.createProgram(command);
 
-        createUseCase.createProgram(command);
-
-        return new BaseResponse<>(BaseResponseStatus.SUCCESS);
+        } catch (BaseException e) {
+            return new BaseResponse(e.getStatus());
+        }
+        return new BaseResponse(BaseResponseStatus.SUCCESS);
     }
-
 }
