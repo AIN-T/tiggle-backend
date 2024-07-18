@@ -46,7 +46,7 @@ public class CreatePaymentController {
                     .reservationId(request.getReservationId())
                     .ticketPrice(request.getTicketPrice())
                     .usePoint(request.getUsePoint())
-                    .string(request.getPayType())
+                    .payType(request.getPayType())
                     .fee(request.getFee())
                     .build();
             try {

@@ -74,10 +74,16 @@ public class PortOneAdapter implements PortOnePort {
         String status = (String) result.get("status");
         String payId = (String) result.get("id");
 
-        Integer canceled = (Integer) amount.get("cancelled");
+        Double D_canceled = (Double) amount.get("cancelled");
 
         String country = (String) result.get("currency");
-        Integer totalPrice = (Integer) amount.get("total");
+        Double D_totalPrice = (Double) amount.get("total");
+
+        int tmp1 = D_canceled.intValue();
+        Integer canceled = Integer.valueOf(tmp1);
+
+        int tmp2 = D_totalPrice.intValue();
+        Integer totalPrice = Integer.valueOf(tmp2);
 
         return VerifyData.builder()
                 .status(status)
