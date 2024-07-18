@@ -7,5 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserPersistencePort {
     void saveUser(User user) throws BaseException;
+
+    void verifyUser(String email) throws BaseException;
 }
 
