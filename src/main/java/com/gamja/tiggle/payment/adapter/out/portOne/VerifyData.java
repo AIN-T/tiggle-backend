@@ -1,4 +1,4 @@
-package com.gamja.tiggle.payment.application.port.out;
+package com.gamja.tiggle.payment.adapter.out.portOne;
 
 import lombok.Builder;
 import lombok.Getter;

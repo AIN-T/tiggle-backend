@@ -5,21 +5,10 @@ import com.gamja.tiggle.payment.application.port.in.VerifyPaymentCommand;
 import com.gamja.tiggle.payment.application.port.in.VerifyPaymentUseCase;
 import com.gamja.tiggle.payment.application.port.out.PaymentPersistencePort;
 import com.gamja.tiggle.payment.application.port.out.PortOnePort;
-import com.gamja.tiggle.payment.application.port.out.VerifyData;
+import com.gamja.tiggle.payment.adapter.out.portOne.VerifyData;
 import com.gamja.tiggle.payment.domain.Payment;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.Map;
 
 
 @Component

@@ -1,12 +1,7 @@
 package com.gamja.tiggle.payment.adapter.out.portOne;
 
 import com.gamja.tiggle.common.BaseException;
-import com.gamja.tiggle.payment.adapter.out.persistence.JpaPaymentRepository;
-import com.gamja.tiggle.payment.adapter.out.persistence.PaymentEntity;
-import com.gamja.tiggle.payment.application.port.out.PaymentPersistencePort;
 import com.gamja.tiggle.payment.application.port.out.PortOnePort;
-import com.gamja.tiggle.payment.application.port.out.VerifyData;
-import com.gamja.tiggle.payment.domain.Payment;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
