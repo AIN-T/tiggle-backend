@@ -37,6 +37,8 @@ public enum BaseResponseStatus {
     /**
      * 5000: 예매
      */
+    ALREADY_CHOSEN_SEAT(false,5000,"이미 선택된 좌석입니다."),
+
 
     /**
      * 6000: 교환
