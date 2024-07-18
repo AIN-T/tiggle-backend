@@ -3,8 +3,8 @@ package com.gamja.tiggle.payment.adapter.out.persistence;
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.payment.application.port.out.PaymentPersistencePort;
 import com.gamja.tiggle.payment.domain.Payment;
-import com.gamja.tiggle.reservation.adapter.out.persistence.ReservationEntity;
-import com.gamja.tiggle.reservation.adapter.out.persistence.ReservationRepository;
+import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
+import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,7 @@ public class PaymentPersistenceAdapter implements PaymentPersistencePort {
 
     @Override
     public void savePayment(Payment payment) throws BaseException {
-            Optional<ReservationEntity> result = jpaReservationRepository.findById(payment.getReservationId());
+        Optional<ReservationEntity> result = jpaReservationRepository.findById(payment.getReservationId());
         //if (!(result.getState)) {
         PaymentEntity entity = PaymentEntity.builder()
                 .username(payment.getUsername())
@@ -53,8 +53,7 @@ public class PaymentPersistenceAdapter implements PaymentPersistencePort {
                     .createdAt(result.getCreatedAt())
                     .verifiedAt(result.getVerifiedAt())
                     .build();
-        }
-        else {
+        } else {
             //throw BaseException(BaseResponseStatus.잘못된 티켓);
         }
         return null;

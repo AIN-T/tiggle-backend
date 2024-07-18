@@ -5,10 +5,7 @@ import com.gamja.tiggle.user.adapter.in.web.request.SignupUserRequest;
 import com.gamja.tiggle.user.application.port.in.SignupUserCommand;
 import com.gamja.tiggle.user.application.port.in.SignupUserUseCase;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -17,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class SignupUserController {
     private final SignupUserUseCase signupUserUseCase;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/signup")
-    void signup(@RequestPart SignupUserRequest request)  {
+    @PostMapping("/signup")
+    void signup(@RequestBody SignupUserRequest request)  {
 
         SignupUserCommand command = SignupUserCommand.builder()
                 .name(request.getName())
