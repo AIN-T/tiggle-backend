@@ -11,6 +11,6 @@ public class Seat {
     private Long id;
     private Location location;
     private Grade grade;
-    private String section;
+    private Long sectionId;
     private int seatNumber;
 }

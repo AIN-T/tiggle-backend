@@ -1,4 +1,4 @@
-package com.gamja.tiggle.reservation.application.out;
+package com.gamja.tiggle.reservation.application.port.out;
 
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.reservation.domain.Section;

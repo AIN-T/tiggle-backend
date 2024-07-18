@@ -1,12 +1,15 @@
 package com.gamja.tiggle.payment.adapter.out.persistence;
 
-import com.gamja.tiggle.reservation.adapter.out.persistence.ReservationEntity;
+import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Date;
-import com.gamja.tiggle.reservation.domain.Reservation;
 
 @Entity
 @Getter

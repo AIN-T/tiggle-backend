@@ -3,7 +3,9 @@ package com.gamja.tiggle.reservation.adapter.out.persistence;
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.PersistenceAdapter;
-import com.gamja.tiggle.reservation.application.out.GetSectionPort;
+import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.SectionEntity;
+import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.SectionRepository;
+import com.gamja.tiggle.reservation.application.port.out.GetSectionPort;
 import com.gamja.tiggle.reservation.domain.Section;
 import lombok.RequiredArgsConstructor;
 
