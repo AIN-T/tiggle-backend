@@ -14,5 +14,5 @@ public class Times {
     private LocalDateTime date;
     private int round;
     private LocalDateTime limitEndTime;
-
 }
+

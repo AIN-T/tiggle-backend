@@ -29,4 +29,7 @@ public class TimesEntity {
     private LocalDateTime date;
     private LocalDateTime limitEnterTime;
 
+    public TimesEntity(Long id) {
+        this.id = id;
+    }
 }

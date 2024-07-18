@@ -37,4 +37,8 @@ public class ProgramEntity {
     @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
 
+
+    public ProgramEntity(Long id) {
+        this.id = id;
+    }
 }
