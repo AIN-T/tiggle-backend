@@ -18,7 +18,7 @@ public class PaymentPersistenceAdapter implements PaymentPersistencePort {
 
     @Override
     public void savePayment(Payment payment) throws BaseException {
-            Optional<ReservationEntity> result = jpaReservationRepository.findById(payment.getReservationId());
+        Optional<ReservationEntity> result = jpaReservationRepository.findById(payment.getReservationId());
         //if (!(result.getState)) {
         PaymentEntity entity = PaymentEntity.builder()
                 .username(payment.getUsername())
@@ -53,8 +53,7 @@ public class PaymentPersistenceAdapter implements PaymentPersistencePort {
                     .createdAt(result.getCreatedAt())
                     .verifiedAt(result.getVerifiedAt())
                     .build();
-        }
-        else {
+        } else {
             //throw BaseException(BaseResponseStatus.잘못된 티켓);
         }
         return null;
