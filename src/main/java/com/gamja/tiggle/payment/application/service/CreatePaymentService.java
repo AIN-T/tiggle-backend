@@ -21,7 +21,7 @@ public class CreatePaymentService implements CreatePaymentUseCase {
                 .ticketPrice(command.getTicketPrice())
                 .usePoint(command.getUsePoint())
                 .fee(command.getFee())
-                .string(command.getString())
+                .payType(command.getPayType())
                 .verify(false)
                 .build();
         paymentPersistencePort.savePayment(payment);

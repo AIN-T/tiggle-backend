@@ -1,5 +1,6 @@
 package com.gamja.tiggle.program.adapter.out.persistence;
 
+import com.gamja.tiggle.common.BaseException;
 import lombok.RequiredArgsConstructor;
 import com.gamja.tiggle.program.application.port.out.CreateCategoryPort;
 import com.gamja.tiggle.program.domain.Category;
@@ -9,10 +10,9 @@ import com.gamja.tiggle.common.annotation.PersistenceAdapter;
 @RequiredArgsConstructor
 public class CategoryPersistenceAdapter implements CreateCategoryPort {
     private final JpaCategoryRepository jpaCategoryRepository;
-    private final JpaProgramRepository jpaProgramRepository;
 
     @Override
-    public void createCategory(Category category) {
+    public void createCategory(Category category) throws BaseException {
         CategoryEntity entity = CategoryEntity.builder()
                 .categoryName(category.getCategoryName())
                 .build();
