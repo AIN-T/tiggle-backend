@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CreateProgramRequest {
     private String programName;
-    private Long categoryIdx;
+    private Long categoryId;
     private String programInfo;
     private LocalDateTime reservationOpenDate;
     private LocalDateTime reservationCloseDate;
