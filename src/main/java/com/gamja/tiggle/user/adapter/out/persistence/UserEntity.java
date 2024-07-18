@@ -34,7 +34,7 @@ public class UserEntity {
     private String region_4depth_name;
     private String phoneNumber;
 
-    @Column(updatable = false, nullable = false)
+//    @Column(updatable = false, nullable = false)
     private Date createdAt;
 
     private Date verifiedAt;
