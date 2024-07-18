@@ -31,4 +31,9 @@ public class ReadProgramService implements ReadProgramUseCase {
                 .build();
         return readProgramPort.readRealTimeAll(program.getCurrentDateTime());
     }
+
+    @Override
+    public Program GetProgramDetail(Long id) throws BaseException {
+        return readProgramPort.getProgramDetail(id);
+    }
 }

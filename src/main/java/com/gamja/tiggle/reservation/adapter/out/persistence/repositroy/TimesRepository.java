@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface TimesRepository extends JpaRepository<TimesEntity, Long> {
 
-    List<TimesEntity> findAllByProgramId(Long id);
+    List<TimesEntity> findAllByProgramEntityId(Long id);
 }

@@ -17,14 +17,14 @@ public class GetTimesAdapter implements GetTimesPort {
 
     @Override
     public List<Times> getTimes(Long id) {
-        List<TimesEntity> TimesList = timesRepository.findAllByProgramId(id);
+        List<TimesEntity> TimesList = timesRepository.findAllByProgramEntityId(id);
         return getList(TimesList);
     }
 
     private static List<Times> getList(List<TimesEntity> TimesList) {
         return TimesList.stream().map(timesEntity -> Times.builder()
                 .id(timesEntity.getId())
-                .programId(timesEntity.getProgram().getId())
+                .programId(timesEntity.getProgramEntity().getId())
                 .date(timesEntity.getDate())
                 .limitEndTime(timesEntity.getLimitEnterTime())
                 .round(timesEntity.getRound())

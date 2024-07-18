@@ -1,4 +1,4 @@
-package com.gamja.tiggle.program.adapter.out.persistence;
+package com.gamja.tiggle.program.adapter.out.persistence.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,17 +7,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "grade")
-public class GradeEntity {
+@Getter
+@Table(name = "location")
+public class LocationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String gradeName;
+    private String locationName;
 
 }

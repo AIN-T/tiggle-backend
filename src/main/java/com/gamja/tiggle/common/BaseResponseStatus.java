@@ -11,10 +11,13 @@ public enum BaseResponseStatus {
     FAIL(false, 500, "요청 실패"),
 
 
+
     /**
      * 1000 : 요청 성공
      */
     SUCCESS(true, 1000, "요청에 성공하였습니다."),
+    READ_EXCHANGE_OFFER_SUCCESS(true, 1001, "교환 요청 조회에 성공하였습니다."),
+
 
     /**
      * 2000: 유저
@@ -25,7 +28,6 @@ public enum BaseResponseStatus {
      */
 
     NOT_FOUND_PROGRAM(false, 3100, "프로그램이 존재하지 않습니다."),
-
 
     NOT_FOUND_CATEGORY(false, 3200, "카테고리가 존재하지 않습니다."),
     DUPLICATE_CATEGORY(false, 3201, "이미 존재하는 카테고리입니다."),
@@ -44,10 +46,13 @@ public enum BaseResponseStatus {
      * 6000: 교환
      */
 
+    NOT_FOUND_EXCHANGE_OFFER(false, 6000, "교환 요청 조회에 실패하였습니다."),
+
     /**
-     * 7000: 공연장, 구역, 좌석
+     * 7000: 공연장, 구역, 좌석, 등급
      */
     NOT_FOUND_SECTION(false,7000,"구역이 존재하지 않습니다."),
+    NOT_FOUND_PRICE(false,7001,"등급별 가격 정보가 존재하지 않습니다."),
 
     /**
      * 8000: 공통 에러

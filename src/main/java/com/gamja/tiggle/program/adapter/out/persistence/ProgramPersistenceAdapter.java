@@ -2,15 +2,18 @@ package com.gamja.tiggle.program.adapter.out.persistence;
 
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponseStatus;
-
+import com.gamja.tiggle.common.annotation.PersistenceAdapter;
+import com.gamja.tiggle.program.adapter.out.persistence.Entity.CategoryEntity;
+import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramEntity;
+import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramImageEntity;
+import com.gamja.tiggle.program.application.port.out.CreateProgramPort;
 import com.gamja.tiggle.program.application.port.out.ProgramPort;
 import com.gamja.tiggle.program.application.port.out.ReadProgramPort;
-import lombok.RequiredArgsConstructor;
-import com.gamja.tiggle.common.annotation.PersistenceAdapter;
-import com.gamja.tiggle.program.application.port.out.CreateProgramPort;
 import com.gamja.tiggle.program.domain.Program;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -86,6 +89,28 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
                 .collect(Collectors.toUnmodifiableList());
 
         return programs;
+    }
+
+    @Override
+    public Program getProgramDetail(Long id) throws BaseException {
+        ProgramEntity programEntity = jpaProgramRepository.findById(id).orElseThrow(() ->
+                new BaseException(BaseResponseStatus.NOT_FOUND_PROGRAM));
+
+        List<String> imgList = new ArrayList<>();
+        for (ProgramImageEntity p : programEntity.getProgramImageEntities()) {
+            imgList.add(p.getImgUrl());
+        }
+
+        return Program.builder()
+                .programName(programEntity.getProgramName())
+                .age(programEntity.getAge())
+                .locationId(programEntity.getLocationEntity().getId())
+                .programStartDate(programEntity.getProgramStartDate())
+                .programEndDate(programEntity.getProgramEndDate())
+                .runtime(programEntity.getRuntime())
+                .imageUrls(imgList)
+                .programInfo(programEntity.getProgramInfo())
+                .build();
     }
 
     @Override
