@@ -20,15 +20,19 @@ public class CreateCategoryController {
     private final CreateCategoryUseCase createCategoryUseCase;
 
     @PostMapping("/create")
-    public BaseResponse<String> create(@RequestBody CreateCategoryRequest request) throws BaseException {
+    public BaseResponse<String> create(@RequestBody CreateCategoryRequest request) {
         // 예외 1. 카테고리 이름이 비어 있는지 확인
         if (request.getCategoryName() == null || request.getCategoryName().isEmpty()) {
-            throw new BaseException(BaseResponseStatus.FAIL);
+            return new BaseResponse<>(BaseResponseStatus.NOT_FOUND_CATEGORY);
         }
         CreateCategoryCommand command = CreateCategoryCommand.builder()
                 .categoryName(request.getCategoryName())
                 .build();
-        createCategoryUseCase.createCategory(command);
+        try {
+            createCategoryUseCase.createCategory(command);
+        } catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
 
         return new BaseResponse<>(BaseResponseStatus.SUCCESS);
     }

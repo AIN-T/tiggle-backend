@@ -1,9 +1,9 @@
-package com.gamja.tiggle.reservation.service;
+package com.gamja.tiggle.reservation.application.service;
 
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.annotation.UseCase;
-import com.gamja.tiggle.reservation.application.in.GetSectionUseCase;
-import com.gamja.tiggle.reservation.application.out.GetSectionPort;
+import com.gamja.tiggle.reservation.application.port.in.GetSectionUseCase;
+import com.gamja.tiggle.reservation.application.port.out.GetSectionPort;
 import com.gamja.tiggle.reservation.domain.Section;
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.gamja.tiggle.reservation.adapter.out.persistence;
+package com.gamja.tiggle.reservation.adapter.out.persistence.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

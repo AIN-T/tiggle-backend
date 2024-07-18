@@ -1,7 +1,5 @@
-package com.gamja.tiggle.reservation.adapter.out.persistence;
+package com.gamja.tiggle.reservation.adapter.out.persistence.Entity;
 
-import com.gamja.tiggle.program.adapter.out.persistence.GradeEntity;
-import com.gamja.tiggle.program.adapter.out.persistence.LocationEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Builder
+@Table(name = "seat")
 public class SeatEntity {
 
     @Id
@@ -20,10 +19,7 @@ public class SeatEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private LocationEntity location;
+    private SectionEntity section;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private GradeEntity grade;
-    private String section;
     private int seatNumber;
 }

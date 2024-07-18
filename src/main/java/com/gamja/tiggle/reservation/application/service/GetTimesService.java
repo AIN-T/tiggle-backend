@@ -1,11 +1,11 @@
-package com.gamja.tiggle.reservation.service;
+package com.gamja.tiggle.reservation.application.service;
 
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.UseCase;
 import com.gamja.tiggle.program.application.port.out.ProgramPort;
-import com.gamja.tiggle.reservation.application.in.GetTimesUseCase;
-import com.gamja.tiggle.reservation.application.out.GetTimesPort;
+import com.gamja.tiggle.reservation.application.port.in.GetTimesUseCase;
+import com.gamja.tiggle.reservation.application.port.out.GetTimesPort;
 import com.gamja.tiggle.reservation.domain.Times;
 import lombok.RequiredArgsConstructor;
 
