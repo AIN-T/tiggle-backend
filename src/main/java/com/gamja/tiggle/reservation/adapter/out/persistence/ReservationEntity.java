@@ -2,8 +2,6 @@ package com.gamja.tiggle.reservation.adapter.out.persistence;
 
 import com.gamja.tiggle.program.adapter.out.persistence.ProgramEntity;
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
-import com.gamja.tiggle.seat.adapter.out.persistence.SeatEntity;
-import com.gamja.tiggle.times.adapter.out.persistence.TimesEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
