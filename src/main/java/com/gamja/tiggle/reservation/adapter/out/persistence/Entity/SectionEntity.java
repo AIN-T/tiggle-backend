@@ -1,4 +1,4 @@
-package com.gamja.tiggle.reservation.adapter.out.persistence;
+package com.gamja.tiggle.reservation.adapter.out.persistence.Entity;
 
 import com.gamja.tiggle.program.adapter.out.persistence.GradeEntity;
 import com.gamja.tiggle.program.adapter.out.persistence.LocationEntity;
