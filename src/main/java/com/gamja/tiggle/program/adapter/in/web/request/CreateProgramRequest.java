@@ -1,6 +1,5 @@
 package com.gamja.tiggle.program.adapter.in.web.request;
 
-import com.gamja.tiggle.category.domain.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

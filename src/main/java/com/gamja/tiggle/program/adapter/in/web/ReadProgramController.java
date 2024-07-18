@@ -1,8 +1,6 @@
 package com.gamja.tiggle.program.adapter.in.web;
 
 import com.gamja.tiggle.common.BaseException;
-import com.gamja.tiggle.common.BaseResponse;
-import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.WebAdapter;
 import com.gamja.tiggle.program.adapter.in.web.response.ReadProgramResponse;
 import com.gamja.tiggle.program.application.port.in.ReadProgramCommand;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

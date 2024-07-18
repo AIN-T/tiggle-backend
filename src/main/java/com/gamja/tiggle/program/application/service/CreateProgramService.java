@@ -1,7 +1,5 @@
 package com.gamja.tiggle.program.application.service;
 
-import com.gamja.tiggle.category.application.service.CreateCategoryService;
-import com.gamja.tiggle.category.domain.Category;
 import com.gamja.tiggle.common.BaseException;
 import lombok.RequiredArgsConstructor;
 import com.gamja.tiggle.common.annotation.UseCase;
