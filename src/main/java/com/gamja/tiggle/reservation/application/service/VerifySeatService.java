@@ -2,16 +2,12 @@ package com.gamja.tiggle.reservation.application.service;
 
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.annotation.UseCase;
-import com.gamja.tiggle.program.adapter.out.persistence.ProgramEntity;
-import com.gamja.tiggle.program.domain.Program;
-import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.TimesEntity;
 import com.gamja.tiggle.reservation.application.port.in.VerifySeatCommand;
 import com.gamja.tiggle.reservation.application.port.in.VerifySeatUseCase;
 import com.gamja.tiggle.reservation.application.port.out.SaveReservationPort;
 import com.gamja.tiggle.reservation.application.port.out.VerifySeatPort;
 import com.gamja.tiggle.reservation.domain.Reservation;
 import com.gamja.tiggle.reservation.domain.Seat;
-import com.gamja.tiggle.reservation.domain.Times;
 import lombok.RequiredArgsConstructor;
 
 @UseCase

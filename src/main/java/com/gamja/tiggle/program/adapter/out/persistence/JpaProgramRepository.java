@@ -1,5 +1,6 @@
 package com.gamja.tiggle.program.adapter.out.persistence;
 
+import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

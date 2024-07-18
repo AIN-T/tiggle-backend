@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import com.gamja.tiggle.program.adapter.out.persistence.ProgramEntity;
+import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramEntity;
 
 import java.time.LocalDateTime;
 
@@ -23,7 +23,7 @@ public class TimesEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private ProgramEntity program;
+    private ProgramEntity programEntity;
 
     private int round;
     private LocalDateTime date;

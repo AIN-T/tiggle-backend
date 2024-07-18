@@ -3,6 +3,9 @@ package com.gamja.tiggle.program.adapter.out.persistence;
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponseStatus;
 
+import com.gamja.tiggle.program.adapter.out.persistence.Entity.CategoryEntity;
+import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramEntity;
+import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramImageEntity;
 import com.gamja.tiggle.program.application.port.out.ProgramPort;
 import com.gamja.tiggle.program.application.port.out.ReadProgramPort;
 import lombok.RequiredArgsConstructor;
@@ -86,6 +89,14 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
                 .collect(Collectors.toUnmodifiableList());
 
         return programs;
+    }
+
+    @Override
+    public Program getProgramDetail(Long id) throws BaseException {
+        jpaProgramRepository.findById(id).orElseThrow(()->
+                new BaseException(BaseResponseStatus.NOT_FOUND_PROGRAM));
+
+        return null;
     }
 
     @Override
