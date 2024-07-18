@@ -13,13 +13,14 @@ import java.util.List;
 @Getter
 public class Program extends BaseEntity {
     private Long id;
+    private Long categoryId;
     private String programName;
     private String programInfo;
 
     private LocalDateTime reservationOpenDate;
     private LocalDateTime reservationCloseDate;
+    private LocalDateTime currentDateTime;
 
-    private Long categoryIdx;
     private List<String> imageUrls;
 
     private Integer age;

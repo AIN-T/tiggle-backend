@@ -35,7 +35,7 @@ public class CreateProgramService implements CreateProgramUseCase {
                 .programStartDate(command.getProgramStartDate())
                 .programEndDate(command.getProgramEndDate())
                 .imageUrls(uploadFilePaths)
-                .categoryIdx(command.getCategoryIdx())
+                .categoryId(command.getCategoryId())
                 .build();
         createPersistencePort.createProgram(program);
     }
