@@ -20,7 +20,8 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity result = jpaUserRepository.findByEmail(username);
         User user = User.builder()
-                .email(result.getEmail())
+                .id(result.getId())
+                .name(result.getEmail())
                 .password(result.getPassword())
                 .role(result.getRole())
                 .enable(true)

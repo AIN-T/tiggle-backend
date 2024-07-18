@@ -50,7 +50,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         User user = User.builder()
                 .id(id)
-                .email(username)
+                .name(username)
                 .role(role)
                 .build();
 

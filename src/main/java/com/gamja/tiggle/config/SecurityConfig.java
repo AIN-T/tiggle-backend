@@ -36,10 +36,10 @@ public class SecurityConfig {
                         auth
 //                        .requestMatchers(HttpMethod.GET, "//**", "/admin/**").has("ADMIN")
 //                        .requestMatchers("/test/**", "/mypage").authenticated()
-//                        .requestMatchers("/login", "/member/**", "/kakao/**").permitAll()
+                       .requestMatchers("/login", "/user/**", "/program/**").permitAll()
 //                        .anyRequest().authenticated()
 
-                                .anyRequest().permitAll()
+                                .anyRequest().authenticated()
         );
 
         http.addFilterBefore(new JwtFilter(jwtUtil), LoginFilter.class);
