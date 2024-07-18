@@ -11,4 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class VerifyPaymentRequest {
     private String paymentId;
+    private Long reservationId;
 }

@@ -24,6 +24,7 @@ public class VerifyPaymentController {
     BaseResponse verify(@RequestBody VerifyPaymentRequest request){
         VerifyPaymentCommand command = VerifyPaymentCommand.builder()
                 .paymentId(request.getPaymentId())
+                .reservationId(request.getReservationId())
                 .build();
 
         try {

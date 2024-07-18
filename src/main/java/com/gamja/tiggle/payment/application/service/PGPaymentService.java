@@ -3,8 +3,11 @@ package com.gamja.tiggle.payment.application.service;
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.payment.application.port.in.VerifyPaymentCommand;
 import com.gamja.tiggle.payment.application.port.in.VerifyPaymentUseCase;
+import com.gamja.tiggle.payment.application.port.out.PaymentPersistencePort;
+import com.gamja.tiggle.payment.domain.Payment;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,7 +21,11 @@ import java.util.Map;
 
 
 @Service
+@RequiredArgsConstructor
 public class PGPaymentService implements VerifyPaymentUseCase {
+    private final PaymentPersistencePort paymentPersistencePort;
+    private final CreatePaymentService createPaymentService;
+
     @Value("${spring.payment.api_key}")
     public String apiSecret;
 
@@ -77,9 +84,40 @@ public class PGPaymentService implements VerifyPaymentUseCase {
         String payId = (String) result.get("id");
         String storeId = (String) result.get("storeId");
 
-        String Country = (String) result.get("currency");
-        Double totalPrice = (Double) amount.get("total");
-        Double paid = (Double) amount.get("paid");
-        Double canceled = (Double) amount.get("cancelled");
+        Integer canceled = (Integer) amount.get("cancelled");
+
+        String country = (String) result.get("currency");
+        Integer totalPrice = (Integer) amount.get("total");
+
+        Boolean verified = false;
+        Payment payment = Payment.builder()
+                .reservationId(command.getReservationId())
+                        .build();
+         Payment paymentSearched = paymentPersistencePort.searchPayment(payment);
+         //Reservation reservationSearched = reservationPersistence.searchReservation()
+         // 정상 결제 검증
+        if (status.equals("PAID")&&payId.equals(command.getPaymentId())&&canceled == 0) {
+            if(country.equals("KRW")&& totalPrice.equals(paymentSearched.getTicketPrice()+paymentSearched.getFee()-paymentSearched.getUsePoint())){
+                verified = true;
+            }
+            else {
+                //결제 정상 진행 되었지만 데이터 이상,
+                //환불 요청
+
+                //throw BaseException(BaseResponseStatus.잘못된 결제 데이터로 결제 진행);
+            }
+        }
+
+        else {
+            //throw BaseException(BaseResponseStatus.잘못된 결제 접근);
+        }
+
+        if (verified) {
+            paymentPersistencePort.verify(paymentSearched);
+        }
+
+
+
     }
+
 }

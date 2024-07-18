@@ -7,5 +7,6 @@ import lombok.Getter;
 @Builder
 public class VerifyPaymentCommand {
     private String paymentId;
+    private Long reservationId;
 }
 
