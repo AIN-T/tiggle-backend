@@ -16,6 +16,8 @@ import com.gamja.tiggle.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @UseCase
@@ -35,14 +37,13 @@ public class CreateExchangeOfferService implements CreateExchangeOfferUseCase {
         if (exchangePort.find(command))
             throw new BaseException(BaseResponseStatus.EXIST_EXCHANGE_OFFER);
 
-        String ticketNumber = UUID.randomUUID().toString();
 
         saveReservationPort.save(Reservation.builder()
 //                .user(User.builder().id(reservation1.getUser().getId()).build())
                 .programId(reservation2.getProgramEntity().getId())
                 .seatId(reservation2.getSeatEntity().getId())
-                .timesId(reservation2.getId())
-                .ticketNumber(ticketNumber)
+                .timesId(reservation2.getTimesEntity().getId())
+                .ticketNumber(getTicketNumber())
                 .totalPrice(reservation2.getTotalPrice())
                 .status(ReservationType.EXCHANGED)
                 .requestLimit(5)
@@ -68,5 +69,12 @@ public class CreateExchangeOfferService implements CreateExchangeOfferUseCase {
                 .totalPrice(reservation1.getTotalPrice())
                 .status(ReservationType.EXCHANGED)
                 .requestLimit(reservation1.getRequestLimit() - 1).build());
+    }
+
+    private static String getTicketNumber() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        String nowDate = LocalDateTime.now().format(formatter);
+        String randomNumber = UUID.randomUUID().toString().substring(0, 4);
+        return nowDate + "-" + randomNumber;
     }
 }
