@@ -47,7 +47,10 @@ public enum BaseResponseStatus {
      * 6000: 교환
      */
 
-    NOT_FOUND_EXCHANGE_OFFER(false, 6000, "교환 요청 조회에 실패하였습니다."),
+    FAIL_LOAD_EXCHANGE_OFFER(false, 6000, "교환 요청 조회에 실패하였습니다."),
+    NOT_FOUND_EXCHANGE_OFFER(false, 6001, "일치하는 교환 내역이 존재하지 않습니다."),
+    EXIST_EXCHANGE_OFFER(false, 6002, "동일한 요청을 보낼 수 없습니다."),
+
 
     /**
      * 7000: 공연장, 구역, 좌석, 등급

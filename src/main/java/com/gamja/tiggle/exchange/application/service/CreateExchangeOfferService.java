@@ -1,6 +1,7 @@
 package com.gamja.tiggle.exchange.application.service;
 
 import com.gamja.tiggle.common.BaseException;
+import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.UseCase;
 import com.gamja.tiggle.exchange.application.port.in.CreateExchangeOfferCommand;
 import com.gamja.tiggle.exchange.application.port.in.CreateExchangeOfferUseCase;
@@ -31,9 +32,11 @@ public class CreateExchangeOfferService implements CreateExchangeOfferUseCase {
         ReservationEntity reservation1 = readReservationPort.read(Reservation.builder().id(command.getReservationId1()).build());
         ReservationEntity reservation2 = readReservationPort.read(Reservation.builder().id(command.getReservationId2()).build());
 
+        if (exchangePort.find(command))
+            throw new BaseException(BaseResponseStatus.EXIST_EXCHANGE_OFFER);
+
         String ticketNumber = UUID.randomUUID().toString();
 
-//      TODO: 요청하는 유저의 새 티켓 발행 -> 상태는 false [보류 - 활성화 전]
         saveReservationPort.save(Reservation.builder()
 //                .user(User.builder().id(reservation1.getUser().getId()).build())
                 .programId(reservation2.getProgramEntity().getId())

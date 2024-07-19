@@ -3,6 +3,7 @@ package com.gamja.tiggle.exchange.adapter.out.persistence;
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.PersistenceAdapter;
+import com.gamja.tiggle.exchange.application.port.in.CreateExchangeOfferCommand;
 import com.gamja.tiggle.exchange.application.port.out.ExchangePort;
 import com.gamja.tiggle.exchange.domain.Exchange;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
@@ -17,7 +18,7 @@ public class ExchangePersistenceAdapter implements ExchangePort {
     public ExchangeEntity read(Exchange exchange) throws BaseException {
 
         ExchangeEntity result = exchangeRepository.findById(exchange.getId()).orElseThrow(
-                () -> new BaseException(BaseResponseStatus.NOT_FOUND_EXCHANGE_OFFER)
+                () -> new BaseException(BaseResponseStatus.FAIL_LOAD_EXCHANGE_OFFER)
         );
 
         return result;
@@ -41,5 +42,11 @@ public class ExchangePersistenceAdapter implements ExchangePort {
                 .build();
 
         exchangeRepository.save(exchangeEntity);
+    }
+
+    @Override
+    public Boolean find(CreateExchangeOfferCommand command) {
+        ExchangeEntity result = exchangeRepository.findByReservation1IdAndReservation2Id(command.getReservationId1(), command.getReservationId2());
+        return result != null;
     }
 }
