@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface SectionRepository extends JpaRepository<SectionEntity, Long> {
 
-    List<SectionEntity> findAllByLocation_Id(Long id);
+    // TODO locationENtity ID
+    List<SectionEntity> findAllByLocationEntityId(Long id);
 }

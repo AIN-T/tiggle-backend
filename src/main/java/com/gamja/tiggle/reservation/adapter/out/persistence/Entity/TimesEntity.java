@@ -24,7 +24,7 @@ public class TimesEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "program_id")
-    private ProgramEntity program;
+    private ProgramEntity programEntity;
 
     private int round;
     private LocalDateTime date;

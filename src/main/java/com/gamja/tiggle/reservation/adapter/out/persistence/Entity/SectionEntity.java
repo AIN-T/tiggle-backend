@@ -23,9 +23,9 @@ public class SectionEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
-    private LocationEntity location;
+    private LocationEntity locationEntity;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "grade_id")
-    private GradeEntity grade;
+    private GradeEntity gradeEntity;
 
 }
