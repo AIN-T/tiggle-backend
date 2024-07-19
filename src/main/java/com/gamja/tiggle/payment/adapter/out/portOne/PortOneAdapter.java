@@ -1,6 +1,7 @@
 package com.gamja.tiggle.payment.adapter.out.portOne;
 
 import com.gamja.tiggle.common.BaseException;
+import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.payment.application.port.out.PortOnePort;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -44,6 +45,10 @@ public class PortOneAdapter implements PortOnePort {
         Map<String, Object> result = gson.fromJson(response.getBody(), Map.class);
         String access_token = (String) result.get("accessToken");
         String refresh_token = (String) result.get("refreshToken");
+        if (access_token != null) {
+        } else {
+            throw new BaseException(BaseResponseStatus.WRONG_API_SECRET);
+        }
         return access_token;
     }
 
@@ -95,7 +100,8 @@ public class PortOneAdapter implements PortOnePort {
     }
 
     @Override
-    public void cancel(String token, String id, String message) throws BaseException {
+    public String cancel(String token, String id, String message) throws BaseException {
+        String portoneError = null;
         String accessToken = token;
         String paymentId = id;
         HttpHeaders headers = new HttpHeaders();
@@ -107,14 +113,21 @@ public class PortOneAdapter implements PortOnePort {
         jsonObject.addProperty("reason", message);
         String jsonStr = gson.toJson(jsonObject);
 
-        HttpEntity<String> request = new HttpEntity<>(headers);
+        HttpEntity<String> request = new HttpEntity<>(jsonStr, headers);
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.exchange(
-                "https://api.portone.io/payments/" + paymentId + "/cancel",
-                HttpMethod.GET,
-                request,
-                String.class
-        );
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(
+                    "https://api.portone.io/payments/" + paymentId + "/cancel",
+                    HttpMethod.POST,
+                    request,
+                    String.class
+            );
+        } catch (Exception e) {
+            String s = e.getMessage().toString().split(",")[2];
+            portoneError = s.toString().split("\"")[3];
+            System.out.println("portoneError = " + portoneError);
+        }
+        return portoneError;
     }
 }
 

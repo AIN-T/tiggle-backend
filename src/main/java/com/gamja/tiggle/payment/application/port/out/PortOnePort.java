@@ -8,5 +8,5 @@ public interface PortOnePort {
 
     VerifyData findByPaymentId(String token, String id) throws BaseException;
 
-    void cancel(String token, String id, String msg) throws BaseException;
+    String cancel(String token, String id, String msg) throws BaseException;
 }
