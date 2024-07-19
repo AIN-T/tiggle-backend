@@ -44,6 +44,8 @@ dependencies {
     implementation 'com.github.iamport:iamport-rest-client-java:0.2.23'
     //security
     implementation 'org.springframework.boot:spring-boot-starter-security:3.3.1'
+    implementation 'org.springframework.security:spring-security-oauth2-client'
+    implementation 'org.springframework.security:spring-security-core:6.3.1'
     //kafka
     implementation 'org.springframework.kafka:spring-kafka'
     testImplementation 'org.springframework.kafka:spring-kafka-test'

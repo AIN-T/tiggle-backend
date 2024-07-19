@@ -23,6 +23,7 @@ public enum BaseResponseStatus {
     /**
      * 2000: 유저
      */
+    NOT_FOUND_USER(false,2000,"허가되지 않은 사용자 접근 입니다."),
 
     /**
      * 3000: 프로그램
@@ -36,6 +37,21 @@ public enum BaseResponseStatus {
     /**
      * 4000: 결제
      */
+    NOT_FOUND_PAYMENT(false,4000,"결제 정보가 존재하지 않습니다."),
+    INCORRECT_PAYMENT_INFO(false,4100,"잘못된 결제 정보 입니다."),
+    WRONG_API_SECRET(false,4101,"잘못된 API KEY 입니다. 데이터와 만료 시기를 확인해 주시기 바랍니다."),
+    WRONG_PAYMENT_ID(false,4102,"결제 ID 코드값을 다시 확인해 주시기 바랍니다."),
+
+    NOT_AGREE_PAYMENT_RULE(false,4101,"결제 주의 사항에 동의가 반드시 필요합니다."),
+    INCORRECT_RESERVATION_DATA(false,4200,"잘못된 예매 정보입니다."),
+    ALREADY_PAID_TICKET(false,4201,"이미 결제된 티켓입니다."),
+
+    NOT_FOUND_PAYMENT_DATA(false,4300,"진행되지 않은 결제 데이터입니다."),
+    FAIL_CANCELED_PAYMENT(false,4301,"잘못된 결제 데이터로 인해 시스템 결제 취소를 시도했으나 실패하였습니다. 결제 기록을 확인하고 환불 처리를 신청해주시길 바랍니다."),
+    INCORRECT_DATA_CANCEL_SUCCESS(false,4302,"잘못된 결제과정에서 오류가 발생하여 결제를 정상 취소했습니다."),
+
+
+
 
     /**
      * 5000: 예매

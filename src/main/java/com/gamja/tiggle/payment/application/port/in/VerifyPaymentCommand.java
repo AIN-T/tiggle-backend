@@ -8,5 +8,6 @@ import lombok.Getter;
 public class VerifyPaymentCommand {
     private String paymentId;
     private Long reservationId;
+    private String username;
 }
 
