@@ -19,9 +19,11 @@ public class ProgramGradeEntity {
     private Long Id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "program_id")
     private ProgramEntity programEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "grade_id")
     private GradeEntity gradeEntity;
     private int price;
 

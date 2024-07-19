@@ -23,6 +23,7 @@ public class TimesEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "program_id")
     private ProgramEntity programEntity;
 
     private int round;

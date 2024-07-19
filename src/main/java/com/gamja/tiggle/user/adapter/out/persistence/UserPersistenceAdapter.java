@@ -23,7 +23,7 @@ public class UserPersistenceAdapter implements UserPersistencePort {
                     .name(result.getName())
                     .password(result.getPassword())
                     .loginType(result.getLoginType())
-                    .role("ROLE_USER")
+                    .role("ROLE_MEMBER")
                     .enable(true)
                     .status(result.getStatus())
                     .region_1depth_name(result.getRegion_1depth_name())

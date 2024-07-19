@@ -23,8 +23,11 @@ public class VerifySeatService implements VerifySeatUseCase {
         //좌석 검증
         Seat seat = Seat.builder().id(command.getSeatId()).build();
         verifySeatPort.verifySeat(seat);
-        //예약 저장
+        //검증했으면 예약 임시 저장
         // TODO 유저 추가하는데 USER 도메인 없어서 주석
+
+        //
+
         Reservation reservation = from(command);
         saveReservationPort.save(reservation);
 
