@@ -7,7 +7,10 @@ import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEn
 import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.ReservationRepository;
 import com.gamja.tiggle.reservation.application.port.out.ReadReservationPort;
 import com.gamja.tiggle.reservation.domain.Reservation;
+import com.gamja.tiggle.user.domain.User;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 
 @PersistenceAdapter
@@ -19,5 +22,10 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
     @Override
     public ReservationEntity read(Reservation reservation) throws BaseException {
         return repository.findById(reservation.getId()).orElseThrow(() -> new BaseException(BaseResponseStatus.FAIL));
+    }
+
+    @Override
+    public List<ReservationEntity> readExchangeOfferForMe(User user) {
+        return repository.findReservationByUser(user.getId());
     }
 }
