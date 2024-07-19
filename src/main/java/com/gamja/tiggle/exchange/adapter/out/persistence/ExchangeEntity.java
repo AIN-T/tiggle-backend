@@ -22,11 +22,11 @@ public class ExchangeEntity extends BaseEntity {
     private Boolean isSuccess;
     private Boolean isWatch;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation1_id", unique = false)
     private ReservationEntity reservation1;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation2_id", unique = false)
     private ReservationEntity reservation2;
 }
