@@ -17,6 +17,7 @@ public enum BaseResponseStatus {
      */
     SUCCESS(true, 1000, "요청에 성공하였습니다."),
     READ_EXCHANGE_OFFER_SUCCESS(true, 1001, "교환 요청 조회에 성공하였습니다."),
+    EXCHANGE_OFFER_SUCCESS(true, 1002, "교환 요청에 성공하였습니다."),
 
 
     /**
