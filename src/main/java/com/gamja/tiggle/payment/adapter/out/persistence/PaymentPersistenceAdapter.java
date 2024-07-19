@@ -1,6 +1,7 @@
 package com.gamja.tiggle.payment.adapter.out.persistence;
 
 import com.gamja.tiggle.common.BaseException;
+import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.payment.application.port.out.PaymentPersistencePort;
 import com.gamja.tiggle.payment.domain.Payment;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
@@ -18,7 +19,9 @@ public class PaymentPersistenceAdapter implements PaymentPersistencePort {
 
     @Override
     public void savePayment(Payment payment) throws BaseException {
-        Optional<ReservationEntity> result = jpaReservationRepository.findById(payment.getReservationId());
+        ReservationEntity result = jpaReservationRepository.findById(payment.getReservationId()).orElseThrow(() ->
+                new BaseException(BaseResponseStatus.BAD_REQUEST)
+                );
         //if (!(result.getState)) {
         PaymentEntity entity = PaymentEntity.builder()
                 .username(payment.getUsername())
@@ -27,7 +30,7 @@ public class PaymentPersistenceAdapter implements PaymentPersistencePort {
                 .fee(payment.getFee())
                 .payType(payment.getPayType())
                 .verify(payment.getVerify())
-                .reservationEntity(result.get())
+                .reservationEntity(result)
                 .build();
 
         entity.createdAt();

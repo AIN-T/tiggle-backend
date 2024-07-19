@@ -8,6 +8,7 @@ import com.gamja.tiggle.user.application.port.out.EmailVerifyPort;
 import com.gamja.tiggle.user.application.port.out.UserPersistencePort;
 import com.gamja.tiggle.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class SignupUserService implements SignupUserUseCase {
     private final UserPersistencePort userPersistencePort;
     private final EmailVerifyPort emailVerifyPort;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public String signup(SignupUserCommand command) throws BaseException {
@@ -22,7 +24,7 @@ public class SignupUserService implements SignupUserUseCase {
 
                 .name(command.getName())
                 .email(command.getEmail())
-                .password(command.getPassword())
+                .password(passwordEncoder.encode(command.getPassword()))
                 .loginType(command.getLoginType())
                 .status(command.getStatus())
                 .enable(command.getEnable())
