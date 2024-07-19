@@ -11,6 +11,7 @@
 
 <br>
 
+
 ## ✔️ 프로젝트 소개
 
 - 문화 생활을 즐기는 사람들이 늘어나 **티켓 사이트에 대한 관심과 사용량이 증가** 하고 있는만큼,   
@@ -22,11 +23,13 @@
 <br>
 
 
+
 ## ✔️ 팀원 소개
 |<img src="https://avatars.githubusercontent.com/u/81555158?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/96894900?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/117149045?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/121721219?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/152248322?v=4" width="150" height="150"/>|
 |:-:|:-:|:-:|:-:|:-:|
 |👑김동욱<br/>[@postrel63](https://github.com/postrel63)|지연희<br/>[@Aqulog](https://github.com/Aqulog)|차윤슬<br/>[@yunseul-dev](https://github.com/yunseul-dev)|이재룡<br/>[@ashd89](https://github.com/ashd89)|김은선<br/>[@kkkeess](https://github.com/kkkeess)|
 <br>
+
 
 
 ## ✔️ 기술 스택
@@ -44,22 +47,27 @@
 <br>
 
 
-## ✔️ [API 명세서](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/1.-API-%EB%AA%85%EC%84%B8%EC%84%9C-(swagger%E2%80%90ui)
+
+## ✔️ API 명세서
+[API 명세서](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/1.-API-%EB%AA%85%EC%84%B8%EC%84%9C-swagger%E2%80%90ui)
 
 
 ## ✔️ 핵심 기능
+[핵심 기능](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/2.-%ED%95%B5%EC%8B%AC-%EA%B8%B0%EB%8A%A5)
 
 
 ## ✔️ 기능 테스트 
+[기능 테스트](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/3.-%EA%B8%B0%EB%8A%A5-%ED%85%8C%EC%8A%A4%ED%8A%B8) 
 
 
 ## ✔️ 코딩 컨벤션
+[코딩 컨벤션](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/4.-%EC%BD%94%EB%94%A9-%EC%BB%A8%EB%B2%A4%EC%85%98)
 
 
-## ✔️ [소프트웨어 아키텍처](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98) 
+## ✔️ 소프트웨어 아키텍처
+[소프트웨어 아키텍처](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98) 
 
 
-## ✔️ 제약 조건이 있음에도 헥사고날 아키텍처를 선택한 이유
 
     
 
