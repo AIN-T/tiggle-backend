@@ -38,11 +38,11 @@ public class ProgramEntity {
     // Category N : 1
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
-    private CategoryEntity categoryEntity;
+    private CategoryEntity category;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
-    private LocationEntity locationEntity;
+    private LocationEntity location;
 
 
     public ProgramEntity(Long id) {

@@ -20,11 +20,11 @@ public class ProgramGradeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "program_id")
-    private ProgramEntity programEntity;
+    private ProgramEntity program;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "grade_id")
-    private GradeEntity gradeEntity;
+    private GradeEntity grade;
     private int price;
 
 }
