@@ -1,6 +1,5 @@
 package com.gamja.tiggle.exchange.adapter.out.persistence;
 
-
 import com.gamja.tiggle.common.BaseEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
 import jakarta.persistence.*;
@@ -8,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "exchange")
@@ -25,10 +23,10 @@ public class ExchangeEntity extends BaseEntity {
     private Boolean isWatch;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation1_id")
+    @JoinColumn(name = "reservation1_id", unique = false)
     private ReservationEntity reservation1;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation2_id")
+    @JoinColumn(name = "reservation2_id", unique = false)
     private ReservationEntity reservation2;
 }
