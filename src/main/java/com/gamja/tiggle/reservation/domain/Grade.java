@@ -9,6 +9,6 @@ import lombok.Getter;
 public class Grade {
 
     @Id
-    private Long gradeId;
+    private Long id;
     private String gradeName;
 }

@@ -1,6 +1,5 @@
 package com.gamja.tiggle.reservation.domain;
 
-import com.gamja.tiggle.program.domain.Program;
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
 import com.gamja.tiggle.user.domain.User;
 import jakarta.persistence.EnumType;
@@ -12,7 +11,7 @@ import lombok.Getter;
 @Builder
 public class Reservation {
 
-    private Long reservationId;
+    private Long id;
 
     private Long programId;
     private User user;
