@@ -20,5 +20,5 @@ public class ProgramImageEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "program_id")
-    private ProgramEntity program;
+    private ProgramEntity programEntity;
 }

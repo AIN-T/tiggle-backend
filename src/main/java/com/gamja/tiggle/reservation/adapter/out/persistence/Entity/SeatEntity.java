@@ -20,7 +20,7 @@ public class SeatEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "section_id")
-    private SectionEntity section;
+    private SectionEntity sectionEntity;
 
     private int seatNumber;
 

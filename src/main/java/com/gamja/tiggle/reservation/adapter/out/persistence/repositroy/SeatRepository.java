@@ -10,12 +10,12 @@ import java.util.List;
 
 public interface SeatRepository extends JpaRepository<SeatEntity, Long> {
 
-    @Query("SELECT new com.gamja.tiggle.reservation.adapter.in.web.response.GetRemainedSeatResponse(s.id, s.section.id, s.seatNumber) " +
+    @Query("SELECT new com.gamja.tiggle.reservation.adapter.in.web.response.GetRemainedSeatResponse(s.id, s.sectionEntity.id, s.seatNumber) " +
             "FROM SeatEntity s " +
             "LEFT JOIN ReservationEntity r ON s.id = r.seatEntity.id " +
             "AND r.programEntity.id = :programId " +
             "AND r.timesEntity.id = :timesId " +
-            "WHERE s.section.id = :sectionId " +
+            "WHERE s.sectionEntity.id = :sectionId " +
             "AND (r.status IS NULL OR r.status = 'AVAILABLE' OR r.status = 'REFUNDED')")
     List<GetRemainedSeatResponse> findAvailableSeat(@Param("programId") Long programId,
                                                     @Param("timesId") Long timesId,

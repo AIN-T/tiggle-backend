@@ -23,18 +23,18 @@ public class ReservationEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "program_id")
-    private ProgramEntity program;
+    private ProgramEntity programEntity;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    private UserEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seat_id")
-    private SeatEntity seat;
+    private SeatEntity seatEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "times_id")
-    private TimesEntity times;
+    private TimesEntity timesEntity;
 
     private String ticketNumber;
     private String payMethod;
