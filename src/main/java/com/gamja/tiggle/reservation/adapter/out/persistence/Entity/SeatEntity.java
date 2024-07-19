@@ -19,6 +19,7 @@ public class SeatEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "section_id")
     private SectionEntity section;
 
     private int seatNumber;

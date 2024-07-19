@@ -22,8 +22,10 @@ public class SectionEntity {
     private String sectionName;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id")
     private LocationEntity location;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "grade_id")
     private GradeEntity grade;
 
 }

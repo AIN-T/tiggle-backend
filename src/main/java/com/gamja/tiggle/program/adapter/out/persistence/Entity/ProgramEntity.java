@@ -41,6 +41,7 @@ public class ProgramEntity {
     private CategoryEntity categoryEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id")
     private LocationEntity locationEntity;
 
 
