@@ -7,4 +7,5 @@ import com.gamja.tiggle.exchange.domain.Exchange;
 
 public interface ExchangePort {
     ExchangeEntity read(Exchange exchange) throws BaseException;
+    void save(Exchange exchange);
 }
