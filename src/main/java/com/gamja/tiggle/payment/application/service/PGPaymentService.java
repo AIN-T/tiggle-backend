@@ -1,6 +1,7 @@
 package com.gamja.tiggle.payment.application.service;
 
 import com.gamja.tiggle.common.BaseException;
+import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.payment.application.port.in.VerifyPaymentCommand;
 import com.gamja.tiggle.payment.application.port.in.VerifyPaymentUseCase;
 import com.gamja.tiggle.payment.application.port.out.PaymentPersistencePort;
@@ -27,10 +28,12 @@ public class PGPaymentService implements VerifyPaymentUseCase {
     public void compareDB(VerifyPaymentCommand command, String accessToken) throws BaseException {
         String paymentId = command.getPaymentId();
         VerifyData data = portOnePort.findByPaymentId(accessToken, paymentId);
+        if (data == null){
+            throw new BaseException(BaseResponseStatus.WRONG_PAYMENT_ID);
+        }
 
         Boolean verified = false;
          Payment paymentSearched = paymentPersistencePort.searchPayment(command.getReservationId());
-         //Reservation reservationSearched = reservationPersistencePort.searchReservation()
 
         // 정상 결제 검증
         if (data.getStatus().equals("PAID")&&data.getPayId().equals(command.getPaymentId())&&data.getCanceled() == 0) {
@@ -40,29 +43,25 @@ public class PGPaymentService implements VerifyPaymentUseCase {
             else {
                 //결제 정상 진행 되었지만 데이터 이상,
                 //환불 요청
-                portOnePort.cancel(accessToken ,paymentId, "결제 데이터 이상 확인");
-
+                String PortOneError = portOnePort.cancel(accessToken ,paymentId, "결제 데이터 이상 확인");
+                System.out.println("PortOneError = " + PortOneError);
                 VerifyData cancelChk = portOnePort.findByPaymentId(accessToken, paymentId);
                 if(cancelChk.getStatus().equals("CANCELED")){
                     //정상적으로 결제 취소
                 }
                 else {
-                    //throw BaseException(BaseResponseStatus.결제 취소 실패);
+                    throw new BaseException(BaseResponseStatus.FAIL_CANCELED_PAYMENT);
                 }
-                //throw BaseException(BaseResponseStatus.잘못된 결제 데이터로 결제 정상 취소);
+                throw new BaseException(BaseResponseStatus.INCORRECT_DATA_CANCEL_SUCCESS);
             }
         }
 
         else {
-            //throw BaseException(BaseResponseStatus.잘못된 결제 접근);
+            throw new BaseException(BaseResponseStatus.INCORRECT_PAYMENT_INFO);
         }
 
         if (verified) {
             paymentPersistencePort.verify(paymentSearched);
         }
-
-
-
     }
-
 }
