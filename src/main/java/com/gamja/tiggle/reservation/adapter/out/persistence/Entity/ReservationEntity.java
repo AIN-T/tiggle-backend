@@ -2,6 +2,7 @@ package com.gamja.tiggle.reservation.adapter.out.persistence.Entity;
 
 import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramEntity;
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
+import com.gamja.tiggle.user.adapter.out.persistence.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,8 +25,8 @@ public class ReservationEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private ProgramEntity programEntity;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private UserEntity user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private UserEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private SeatEntity seatEntity;
