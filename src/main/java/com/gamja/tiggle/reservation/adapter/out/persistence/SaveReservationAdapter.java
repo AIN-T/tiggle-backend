@@ -9,6 +9,7 @@ import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.Reservati
 import com.gamja.tiggle.reservation.application.port.out.SaveReservationPort;
 import com.gamja.tiggle.reservation.domain.Reservation;
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
+import com.gamja.tiggle.user.adapter.out.persistence.UserEntity;
 import lombok.RequiredArgsConstructor;
 
 @PersistenceAdapter
@@ -26,6 +27,7 @@ public class SaveReservationAdapter implements SaveReservationPort {
 
     private static ReservationEntity from(Reservation reservation) {
         return ReservationEntity.builder()
+                .user(new UserEntity(reservation.getUser().getId()))
                 .programEntity(new ProgramEntity(reservation.getProgramId()))
                 .timesEntity(new TimesEntity(reservation.getTimesId()))
                 .seatEntity(new SeatEntity(reservation.getSeatId()))
@@ -46,7 +48,7 @@ public class SaveReservationAdapter implements SaveReservationPort {
     private static ReservationEntity updateFrom(Reservation reservation) {
         return ReservationEntity.builder()
                 .id(reservation.getId())
-//                .user(new UserEntity(reservation.getUserId()))
+                .user(new UserEntity(reservation.getUser().getId()))
                 .programEntity(new ProgramEntity(reservation.getProgramId()))
                 .timesEntity(new TimesEntity(reservation.getTimesId()))
                 .seatEntity(new SeatEntity(reservation.getSeatId()))

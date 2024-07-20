@@ -21,7 +21,7 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
 
     @Override
     public ReservationEntity read(Reservation reservation) throws BaseException {
-        return repository.findById(reservation.getId()).orElseThrow(() -> new BaseException(BaseResponseStatus.FAIL));
+        return repository.findById(reservation.getId()).orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_RESERVATION));
     }
 
     @Override
