@@ -37,7 +37,6 @@ public class ExchangePersistenceAdapter implements ExchangePort {
         ExchangeEntity exchangeEntity = ExchangeEntity.builder()
                 .reservation1(reservation1)
                 .reservation2(reservation2)
-                .isSuccess(exchange.getIsSuccess())
                 .isWatch(exchange.getIsWatch())
                 .build();
 
@@ -48,5 +47,17 @@ public class ExchangePersistenceAdapter implements ExchangePort {
     public Boolean find(CreateExchangeOfferCommand command) {
         ExchangeEntity result = exchangeRepository.findByReservation1IdAndReservation2Id(command.getReservationId1(), command.getReservationId2());
         return result != null;
+    }
+
+    @Override
+    public ExchangeEntity findById(Long id) throws BaseException {
+        return exchangeRepository.findById(id).orElseThrow(() ->
+                new BaseException(BaseResponseStatus.NOT_FOUND_EXCHANGE_OFFER)
+        );
+    }
+
+    @Override
+    public void update(ExchangeEntity exchange) {
+        exchangeRepository.save(exchange);
     }
 }

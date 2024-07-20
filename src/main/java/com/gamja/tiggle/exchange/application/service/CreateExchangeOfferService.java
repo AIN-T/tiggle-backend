@@ -45,15 +45,14 @@ public class CreateExchangeOfferService implements CreateExchangeOfferUseCase {
                 .timesId(reservation2.getTimesEntity().getId())
                 .ticketNumber(getTicketNumber())
                 .totalPrice(reservation2.getTotalPrice())
-                .status(ReservationType.EXCHANGED)
+                .status(ReservationType.IN_PROGRESS)
                 .requestLimit(5)
                 .build());
 
-//        새로 발행한 티켓 저장
+//        교환 내역 저장
         exchangePort.save(Exchange.builder()
                 .reservationId1(Reservation.builder().id(reservation1.getId()).build())
                 .reservationId2(Reservation.builder().id(reservation2.getId()).build())
-                .isSuccess(false)
                 .isWatch(false)
                 .build());
 
@@ -67,7 +66,7 @@ public class CreateExchangeOfferService implements CreateExchangeOfferUseCase {
                 .ticketNumber(reservation1.getTicketNumber())
                 .payMethod(reservation1.getPayMethod())
                 .totalPrice(reservation1.getTotalPrice())
-                .status(ReservationType.EXCHANGED)
+                .status(reservation1.getStatus())
                 .requestLimit(reservation1.getRequestLimit() - 1).build());
     }
 
