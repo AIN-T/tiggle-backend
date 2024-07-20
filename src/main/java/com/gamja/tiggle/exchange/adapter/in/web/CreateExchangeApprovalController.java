@@ -9,8 +9,10 @@ import com.gamja.tiggle.exchange.adapter.in.web.request.CreateExchangeApprovalRe
 import com.gamja.tiggle.exchange.adapter.out.persistence.ExchangeEntity;
 import com.gamja.tiggle.exchange.application.port.in.CreateExchangeApprovalCommand;
 import com.gamja.tiggle.exchange.application.port.in.CreateExchangeApprovalUseCase;
+import com.gamja.tiggle.user.domain.CustomUserDetails;
 import com.gamja.tiggle.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,24 +26,25 @@ public class CreateExchangeApprovalController {
     private final CreateExchangeApprovalUseCase useCase;
 
     @PostMapping("/approval")
-    public BaseResponse<BaseResponseStatus> createApproval(@RequestBody CreateExchangeApprovalRequest request) {
+    public BaseResponse<BaseResponseStatus> createApproval(@AuthenticationPrincipal CustomUserDetails customUserDetails , @RequestBody CreateExchangeApprovalRequest request) {
+        User user = customUserDetails.getUser();
+
         CreateExchangeApprovalCommand command = CreateExchangeApprovalCommand.builder()
+                .user(user)
                 .exchangeId(request.getExchangeId())
                 .isAgree(request.getIsAgree())
                 .build();
 
-        User user = User.builder().id(1L).build();
-
         try {
-//            나에게 온 요청이 아닐 때,
             ExchangeEntity exchangeEntity = useCase.findExchangeEntity(command.getExchangeId());
 
             if (!Objects.equals(exchangeEntity.getReservation2().getUser().getId(), user.getId())) {
-                throw new BaseException(BaseResponseStatus.WRONG_USER_EXCHANGE_OFFER);
+                throw new BaseException(BaseResponseStatus.WRONG_EXCHANGE_OFFER);
             }
 
             if(exchangeEntity.getIsSuccess() == null){
                 command = CreateExchangeApprovalCommand.builder()
+                        .user(user)
                         .exchangeId(exchangeEntity.getId())
                         .reservationId1(exchangeEntity.getReservation1().getId())
                         .reservationId2(exchangeEntity.getReservation2().getId())
@@ -68,6 +71,4 @@ public class CreateExchangeApprovalController {
 
         return new BaseResponse<>(BaseResponseStatus.EXCHANGE_APPROVAL_SUCCESS);
     }
-
-
 }

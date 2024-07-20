@@ -12,13 +12,13 @@ import com.gamja.tiggle.reservation.application.port.out.ReadReservationPort;
 import com.gamja.tiggle.reservation.application.port.out.SaveReservationPort;
 import com.gamja.tiggle.reservation.domain.Reservation;
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
+import com.gamja.tiggle.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
-
 
 @UseCase
 @RequiredArgsConstructor
@@ -46,7 +46,7 @@ public class CreateExchangeApprovalService implements CreateExchangeApprovalUseC
 
 //        티켓 발행
         saveReservationPort.save(Reservation.builder()
-//                .user(User.builder().id(reservation1.getUser().getId()).build())
+                .user(User.builder().id(reservation1.getUser().getId()).build())
                 .programId(reservation1.getProgramEntity().getId())
                 .seatId(reservation1.getSeatEntity().getId())
                 .timesId(reservation1.getTimesEntity().getId())
@@ -77,7 +77,7 @@ public class CreateExchangeApprovalService implements CreateExchangeApprovalUseC
                 .seatId(reservation.getSeatEntity().getId())
                 .programId(reservation.getProgramEntity().getId())
                 .timesId(reservation.getTimesEntity().getId())
-//                .user(User.builder().id(reservation.getUser().getId()).build())
+                .user(User.builder().id(reservation.getUser().getId()).build())
                 .ticketNumber(reservation.getTicketNumber())
                 .payMethod(reservation.getPayMethod())
                 .totalPrice(reservation.getTotalPrice())
