@@ -18,7 +18,7 @@ public class CreateExchangeOfferController {
     private final CreateExchangeOfferUseCase useCase;
 
     @GetMapping("/offer")
-    public BaseResponse createOffer(@RequestParam Long id1 , @RequestParam Long id2) throws BaseException {
+    public BaseResponse<BaseResponseStatus> createOffer(@RequestParam Long id1, @RequestParam Long id2) {
         CreateExchangeOfferCommand command = CreateExchangeOfferCommand.builder()
                 .reservationId1(id1)
                 .reservationId2(id2)
@@ -26,10 +26,10 @@ public class CreateExchangeOfferController {
 
         try {
             useCase.create(command);
-        } catch (BaseException e){
+        } catch (BaseException e) {
             return new BaseResponse<>(e.getStatus());
         }
 
-        return new BaseResponse(BaseResponseStatus.EXCHANGE_OFFER_SUCCESS);
+        return new BaseResponse<>(BaseResponseStatus.EXCHANGE_OFFER_SUCCESS);
     }
 }

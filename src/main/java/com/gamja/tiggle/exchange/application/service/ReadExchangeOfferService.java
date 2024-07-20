@@ -26,6 +26,8 @@ public class ReadExchangeOfferService implements ReadExchangeOfferUseCase {
     private final ExchangePort exchangePort;
     private final ReadReservationPort readReservationPort;
 
+
+
     @Override
     public ReadExchangeOfferResponse read(ReadExchangeOfferCommand command) throws BaseException {
         Exchange exchange = Exchange.builder()
@@ -36,6 +38,8 @@ public class ReadExchangeOfferService implements ReadExchangeOfferUseCase {
 
         ReservationEntity reservation1 = exchangeEntity.getReservation1();
         ReservationEntity reservation2 = exchangeEntity.getReservation2();
+
+        exchangePort.update(exchangeEntity.watched());
 
         return ReadExchangeOfferResponse.builder()
                 .reservationId(reservation2.getId())
