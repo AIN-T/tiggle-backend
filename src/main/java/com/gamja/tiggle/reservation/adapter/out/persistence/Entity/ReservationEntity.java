@@ -30,6 +30,7 @@ public class ReservationEntity {
     private ProgramEntity programEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY)

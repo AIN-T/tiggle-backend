@@ -29,4 +29,16 @@ public class ExchangeEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation2_id", unique = false)
     private ReservationEntity reservation2;
+
+    public ExchangeEntity watched(){
+        this.isWatch = true;
+
+        return this;
+    }
+
+    public ExchangeEntity successed(Boolean state){
+        this.isSuccess = state;
+
+        return this;
+    }
 }
