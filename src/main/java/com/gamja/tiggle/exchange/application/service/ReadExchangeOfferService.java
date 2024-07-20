@@ -6,6 +6,7 @@ import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.UseCase;
 import com.gamja.tiggle.exchange.adapter.in.web.response.ReadExchangeOfferListResponse;
 import com.gamja.tiggle.exchange.adapter.in.web.response.ReadExchangeOfferResponse;
+import com.gamja.tiggle.exchange.adapter.in.web.response.ReadSummaryExchange;
 import com.gamja.tiggle.exchange.adapter.out.persistence.ExchangeEntity;
 import com.gamja.tiggle.exchange.application.port.in.ReadExchangeOfferCommand;
 import com.gamja.tiggle.exchange.application.port.in.ReadExchangeOfferListCommand;
@@ -28,7 +29,6 @@ public class ReadExchangeOfferService implements ReadExchangeOfferUseCase {
     private final ReadReservationPort readReservationPort;
 
 
-
     @Override
     public ReadExchangeOfferResponse read(ReadExchangeOfferCommand command) throws BaseException {
         Exchange exchange = Exchange.builder()
@@ -40,7 +40,7 @@ public class ReadExchangeOfferService implements ReadExchangeOfferUseCase {
         ReservationEntity reservation1 = exchangeEntity.getReservation1();
         ReservationEntity reservation2 = exchangeEntity.getReservation2();
 
-        if(!Objects.equals(command.getUser().getId(), reservation2.getUser().getId()))
+        if (!Objects.equals(command.getUser().getId(), reservation2.getUser().getId()))
             throw new BaseException(BaseResponseStatus.NOT_FOUND_USER);
 
         exchangePort.update(exchangeEntity.watched());
@@ -50,14 +50,8 @@ public class ReadExchangeOfferService implements ReadExchangeOfferUseCase {
                 .programName(reservation2.getProgramEntity().getProgramName())
                 .ticketNumber(reservation2.getTicketNumber())
                 .location(reservation2.getSeatEntity().getSectionEntity().getLocationEntity().getLocationName())
-                .myGrade(reservation2.getSeatEntity().getSectionEntity().getGradeEntity().getGradeName())
-                .mySectionName(reservation2.getSeatEntity().getSectionEntity().getSectionName())
-                .mySeatNumber(reservation2.getSeatEntity().getSeatNumber())
-                .myPrice(reservation2.getTotalPrice())
-                .otherGrade(reservation1.getSeatEntity().getSectionEntity().getGradeEntity().getGradeName())
-                .otherSectionName(reservation1.getSeatEntity().getSectionEntity().getSectionName())
-                .otherSeatNumber(reservation1.getSeatEntity().getSeatNumber())
-                .otherPrice(reservation1.getTotalPrice())
+                .myTicketInfo(createSummaryExchange(reservation2))
+                .otherTicketInfo(createSummaryExchange(reservation1))
                 .diffPrice(reservation2.getTotalPrice() - reservation1.getTotalPrice())
                 .point(reservation1.getTotalPrice() * 0.1)
                 .build();
@@ -76,15 +70,21 @@ public class ReadExchangeOfferService implements ReadExchangeOfferUseCase {
                         .otherEmail(reservation.getUser().getEmail())
                         .programName(reservation.getProgramEntity().getProgramName())
                         .location(reservation.getProgramEntity().getLocationEntity().getLocationName())
-                        .otherGrade(reservation.getSeatEntity().getSectionEntity().getGradeEntity().getGradeName())
-                        .otherPrice(reservation.getTotalPrice())
-                        .otherSectionName(reservation.getSeatEntity().getSectionEntity().getSectionName())
-                        .otherSeatNumber(reservation.getSeatEntity().getSeatNumber())
+                        .otherTicketInfo(createSummaryExchange(reservation))
                         .isWatch(false)
                         .build());
             });
         });
 
         return result;
+    }
+
+    private ReadSummaryExchange createSummaryExchange(ReservationEntity reservation) {
+        return ReadSummaryExchange.builder()
+                .grade(reservation.getSeatEntity().getSectionEntity().getGradeEntity().getGradeName())
+                .sectionName(reservation.getSeatEntity().getSectionEntity().getSectionName())
+                .seatNumber(reservation.getSeatEntity().getSeatNumber())
+                .price(reservation.getTotalPrice())
+                .build();
     }
 }
