@@ -2,6 +2,7 @@ package com.gamja.tiggle.exchange.application.service;
 
 
 import com.gamja.tiggle.common.BaseException;
+import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.UseCase;
 import com.gamja.tiggle.exchange.adapter.in.web.response.ReadExchangeOfferListResponse;
 import com.gamja.tiggle.exchange.adapter.in.web.response.ReadExchangeOfferResponse;
@@ -13,11 +14,11 @@ import com.gamja.tiggle.exchange.application.port.out.ExchangePort;
 import com.gamja.tiggle.exchange.domain.Exchange;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
 import com.gamja.tiggle.reservation.application.port.out.ReadReservationPort;
-import com.gamja.tiggle.user.domain.User;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @UseCase
@@ -38,6 +39,9 @@ public class ReadExchangeOfferService implements ReadExchangeOfferUseCase {
 
         ReservationEntity reservation1 = exchangeEntity.getReservation1();
         ReservationEntity reservation2 = exchangeEntity.getReservation2();
+
+        if(!Objects.equals(command.getUser().getId(), reservation2.getUser().getId()))
+            throw new BaseException(BaseResponseStatus.NOT_FOUND_USER);
 
         exchangePort.update(exchangeEntity.watched());
 
@@ -61,7 +65,7 @@ public class ReadExchangeOfferService implements ReadExchangeOfferUseCase {
 
     @Override
     public List<ReadExchangeOfferListResponse> readAll(ReadExchangeOfferListCommand command) {
-        List<ReservationEntity> reservations = readReservationPort.readExchangeOfferForMe(User.builder().id(command.getUserId()).build());
+        List<ReservationEntity> reservations = readReservationPort.readExchangeOfferForMe(command.getUser());
 
         List<ReadExchangeOfferListResponse> result = new ArrayList<>();
 
