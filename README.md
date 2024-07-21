@@ -53,11 +53,11 @@
 
 
 ## ✔️ 핵심 기능
-[핵심 기능](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/2.-%ED%95%B5%EC%8B%AC-%EA%B8%B0%EB%8A%A5)
+[시퀀스 다이어그램]([https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/2.-%ED%95%B5%EC%8B%AC-%EA%B8%B0%EB%8A%A5](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/2.-%EC%8B%9C%ED%80%80%EC%8A%A4-%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8))
 
 
 ## ✔️ 기능 테스트 
-[기능 테스트](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/3.-%EA%B8%B0%EB%8A%A5-%ED%85%8C%EC%8A%A4%ED%8A%B8) 
+[기능 테스트](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/3.-%EC%84%B1%EB%8A%A5-%EA%B0%9C%EC%84%A0-%ED%85%8C%EC%8A%A4%ED%8A%B8) 
 
 
 ## ✔️ 코딩 컨벤션
