@@ -7,6 +7,8 @@ import com.gamja.tiggle.payment.application.port.out.PaymentPersistencePort;
 import com.gamja.tiggle.payment.domain.Payment;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.ReservationRepository;
+import com.gamja.tiggle.reservation.domain.Reservation;
+import com.gamja.tiggle.reservation.domain.type.ReservationType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -46,7 +48,13 @@ public class PaymentPersistenceAdapter implements PaymentPersistencePort {
     @Override
     public Payment searchPayment(Long id) throws BaseException {
         PaymentEntity result = jpaPaymentRepository.findByReservationEntity_Id(id);
-        if (result != null) {
+        Optional<ReservationEntity> reservation = jpaReservationRepository.findById(id);
+        Boolean reservationChk = false;
+        if ((reservation.get().getPayMethod() == result.getPayType())&&reservation.get().getStatus().equals("IN_PROGRESS")&&(reservation.get().getTotalPrice() == (result.getTicketPrice()+result.getFee()- result.getUsePoint()))){
+            reservationChk = true;
+        }
+
+        if ((result != null)&&(reservationChk)) {
             return Payment.builder()
                     .reservationId(result.getReservationEntity().getId())
                     .username(result.getUsername())
@@ -66,6 +74,7 @@ public class PaymentPersistenceAdapter implements PaymentPersistencePort {
     @Override
     public void verify(Payment payment) throws BaseException {
         PaymentEntity searchedEntity = jpaPaymentRepository.findByReservationEntity_Id(payment.getReservationId());
+        Optional<ReservationEntity> reservation = jpaReservationRepository.findById(payment.getReservationId());
         if (searchedEntity != null) {
             PaymentEntity entity = PaymentEntity.builder()
                     .id(searchedEntity.getId())
@@ -80,6 +89,22 @@ public class PaymentPersistenceAdapter implements PaymentPersistencePort {
 
             entity.verifiedAt();
             jpaPaymentRepository.save(entity);
+            if (searchedEntity.getFee() != null) {
+                ReservationEntity result = ReservationEntity.builder()
+                        .id(reservation.get().getId())
+                        .status(ReservationType.EXCHANGED)
+                        .build();
+
+                jpaReservationRepository.save(result);
+            }
+            else {
+                ReservationEntity result = ReservationEntity.builder()
+                        .id(reservation.get().getId())
+                        .status(ReservationType.COMPLETED)
+                        .build();
+
+                jpaReservationRepository.save(result);
+            }
         }
         else {
             throw new BaseException(BaseResponseStatus.NOT_FOUND_PAYMENT_DATA);
