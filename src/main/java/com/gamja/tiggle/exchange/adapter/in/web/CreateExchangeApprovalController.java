@@ -11,6 +11,8 @@ import com.gamja.tiggle.exchange.application.port.in.CreateExchangeApprovalComma
 import com.gamja.tiggle.exchange.application.port.in.CreateExchangeApprovalUseCase;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
 import com.gamja.tiggle.user.domain.User;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,13 +21,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Objects;
 
+
 @WebAdapter
 @RequiredArgsConstructor
 @RequestMapping("/exchange")
+@Tag(name = "Response For Exchange Request")
 public class CreateExchangeApprovalController {
     private final CreateExchangeApprovalUseCase useCase;
 
     @PostMapping("/approval")
+    @Operation(summary = "교환 요청 응답", description = "교환 요청 동의나 거절로 응답하는 API 입니다.")
     public BaseResponse<BaseResponseStatus> createApproval(@AuthenticationPrincipal CustomUserDetails customUserDetails , @RequestBody CreateExchangeApprovalRequest request) {
         User user = customUserDetails.getUser();
 
@@ -36,8 +41,10 @@ public class CreateExchangeApprovalController {
                 .build();
 
         try {
+//            TODO: 1번 실행
             ExchangeEntity exchangeEntity = useCase.findExchangeEntity(command.getExchangeId());
 
+//            TODO: 2번 실행
             if (!Objects.equals(exchangeEntity.getReservation2().getUser().getId(), user.getId())) {
                 throw new BaseException(BaseResponseStatus.WRONG_EXCHANGE_OFFER);
             }

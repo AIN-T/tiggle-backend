@@ -8,6 +8,8 @@ import com.gamja.tiggle.exchange.application.port.in.CreateExchangeOfferCommand;
 import com.gamja.tiggle.exchange.application.port.in.CreateExchangeOfferUseCase;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
 import com.gamja.tiggle.user.domain.User;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @WebAdapter
 @RequiredArgsConstructor
 @RequestMapping("/exchange")
+@Tag(name = "Exchange Request")
 public class CreateExchangeOfferController {
     private final CreateExchangeOfferUseCase useCase;
 
     @GetMapping("/offer")
+    @Operation(summary = "교환 요청", description = "공연 티켓 교환을 요청하는 API 입니다.")
     public BaseResponse<BaseResponseStatus> createOffer(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam Long id1, @RequestParam Long id2) {
         User user = customUserDetails.getUser();
 

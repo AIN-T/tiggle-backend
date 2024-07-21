@@ -95,6 +95,7 @@ public enum BaseResponseStatus {
     ALREADY_SUCCESS_EXCHANGE_OFFER(false, 6004, "이미 교환 완료된 요청입니다."),
     ALREADY_FAIL_EXCHANGE_OFFER(false, 6005, "이미 교환 거절된 요청입니다."),
     UNAVAILABLE_EXCHANGE_OFFER(false, 6006, "유효하지 않은 교환 요청입니다."),
+    NOT_REMAIN_EXCHANGE_OFFER(false, 6007, "교환 요청 가능 횟수가 남아있지 않습니다."),
 
 
 
