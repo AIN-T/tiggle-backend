@@ -1,6 +1,7 @@
 package com.gamja.tiggle.reservation.adapter.out.persistence.Entity;
 
 import com.gamja.tiggle.exchange.adapter.out.persistence.ExchangeEntity;
+import com.gamja.tiggle.common.BaseEntity;
 import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramEntity;
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
 import com.gamja.tiggle.user.adapter.out.persistence.UserEntity;
@@ -19,7 +20,7 @@ import java.util.List;
 @Getter
 @Builder
 @Table(name = "reservation")
-public class ReservationEntity {
+public class ReservationEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,12 +43,16 @@ public class ReservationEntity {
     private TimesEntity timesEntity;
 
     private String ticketNumber;
-    private String payMethod;
     private Integer totalPrice;
     private Integer requestLimit;
 
     @Enumerated(EnumType.STRING)
     private ReservationType status;
+
+    // 예약 가능 True, 예약 불가능 false
+    // 예약이 생성됐다는 건 예약 불가능 상태
+    @Column(columnDefinition = "boolean default false")
+    private Boolean available;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation1")
     private List<ExchangeEntity> exchangeEntity1List;

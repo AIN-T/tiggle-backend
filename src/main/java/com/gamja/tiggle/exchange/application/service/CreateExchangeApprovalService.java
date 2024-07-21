@@ -46,7 +46,7 @@ public class CreateExchangeApprovalService implements CreateExchangeApprovalUseC
 
 //        티켓 발행
         saveReservationPort.save(Reservation.builder()
-                .user(User.builder().id(reservation1.getUser().getId()).build())
+                .userId(reservation1.getUser().getId())
                 .programId(reservation1.getProgramEntity().getId())
                 .seatId(reservation1.getSeatEntity().getId())
                 .timesId(reservation1.getTimesEntity().getId())
@@ -77,9 +77,8 @@ public class CreateExchangeApprovalService implements CreateExchangeApprovalUseC
                 .seatId(reservation.getSeatEntity().getId())
                 .programId(reservation.getProgramEntity().getId())
                 .timesId(reservation.getTimesEntity().getId())
-                .user(User.builder().id(reservation.getUser().getId()).build())
+                .userId(reservation.getUser().getId())
                 .ticketNumber(reservation.getTicketNumber())
-                .payMethod(reservation.getPayMethod())
                 .totalPrice(reservation.getTotalPrice())
                 .status(ReservationType.EXCHANGED)
                 .requestLimit(reservation.getRequestLimit()).build();

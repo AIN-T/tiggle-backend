@@ -14,7 +14,7 @@ public class Reservation {
     private Long id;
 
     private Long programId;
-    private User user;
+    private Long userId;
     private Long seatId;
     private Long timesId;
 

@@ -68,6 +68,7 @@ public enum BaseResponseStatus {
      */
     ALREADY_CHOSEN_SEAT(false,5000,"이미 선택된 좌석입니다."),
     NOT_FOUND_RESERVATION(false,5001,"결제 정보가 존재하지 않습니다."),
+    NOT_FOUND_TIMES(false, 5002, "회차 정보가 존재하지 않습니다."),
 
 
     /**
