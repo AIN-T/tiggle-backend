@@ -10,6 +10,7 @@ import com.gamja.tiggle.reservation.domain.Seat;
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
 
 @PersistenceAdapter

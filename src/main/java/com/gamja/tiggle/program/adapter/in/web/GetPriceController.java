@@ -5,6 +5,7 @@ import com.gamja.tiggle.common.BaseResponse;
 import com.gamja.tiggle.common.annotation.WebAdapter;
 import com.gamja.tiggle.program.adapter.in.web.response.GetPriceResponse;
 import com.gamja.tiggle.program.application.port.in.GetPriceUseCase;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import java.util.List;
 @WebAdapter
 @RequiredArgsConstructor
 @RequestMapping("/price")
+@Tag(name = "공연 가격 정보 컨트롤러", description = "programId를 입력하면 해당 공연의 등급 별 가격 정보 리스트를 응답")
 public class GetPriceController {
 
     private final GetPriceUseCase getPriceUseCase;

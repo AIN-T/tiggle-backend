@@ -52,16 +52,20 @@
 [API 명세서](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/1.-API-%EB%AA%85%EC%84%B8%EC%84%9C-swagger%E2%80%90ui)
 
 
-## ✔️ 핵심 기능
+## ✔️ 시퀀스 다이어그램
 [시퀀스 다이어그램](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/2.-%EC%8B%9C%ED%80%80%EC%8A%A4-%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8)
 
 
-## ✔️ 기능 테스트 
-[기능 테스트](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/3.-%EC%84%B1%EB%8A%A5-%EA%B0%9C%EC%84%A0-%ED%85%8C%EC%8A%A4%ED%8A%B8) 
+## ✔️ 성능 개선 테스트
+[성능 개선 테스트](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/3.-%EC%84%B1%EB%8A%A5-%EA%B0%9C%EC%84%A0) 
 
 
 ## ✔️ 코딩 컨벤션
 [코딩 컨벤션](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/4.-%EC%BD%94%EB%94%A9-%EC%BB%A8%EB%B2%A4%EC%85%98)
+
+
+## ✔️ 시스템 아키텍처
+[시스템 아키텍처](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/5.-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98)
 
 
 ## ✔️ 소프트웨어 아키텍처

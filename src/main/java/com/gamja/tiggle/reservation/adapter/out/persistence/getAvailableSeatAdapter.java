@@ -50,7 +50,7 @@ public class getAvailableSeatAdapter implements GetAvailableSeatPort {
                 }
             }
 
-            if (latestReservation.getAvailable()) {
+            if (latestReservation.isAvailable()) {
                 result.add(seat);
             }
         }

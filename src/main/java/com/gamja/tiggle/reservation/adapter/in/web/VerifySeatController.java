@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @WebAdapter
 @RequiredArgsConstructor
 @RequestMapping("/verify")
-@Tag(name = "좌석검증 컨트롤러", description = "선택한 좌석이 예약 가능한지 검증")
+@Tag(name = "검증 컨트롤러", description = "선택한 좌석이 예약 가능한지 검증")
 public class VerifySeatController {
 
     private final VerifySeatUseCase verifySeatUseCase;
@@ -31,7 +31,6 @@ public class VerifySeatController {
             @RequestBody @Valid VerifySeatRequest request,
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
-        // TODO 원래대로 돌려놓기!!
         VerifySeatCommand command = from(request,customUserDetails.getUser().getId());
         try {
             verifySeatUseCase.verifySeat(command);
@@ -40,7 +39,6 @@ public class VerifySeatController {
             return new BaseResponse<>(e.getStatus());
         }
     }
-
     private static VerifySeatCommand from(VerifySeatRequest request, Long userId) {
         return VerifySeatCommand.builder()
                 .programId(request.getProgramId())

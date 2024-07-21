@@ -54,11 +54,12 @@ public class ReservationEntity extends BaseEntity {
     // 예약 가능 True, 예약 불가능 false
     // 예약이 생성됐다는 건 예약 불가능 상태
     @Column(columnDefinition = "boolean default false")
-    private Boolean available;
+    private boolean available;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation1")
     private List<ExchangeEntity> exchangeEntity1List;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation2")
     private List<ExchangeEntity> exchangeEntity2List;
+
 }
