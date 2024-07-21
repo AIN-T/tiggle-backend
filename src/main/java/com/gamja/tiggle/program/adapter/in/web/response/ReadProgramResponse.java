@@ -9,7 +9,6 @@ import java.util.List;
 @Getter
 public class ReadProgramResponse {
     private String programName;
-    private Long categoryId;
     private String programInfo;
     private LocalDateTime programStartDate;
     private LocalDateTime reservationOpenDate;

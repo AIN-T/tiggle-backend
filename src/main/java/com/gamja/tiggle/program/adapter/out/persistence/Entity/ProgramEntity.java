@@ -1,3 +1,4 @@
+
 package com.gamja.tiggle.program.adapter.out.persistence.Entity;
 
 import jakarta.persistence.*;
@@ -5,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -33,14 +35,16 @@ public class ProgramEntity {
 
     // ProgramImage 1 : N
     @Builder.Default
-    @OneToMany(mappedBy = "programEntity", fetch = FetchType.LAZY)
+//    @BatchSize(size = 5)
+    @OneToMany(mappedBy = "programEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<ProgramImageEntity> programImageEntities = new ArrayList<>();
     // Category N : 1
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    // Location N : 1
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
     private LocationEntity locationEntity;
 
@@ -48,4 +52,5 @@ public class ProgramEntity {
     public ProgramEntity(Long id) {
         this.id = id;
     }
+
 }

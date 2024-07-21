@@ -14,6 +14,7 @@ public class Program {
     private Long locationId;
     private String programName;
     private String programInfo;
+    private Location location;
 
     private LocalDateTime reservationOpenDate;
     private LocalDateTime reservationCloseDate;

@@ -1,3 +1,4 @@
+
 package com.gamja.tiggle.program.adapter.out.persistence.Entity;
 
 import jakarta.persistence.*;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class ProgramImageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long imageId;
+    private Long id;
     private String imgUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,7 +20,13 @@ public class LocationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String locationName;
+    private String addressName;
+    private String thumbnail;
+    private String seatImg;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "locationEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<ProgramEntity> programEntities = new ArrayList<>();
 
 }
