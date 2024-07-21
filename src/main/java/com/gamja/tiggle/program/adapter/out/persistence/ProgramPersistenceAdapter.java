@@ -2,14 +2,20 @@ package com.gamja.tiggle.program.adapter.out.persistence;
 
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponseStatus;
+import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramImageEntity;
+import com.gamja.tiggle.program.application.port.in.ReadProgramCommand;
 import com.gamja.tiggle.common.annotation.PersistenceAdapter;
 import com.gamja.tiggle.program.adapter.out.persistence.Entity.CategoryEntity;
 import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramEntity;
-import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramImageEntity;
 import com.gamja.tiggle.program.application.port.out.CreateProgramPort;
 import com.gamja.tiggle.program.application.port.out.ProgramPort;
 import com.gamja.tiggle.program.application.port.out.ReadProgramPort;
 import com.gamja.tiggle.program.domain.Program;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -51,6 +57,7 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
 
     }
 
+
     @Override
     public List<Program> readProgramAll(Program program) throws BaseException {
 
@@ -87,7 +94,34 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
                         .imageUrls(p.getProgramImageEntities().stream().map(programImageEntity -> programImageEntity.getImgUrl()).collect(Collectors.toList()))
                         .build())
                 .collect(Collectors.toUnmodifiableList());
+
         return programs;
+    }
+
+    @Override
+    public List<Program> readRealTimeAllPaged(ReadProgramCommand command) throws BaseException {
+        int page = command.getPage();
+        int size = command.getSize();
+        LocalDateTime currentDateTime = command.getCurrentDateTime();
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ProgramEntity> programEntityPage = jpaProgramRepository.findAll(pageable);
+        List<Program> programs = programEntityPage.stream()
+                .filter(p -> p.getReservationOpenDate().isAfter(currentDateTime))
+                .sorted((p1, p2) -> p1.getReservationOpenDate().compareTo(p2.getReservationOpenDate()))
+                .map(p -> Program.builder()
+                        .categoryId(p.getCategoryEntity().getId())
+                        .programName(p.getProgramName())
+                        .programInfo(p.getProgramInfo())
+                        .programStartDate(p.getProgramStartDate())
+                        .programEndDate(p.getProgramEndDate())
+                        .reservationOpenDate(p.getReservationOpenDate())
+                        .imageUrls(p.getProgramImageEntities().stream().map(programImageEntity -> programImageEntity.getImgUrl()).collect(Collectors.toList()))
+                        .build())
+                .collect(Collectors.toUnmodifiableList());
+
+        return programs;
+
     }
 
     @Override

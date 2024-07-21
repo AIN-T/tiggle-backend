@@ -36,7 +36,6 @@ public class ReadProgramController {
             List<ReadProgramResponse> responses = program.stream()
                     .map(p -> ReadProgramResponse.builder()
                             .programName(p.getProgramName())
-                            .categoryId(p.getCategoryId())
                             .programInfo(p.getProgramInfo())
                             .programStartDate(p.getProgramStartDate())
                             .programEndDate(p.getProgramEndDate())
@@ -50,7 +49,6 @@ public class ReadProgramController {
             return new BaseResponse<>(BaseResponseStatus.FAIL, null);
         }
     }
-
 
     // 실시간 Program 조회
     @GetMapping("/readRealTime")
@@ -70,7 +68,6 @@ public class ReadProgramController {
                     .map(p -> ReadProgramResponse.builder()
                             .programName(p.getProgramName())
                             .reservationOpenDate(p.getReservationOpenDate())
-                            .categoryId(p.getCategoryId())
                             .programInfo(p.getProgramInfo())
                             .programStartDate(p.getProgramStartDate())
                             .programEndDate(p.getProgramEndDate())
@@ -82,6 +79,42 @@ public class ReadProgramController {
             return new BaseResponse<>(BaseResponseStatus.FAIL, null);
         }
     }
+
+    @GetMapping("/read2")
+    public BaseResponse<List<ReadProgramResponse>> readPage(@RequestParam Integer page,
+                                                            @RequestParam Integer size,
+                                                            @RequestParam(required = false) LocalDateTime currentDateTime) {
+
+        try{
+            if (currentDateTime == null) {
+                currentDateTime = LocalDateTime.now();
+            }
+
+            ReadProgramCommand command = ReadProgramCommand.builder()
+                    .currentDateTime(currentDateTime)
+                    .page(page)
+                    .size(size)
+                    .build();
+            List<Program> program = readUseCase.readRealTimeAllPaged(command);
+            List<ReadProgramResponse> responses = program.stream()
+                    .map(p -> ReadProgramResponse.builder()
+                            .programName(p.getProgramName())
+                            .reservationOpenDate(p.getReservationOpenDate())
+                            .programInfo(p.getProgramInfo())
+                            .programStartDate(p.getProgramStartDate())
+                            .programEndDate(p.getProgramEndDate())
+                            .imageFiles(p.getImageUrls())
+                            .build())
+                    .collect(Collectors.toList());
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS, responses);
+
+        } catch (BaseException e) {
+            return new BaseResponse<>(BaseResponseStatus.FAIL, null);
+        }
+
+    }
+
+
 
     @GetMapping
     public BaseResponse<GetProgramDetailResponse> GetProgramDetail(@RequestParam Long id) {
@@ -112,4 +145,5 @@ public class ReadProgramController {
                 .runtime(program.getRuntime())
                 .build();
     }
+
 }

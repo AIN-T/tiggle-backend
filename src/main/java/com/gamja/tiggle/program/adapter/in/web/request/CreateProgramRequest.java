@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class CreateProgramRequest {
     private String programName;
     private Long categoryId;
+    private Long locationId;
     private String programInfo;
     private LocalDateTime reservationOpenDate;
     private LocalDateTime reservationCloseDate;
