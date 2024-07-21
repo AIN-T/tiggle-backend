@@ -1,7 +1,6 @@
 package com.gamja.tiggle.user.application.service;
 
 import com.gamja.tiggle.common.BaseException;
-import com.gamja.tiggle.user.adapter.out.persistence.EmailVerify;
 import com.gamja.tiggle.user.application.port.in.SignupUserCommand;
 import com.gamja.tiggle.user.application.port.in.SignupUserUseCase;
 import com.gamja.tiggle.user.application.port.out.EmailVerifyPort;

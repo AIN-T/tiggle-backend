@@ -2,13 +2,10 @@ package com.gamja.tiggle.user.application.service;
 
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.user.adapter.out.persistence.EmailVerify;
-import com.gamja.tiggle.user.application.port.in.SignupUserCommand;
-import com.gamja.tiggle.user.application.port.in.SignupUserUseCase;
 import com.gamja.tiggle.user.application.port.in.VerifyUserCommand;
 import com.gamja.tiggle.user.application.port.in.VerifyUserUseCase;
 import com.gamja.tiggle.user.application.port.out.EmailVerifyPort;
 import com.gamja.tiggle.user.application.port.out.UserPersistencePort;
-import com.gamja.tiggle.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +18,7 @@ public class VerifyUserService implements VerifyUserUseCase {
     @Override
     public void verify(VerifyUserCommand command) throws BaseException {
         EmailVerify emailVerify = emailVerifyPort.findByEmail(command.getEmail());
-        if(emailVerify.getUuid().equals(command.getUuid())) {
+        if (emailVerify.getUuid().equals(command.getUuid())) {
             userPersistencePort.verifyUser(command.getEmail());
         }
     }

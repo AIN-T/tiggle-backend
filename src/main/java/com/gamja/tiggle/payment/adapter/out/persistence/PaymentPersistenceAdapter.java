@@ -1,13 +1,11 @@
 package com.gamja.tiggle.payment.adapter.out.persistence;
 
 import com.gamja.tiggle.common.BaseException;
-import com.gamja.tiggle.common.BaseResponse;
 import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.payment.application.port.out.PaymentPersistencePort;
 import com.gamja.tiggle.payment.domain.Payment;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.ReservationRepository;
-import com.gamja.tiggle.reservation.domain.Reservation;
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

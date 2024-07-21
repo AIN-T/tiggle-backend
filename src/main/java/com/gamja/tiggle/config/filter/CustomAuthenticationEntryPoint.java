@@ -1,9 +1,7 @@
 package com.gamja.tiggle.config.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponse;
-import com.gamja.tiggle.common.BaseResponseStatus;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
