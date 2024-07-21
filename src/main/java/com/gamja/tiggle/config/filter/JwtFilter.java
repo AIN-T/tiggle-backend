@@ -31,14 +31,17 @@ public class JwtFilter extends OncePerRequestFilter {
         User user = null;
         String authorization = null;
         String token = null;
+
+        authorization = request.getHeader("Authorization");
+
+
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            System.out.println("Bearer 토큰이 없음");
+            filterChain.doFilter(request, response);
+            return;
+
+        }
         try {
-            authorization = request.getHeader("Authorization");
-
-
-            if (authorization == null || !authorization.startsWith("Bearer ")) {
-                System.out.println("Bearer 토큰이 없음");
-            }
-
             token = authorization.split(" ")[1];
         } catch (NullPointerException e) {
             CustomAuthenticationEntryPoint authenticationEntryPoint = new CustomAuthenticationEntryPoint();

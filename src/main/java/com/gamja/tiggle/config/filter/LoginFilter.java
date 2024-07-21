@@ -1,7 +1,6 @@
 package com.gamja.tiggle.config.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.user.adapter.in.web.request.LoginUserRequest;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
 import com.gamja.tiggle.utils.JwtUtil;
@@ -10,14 +9,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import okhttp3.internal.http2.ErrorCode;
-import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.web.authentication.*;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
@@ -70,7 +67,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        CustomUserDetails user = (CustomUserDetails)authResult.getPrincipal();
+        CustomUserDetails user = (CustomUserDetails) authResult.getPrincipal();
 
         Collection<? extends GrantedAuthority> authorities = authResult.getAuthorities();
         GrantedAuthority auth = authorities.iterator().next();
@@ -82,6 +79,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         response.addHeader("Authorization", "Bearer " + token);
         PrintWriter out = response.getWriter();
-        out.println("{\"isSuccess\": true, \"accessToken\": \""+token+"\"}");
+        out.println("{\"isSuccess\": true, \"accessToken\": \"" + token + "\"}");
     }
 }

@@ -4,7 +4,6 @@ import com.gamja.tiggle.config.filter.JwtFilter;
 import com.gamja.tiggle.config.filter.LoginFilter;
 import com.gamja.tiggle.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,7 +29,14 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests((auth) ->
                 auth
-                        .requestMatchers("user/**", "login/**").permitAll()
+                        .requestMatchers("swagger-ui/**",
+                                "user/**", "login/**","program/**",
+                                "swagger-ui.html/**",
+                                "v3/api-docs/**",
+                                "v2/api-docs/**",
+                                "swagger-resources/**",
+                                "swagger-ui/**",
+                                "swagger/**").permitAll()
                         .anyRequest().authenticated()
         );
 

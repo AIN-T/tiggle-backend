@@ -26,6 +26,11 @@ public enum BaseResponseStatus {
      * 2000: 유저
      */
     NOT_FOUND_USER(false,2000,"허가되지 않은 사용자 접근 입니다."),
+    USER_EMPTY_EMAIL(false,2001,"이메일 등록란은 필수 항목입니다."),
+    USER_EMPTY_NAME(false,2002,"이름 등록란은 필수 항목입니다."),
+    USER_EMPTY_PASSWORD(false,2003,"패스워드 입력란은 필수 항목입니다."),
+
+
     /**
      * 필터 단계에서 확인되는 에러는 실제 에러코드 형태여야 함.
      */
