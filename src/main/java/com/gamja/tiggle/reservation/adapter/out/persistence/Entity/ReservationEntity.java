@@ -49,6 +49,8 @@ public class ReservationEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ReservationType status;
 
+    private String payMethod;
+
     // 예약 가능 True, 예약 불가능 false
     // 예약이 생성됐다는 건 예약 불가능 상태
     @Column(columnDefinition = "boolean default false")
