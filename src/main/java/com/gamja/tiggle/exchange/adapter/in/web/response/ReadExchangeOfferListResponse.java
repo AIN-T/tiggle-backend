@@ -11,9 +11,6 @@ public class ReadExchangeOfferListResponse {
     private String otherEmail;
     private String programName;
     private String location;
-    private String otherGrade;
-    private String otherSectionName;
-    private Integer otherSeatNumber;
-    private Integer otherPrice;
+    private ReadSummaryExchange otherTicketInfo;
     private Boolean isWatch;
 }

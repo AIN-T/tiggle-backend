@@ -10,14 +10,8 @@ public class ReadExchangeOfferResponse {
     private String programName;
     private String ticketNumber;
     private String location;
-    private String myGrade;
-    private String mySectionName;
-    private Integer mySeatNumber;
-    private Integer myPrice;
-    private String otherGrade;
-    private String otherSectionName;
-    private Integer otherSeatNumber;
-    private Integer otherPrice;
+    private ReadSummaryExchange myTicketInfo;
+    private ReadSummaryExchange otherTicketInfo;
     private Integer diffPrice;
     private Double point;
 }

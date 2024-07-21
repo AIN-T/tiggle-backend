@@ -1,11 +1,12 @@
 package com.gamja.tiggle.exchange.application.port.in;
 
 
+import com.gamja.tiggle.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 
 @Builder
 @Getter
 public class ReadExchangeOfferListCommand {
-    private Long userId;
+    private User user;
 }

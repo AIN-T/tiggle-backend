@@ -18,6 +18,8 @@ public enum BaseResponseStatus {
     SUCCESS(true, 1000, "요청에 성공하였습니다."),
     READ_EXCHANGE_OFFER_SUCCESS(true, 1001, "교환 요청 조회에 성공하였습니다."),
     EXCHANGE_OFFER_SUCCESS(true, 1002, "교환 요청에 성공하였습니다."),
+    EXCHANGE_APPROVAL_SUCCESS(true, 1003, "티켓 교환에 성공하였습니다."),
+    EXCHANGE_REJECT_SUCCESS(true, 1004, "티켓 거절에 성공하였습니다."),
 
 
     /**
@@ -65,6 +67,7 @@ public enum BaseResponseStatus {
      * 5000: 예매
      */
     ALREADY_CHOSEN_SEAT(false,5000,"이미 선택된 좌석입니다."),
+    NOT_FOUND_RESERVATION(false,5001,"결제 정보가 존재하지 않습니다."),
 
 
     /**
@@ -74,6 +77,11 @@ public enum BaseResponseStatus {
     FAIL_LOAD_EXCHANGE_OFFER(false, 6000, "교환 요청 조회에 실패하였습니다."),
     NOT_FOUND_EXCHANGE_OFFER(false, 6001, "일치하는 교환 내역이 존재하지 않습니다."),
     EXIST_EXCHANGE_OFFER(false, 6002, "동일한 요청을 보낼 수 없습니다."),
+    WRONG_EXCHANGE_OFFER(false, 6003, "잘못된 교환 요청입니다."),
+    ALREADY_SUCCESS_EXCHANGE_OFFER(false, 6004, "이미 교환 완료된 요청입니다."),
+    ALREADY_FAIL_EXCHANGE_OFFER(false, 6005, "이미 교환 거절된 요청입니다."),
+    UNAVAILABLE_EXCHANGE_OFFER(false, 6006, "유효하지 않은 교환 요청입니다."),
+
 
 
     /**

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.UUID;
 
 @UseCase
@@ -34,40 +35,45 @@ public class CreateExchangeOfferService implements CreateExchangeOfferUseCase {
         ReservationEntity reservation1 = readReservationPort.read(Reservation.builder().id(command.getReservationId1()).build());
         ReservationEntity reservation2 = readReservationPort.read(Reservation.builder().id(command.getReservationId2()).build());
 
+        if (!Objects.equals(command.getUser().getId(), reservation1.getUser().getId()))
+            throw new BaseException(BaseResponseStatus.WRONG_EXCHANGE_OFFER);
+
         if (exchangePort.find(command))
             throw new BaseException(BaseResponseStatus.EXIST_EXCHANGE_OFFER);
 
+        if (!Objects.equals(reservation1.getProgramEntity().getId(), reservation2.getProgramEntity().getId()) || !Objects.equals(reservation1.getTimesEntity().getId(), reservation2.getTimesEntity().getId()))
+            throw new BaseException(BaseResponseStatus.WRONG_EXCHANGE_OFFER);
 
         saveReservationPort.save(Reservation.builder()
-//                .user(User.builder().id(reservation1.getUser().getId()).build())
+                .user(User.builder().id(reservation1.getUser().getId()).build())
                 .programId(reservation2.getProgramEntity().getId())
                 .seatId(reservation2.getSeatEntity().getId())
                 .timesId(reservation2.getTimesEntity().getId())
                 .ticketNumber(getTicketNumber())
                 .totalPrice(reservation2.getTotalPrice())
-                .status(ReservationType.EXCHANGED)
+                .status(ReservationType.IN_PROGRESS)
                 .requestLimit(5)
                 .build());
 
-//        새로 발행한 티켓 저장
+//        교환 내역 저장
         exchangePort.save(Exchange.builder()
                 .reservationId1(Reservation.builder().id(reservation1.getId()).build())
                 .reservationId2(Reservation.builder().id(reservation2.getId()).build())
-                .isSuccess(false)
                 .isWatch(false)
                 .build());
 
 //      유저 티켓의 횟수 -- update
         saveReservationPort.update(Reservation.builder()
                 .id(reservation1.getId())
+                .user(User.builder().id(command.getUser().getId()).build())
                 .seatId(reservation1.getSeatEntity().getId())
                 .programId(reservation1.getProgramEntity().getId())
                 .timesId(reservation1.getTimesEntity().getId())
-//                .user(User.builder().id(reservation1.getUser().getId()).build())
+                .user(User.builder().id(reservation1.getUser().getId()).build())
                 .ticketNumber(reservation1.getTicketNumber())
                 .payMethod(reservation1.getPayMethod())
                 .totalPrice(reservation1.getTotalPrice())
-                .status(ReservationType.EXCHANGED)
+                .status(reservation1.getStatus())
                 .requestLimit(reservation1.getRequestLimit() - 1).build());
     }
 

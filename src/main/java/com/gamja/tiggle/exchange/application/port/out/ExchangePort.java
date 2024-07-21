@@ -10,5 +10,7 @@ public interface ExchangePort {
     ExchangeEntity read(Exchange exchange) throws BaseException;
     void save(Exchange exchange);
     Boolean find(CreateExchangeOfferCommand command);
+    ExchangeEntity findById(Long id) throws BaseException;
+    void update(ExchangeEntity exchange);
 
 }
