@@ -1,6 +1,7 @@
 package com.gamja.tiggle.reservation.adapter.in.web;
 
 
+import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponse;
 import com.gamja.tiggle.common.annotation.WebAdapter;
 import com.gamja.tiggle.reservation.adapter.in.web.request.GetAvailableSeatRequest;
@@ -33,9 +34,13 @@ public class GetSeatController {
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
         GetAvailableSeatCommand command = toCommand(request);
-        List<GetAvailableSeatResponse> list
-                = getAvailableSeatUseCase.getAvailableSeat(command).stream().map(seat -> getResponse(seat)
-        ).toList();
+        List<GetAvailableSeatResponse> list;
+        try {
+            list = getAvailableSeatUseCase.getAvailableSeat(command).stream().map(seat -> getResponse(seat)
+            ).toList();
+        } catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
 
         return new BaseResponse<>(list);
     }
