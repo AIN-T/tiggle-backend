@@ -25,7 +25,7 @@ import java.util.Objects;
 @WebAdapter
 @RequiredArgsConstructor
 @RequestMapping("/exchange")
-@Tag(name = "Response For Exchange Request")
+@Tag(name = "교환 요청 응답")
 public class CreateExchangeApprovalController {
     private final CreateExchangeApprovalUseCase useCase;
 
