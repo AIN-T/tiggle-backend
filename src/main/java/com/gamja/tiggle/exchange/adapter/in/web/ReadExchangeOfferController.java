@@ -11,6 +11,8 @@ import com.gamja.tiggle.exchange.application.port.in.ReadExchangeOfferListComman
 import com.gamja.tiggle.exchange.application.port.in.ReadExchangeOfferUseCase;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
 import com.gamja.tiggle.user.domain.User;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +24,12 @@ import java.util.List;
 @WebAdapter
 @RequiredArgsConstructor
 @RequestMapping("/exchange")
+@Tag(name = "Exchange Request Read", description = "교환 요청을 조회하는 API 입니다.")
 public class ReadExchangeOfferController {
     private final ReadExchangeOfferUseCase useCase;
 
     @GetMapping("")
+    @Operation(summary = "교환 요청 단일 조회", description = "교환 요청에 대한 상세 정보를 조회하는 API 입니다.")
     public BaseResponse<ReadExchangeOfferResponse> read(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam Long id) {
         User user = customUserDetails.getUser();
 
@@ -46,6 +50,7 @@ public class ReadExchangeOfferController {
     }
 
     @GetMapping("/list")
+    @Operation(summary = "교환 요청 조회", description = "사용자가 받은 교환 요청들을 조회하는 API 입니다.")
     public BaseResponse<List<ReadExchangeOfferListResponse>> readAll(@AuthenticationPrincipal CustomUserDetails customUserDetails){
         User user = customUserDetails.getUser();
 
