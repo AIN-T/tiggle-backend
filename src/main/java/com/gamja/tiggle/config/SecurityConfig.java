@@ -26,7 +26,6 @@ public class SecurityConfig {
         http.httpBasic((auth) -> auth.disable());
         http.formLogin((auth) -> auth.disable());
         http.sessionManagement((auth) -> auth.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
         http.authorizeHttpRequests((auth) ->
                 auth
                         .requestMatchers("swagger-ui/**",
