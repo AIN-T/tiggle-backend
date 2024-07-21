@@ -87,7 +87,6 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
                         .imageUrls(p.getProgramImageEntities().stream().map(programImageEntity -> programImageEntity.getImgUrl()).collect(Collectors.toList()))
                         .build())
                 .collect(Collectors.toUnmodifiableList());
-
         return programs;
     }
 

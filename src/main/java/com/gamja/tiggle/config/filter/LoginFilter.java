@@ -1,6 +1,7 @@
 package com.gamja.tiggle.config.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.user.adapter.in.web.request.LoginUserRequest;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
 import com.gamja.tiggle.utils.JwtUtil;
@@ -9,6 +10,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import okhttp3.internal.http2.ErrorCode;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

@@ -24,6 +24,14 @@ public enum BaseResponseStatus {
      * 2000: 유저
      */
     NOT_FOUND_USER(false,2000,"허가되지 않은 사용자 접근 입니다."),
+    /**
+     * 필터 단계에서 확인되는 에러는 실제 에러코드 형태여야 함.
+     */
+    EXPIRED_TOKEN(false,400,"만료된 토큰 입니다."),
+    NOT_INSERT_TOKEN(false,400,"요청 헤더에 토큰이 존재하지 않습니다."),
+    NOT_MATCH_USERDATA_TOKEN(false,400,"토큰의 정보와 유저의 데이터가 일치 하지 않습니다."),
+    UNSIGNED_FORMAT_TOKEN(false,400,"지원하지 않는 형태의 JWT 토큰 양식 입니다."),
+
 
     /**
      * 3000: 프로그램
