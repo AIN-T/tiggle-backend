@@ -1,10 +1,12 @@
 package com.gamja.tiggle.config.filter;
 
-
-
+import com.gamja.tiggle.common.BaseResponse;
+import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
 import com.gamja.tiggle.user.domain.User;
 import com.gamja.tiggle.utils.JwtUtil;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,43 +28,73 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authorization = request.getHeader("Authorization");
+        User user = null;
+        String authorization = null;
+        String token = null;
+        try {
+            authorization = request.getHeader("Authorization");
 
-        if(authorization == null || !authorization.startsWith("Bearer ")) {
-            System.out.println("Bearer 토큰이 없음");
-            filterChain.doFilter(request, response);
 
+            if (authorization == null || !authorization.startsWith("Bearer ")) {
+                System.out.println("Bearer 토큰이 없음");
+            }
+
+            token = authorization.split(" ")[1];
+        } catch (NullPointerException e) {
+            CustomAuthenticationEntryPoint authenticationEntryPoint = new CustomAuthenticationEntryPoint();
+            BaseResponse br = new BaseResponse(BaseResponseStatus.NOT_INSERT_TOKEN);
+            authenticationEntryPoint.commenceBaseResponse(request, response, br);
             return;
         }
 
-        String token = authorization.split(" ")[1];
-
-        if(jwtUtil.isExpired(token)) {
-            System.out.println("토큰 만료됨");
-            filterChain.doFilter(request, response);
+        try {
+            if (jwtUtil.isExpired(token)) {
+                System.out.println("토큰 만료됨");
+            }
+        } catch (ExpiredJwtException e) {
+            CustomAuthenticationEntryPoint authenticationEntryPoint = new CustomAuthenticationEntryPoint();
+            BaseResponse br = new BaseResponse(BaseResponseStatus.EXPIRED_TOKEN);
+            authenticationEntryPoint.commenceBaseResponse(request, response, br);
+            return;
+        } catch (MalformedJwtException eM) {
+            CustomAuthenticationEntryPoint authenticationEntryPoint = new CustomAuthenticationEntryPoint();
+            BaseResponse br = new BaseResponse(BaseResponseStatus.UNSIGNED_FORMAT_TOKEN);
+            authenticationEntryPoint.commenceBaseResponse(request, response, br);
             return;
         }
 
-        Long id = jwtUtil.getId(token);
-        String username = jwtUtil.getUsername(token);
-        String role = jwtUtil.getRole(token);
+        Long idx = null;
+        String username = null;
+        String role = null;
+        try {
+            idx = jwtUtil.getId(token);
+            username = jwtUtil.getUsername(token);
+            role = jwtUtil.getRole(token);
+        } catch (NullPointerException e) {
+            CustomAuthenticationEntryPoint authenticationEntryPoint = new CustomAuthenticationEntryPoint();
+            BaseResponse br = new BaseResponse(BaseResponseStatus.NOT_MATCH_USERDATA_TOKEN);
+            authenticationEntryPoint.commenceBaseResponse(request, response, br);
+            return;
+        }
 
-
-        User user = User.builder()
-                .id(id)
-                .name(username)
+        user = User.builder()
+                .id(idx)
+                .email(username)
                 .role(role)
                 .build();
+
 
         CustomUserDetails customUserDetails = new CustomUserDetails(user);
 
         Authentication authToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+        SecurityContextHolder.getContext().
 
-        SecurityContextHolder.getContext().setAuthentication(authToken);
+                setAuthentication(authToken);
 
 
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
 
 
     }
 }
+
