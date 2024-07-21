@@ -56,8 +56,8 @@
 [시퀀스 다이어그램](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/2.-%EC%8B%9C%ED%80%80%EC%8A%A4-%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8)
 
 
-## ✔️ 성능 개선 
-[성능 개선](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/3.-%EC%84%B1%EB%8A%A5-%EA%B0%9C%EC%84%A0) 
+## ✔️ 성능 개선 테스트
+[성능 개선 테스트](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/3.-%EC%84%B1%EB%8A%A5-%EA%B0%9C%EC%84%A0) 
 
 
 ## ✔️ 코딩 컨벤션
