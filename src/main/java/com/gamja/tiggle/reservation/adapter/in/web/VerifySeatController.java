@@ -4,7 +4,6 @@ import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponse;
 import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.WebAdapter;
-import com.gamja.tiggle.reservation.adapter.in.web.request.VerifyFormRequest;
 import com.gamja.tiggle.reservation.adapter.in.web.request.VerifySeatRequest;
 import com.gamja.tiggle.reservation.application.port.in.VerifySeatCommand;
 import com.gamja.tiggle.reservation.application.port.in.VerifySeatUseCase;
@@ -40,16 +39,6 @@ public class VerifySeatController {
             return new BaseResponse<>(e.getStatus());
         }
     }
-
-    @PostMapping("/form")
-    @Operation(summary = "사용자 입력 데이터 검증")
-    public BaseResponse<Void> verifyFormController(@RequestBody VerifyFormRequest request){
-
-        return null;
-    }
-
-
-
     private static VerifySeatCommand from(VerifySeatRequest request, Long userId) {
         return VerifySeatCommand.builder()
                 .programId(request.getProgramId())

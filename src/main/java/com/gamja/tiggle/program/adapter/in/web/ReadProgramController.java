@@ -116,6 +116,7 @@ public class ReadProgramController {
 
 
 
+    // 프로그램 상세 조회
     @GetMapping
     public BaseResponse<GetProgramDetailResponse> GetProgramDetail(@RequestParam Long id) {
 
