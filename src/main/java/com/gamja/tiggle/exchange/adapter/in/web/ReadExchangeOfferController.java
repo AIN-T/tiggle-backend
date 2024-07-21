@@ -24,7 +24,7 @@ import java.util.List;
 @WebAdapter
 @RequiredArgsConstructor
 @RequestMapping("/exchange")
-@Tag(name = "Exchange Request Read", description = "교환 요청을 조회하는 API 입니다.")
+@Tag(name = "교환 요청 조회", description = "교환 요청을 조회하는 API 입니다.")
 public class ReadExchangeOfferController {
     private final ReadExchangeOfferUseCase useCase;
 
@@ -42,7 +42,7 @@ public class ReadExchangeOfferController {
 
         try {
             response = useCase.read(command);
-        }catch(BaseException e){
+        } catch (BaseException e) {
             return new BaseResponse<>(e.getStatus());
         }
 
@@ -50,15 +50,23 @@ public class ReadExchangeOfferController {
     }
 
     @GetMapping("/list")
-    @Operation(summary = "교환 요청 조회", description = "사용자가 받은 교환 요청들을 조회하는 API 입니다.")
-    public BaseResponse<List<ReadExchangeOfferListResponse>> readAll(@AuthenticationPrincipal CustomUserDetails customUserDetails){
+    @Operation(summary = "교환 요청 리스트 조회", description = "사용자가 받은 교환 요청들을 조회하는 API 입니다.")
+    public BaseResponse<List<ReadExchangeOfferListResponse>> readAll(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         User user = customUserDetails.getUser();
 
         ReadExchangeOfferListCommand command = ReadExchangeOfferListCommand.builder()
                 .user(user)
                 .build();
+        List<ReadExchangeOfferListResponse> result = null;
+        try {
+            result = useCase.readAll(command);
 
-        List<ReadExchangeOfferListResponse> result = useCase.readAll(command);
+            if(result == null){
+                throw new BaseException(BaseResponseStatus.NOT_EXCHANGE_OFFER);
+            }
+        } catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
 
         return new BaseResponse<>(result);
     }
