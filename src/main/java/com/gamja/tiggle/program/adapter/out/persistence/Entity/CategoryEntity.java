@@ -1,3 +1,4 @@
+
 package com.gamja.tiggle.program.adapter.out.persistence.Entity;
 
 import jakarta.persistence.*;

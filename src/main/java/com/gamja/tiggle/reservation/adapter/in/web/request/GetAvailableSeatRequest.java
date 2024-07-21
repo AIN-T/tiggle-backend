@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class GetRemainedSeatRequest {
+public class GetAvailableSeatRequest {
 
     private Long programId;
     private Long timesId;

@@ -6,15 +6,17 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Builder
 public class Reservation {
 
     private Long id;
 
     private Long programId;
-    private User user;
+    private Long userId;
     private Long seatId;
     private Long timesId;
 

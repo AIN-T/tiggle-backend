@@ -1,5 +1,7 @@
 package com.gamja.tiggle.reservation.adapter.out.persistence;
 
+import com.gamja.tiggle.common.BaseException;
+import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.PersistenceAdapter;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.TimesEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.TimesRepository;
@@ -16,8 +18,12 @@ public class GetTimesAdapter implements GetTimesPort {
     private final TimesRepository timesRepository;
 
     @Override
-    public List<Times> getTimes(Long id) {
+    public List<Times> getTimes(Long id) throws BaseException {
+        // TODO 회차가 없는 경우 예외
         List<TimesEntity> TimesList = timesRepository.findAllByProgramEntityId(id);
+        if (TimesList.isEmpty()) {
+            throw new BaseException(BaseResponseStatus.NOT_FOUND_TIMES);
+        }
         return getList(TimesList);
     }
 

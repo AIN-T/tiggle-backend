@@ -27,7 +27,7 @@ public class CustomUserDetailService implements UserDetailsService {
                 .enable(true)
                 .build();
 
-        if (result!=null) {
+        if (result != null) {
             return new CustomUserDetails(user);
         } else {
             return null;

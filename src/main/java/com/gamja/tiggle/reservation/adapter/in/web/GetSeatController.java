@@ -3,12 +3,14 @@ package com.gamja.tiggle.reservation.adapter.in.web;
 
 import com.gamja.tiggle.common.BaseResponse;
 import com.gamja.tiggle.common.annotation.WebAdapter;
-import com.gamja.tiggle.reservation.adapter.in.web.request.GetRemainedSeatRequest;
-import com.gamja.tiggle.reservation.adapter.in.web.response.GetRemainedSeatResponse;
-import com.gamja.tiggle.reservation.application.port.in.GetRemainedSeatCommand;
-import com.gamja.tiggle.reservation.application.port.in.GetRemainedSeatUseCase;
+import com.gamja.tiggle.reservation.adapter.in.web.request.GetAvailableSeatRequest;
+import com.gamja.tiggle.reservation.adapter.in.web.response.GetAvailableSeatResponse;
+import com.gamja.tiggle.reservation.application.port.in.GetAvailableSeatCommand;
+import com.gamja.tiggle.reservation.application.port.in.GetAvailableSeatUseCase;
 import com.gamja.tiggle.reservation.domain.Seat;
+import com.gamja.tiggle.user.domain.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,26 +22,24 @@ import java.util.List;
 @RequestMapping("/seat")
 public class GetSeatController {
 
-    private final GetRemainedSeatUseCase getRemainedSeatUseCase;
+    private final GetAvailableSeatUseCase getAvailableSeatUseCase;
 
 
-    //@AuthenticationPrincipal CustomUserDetails customUserDetails
     @PostMapping
-    public BaseResponse<List<GetRemainedSeatResponse>> getRemainedSeat(
-            @RequestBody GetRemainedSeatRequest request) {
+    public BaseResponse<List<GetAvailableSeatResponse>> getAvailableSeat(
+            @RequestBody GetAvailableSeatRequest request,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
-        GetRemainedSeatCommand command = toCommand(request);
-
-        List<GetRemainedSeatResponse> list
-                = getRemainedSeatUseCase.getRemainedSeat(command).stream().map(seat ->
-                getResponse(seat)
+        GetAvailableSeatCommand command = toCommand(request);
+        List<GetAvailableSeatResponse> list
+                = getAvailableSeatUseCase.getAvailableSeat(command).stream().map(seat -> getResponse(seat)
         ).toList();
 
         return new BaseResponse<>(list);
     }
 
-    private static GetRemainedSeatResponse getResponse(Seat seat) {
-        return GetRemainedSeatResponse.builder()
+    private static GetAvailableSeatResponse getResponse(Seat seat) {
+        return GetAvailableSeatResponse.builder()
                 .seatId(seat.getId())
                 .seatNumber(seat.getSeatNumber())
                 .sectionId(seat.getSectionId())
@@ -47,8 +47,8 @@ public class GetSeatController {
     }
 
 
-    private static GetRemainedSeatCommand toCommand(GetRemainedSeatRequest request) {
-        return GetRemainedSeatCommand
+    private static GetAvailableSeatCommand toCommand(GetAvailableSeatRequest request) {
+        return GetAvailableSeatCommand
                 .builder()
                 .programId(request.getProgramId())
                 .timesId(request.getTimesId())

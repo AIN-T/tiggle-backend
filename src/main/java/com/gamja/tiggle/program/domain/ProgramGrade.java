@@ -12,5 +12,4 @@ public class ProgramGrade {
     private Long gradeId;
     private int price;
     private String gradeName;
-
 }

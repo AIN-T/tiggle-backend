@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<ReservationEntity, Long> {
 
+    List<ReservationEntity> findBySeatEntityIdAndProgramEntityIdAndTimesEntityId(Long seatId, Long ProgramId, Long timesId);
+
     Optional<ReservationEntity> findBySeatEntityId(Long seatId);
 
     @Query("SELECT r FROM ReservationEntity r JOIN FETCH r.exchangeEntity2List e  WHERE e.reservation2.user.id = :userId")

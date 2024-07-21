@@ -12,7 +12,6 @@ import com.gamja.tiggle.reservation.application.port.out.ReadReservationPort;
 import com.gamja.tiggle.reservation.application.port.out.SaveReservationPort;
 import com.gamja.tiggle.reservation.domain.Reservation;
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
-import com.gamja.tiggle.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,7 +50,7 @@ public class CreateExchangeOfferService implements CreateExchangeOfferUseCase {
             throw new BaseException(BaseResponseStatus.WRONG_EXCHANGE_OFFER);
 
         saveReservationPort.save(Reservation.builder()
-                .user(User.builder().id(reservation1.getUser().getId()).build())
+                .userId(reservation1.getUser().getId())
                 .programId(reservation2.getProgramEntity().getId())
                 .seatId(reservation2.getSeatEntity().getId())
                 .timesId(reservation2.getTimesEntity().getId())
@@ -71,13 +70,11 @@ public class CreateExchangeOfferService implements CreateExchangeOfferUseCase {
 //      유저 티켓의 횟수 -- update
         saveReservationPort.update(Reservation.builder()
                 .id(reservation1.getId())
-                .user(User.builder().id(command.getUser().getId()).build())
+                .userId(command.getUser().getId())
                 .seatId(reservation1.getSeatEntity().getId())
                 .programId(reservation1.getProgramEntity().getId())
                 .timesId(reservation1.getTimesEntity().getId())
-                .user(User.builder().id(reservation1.getUser().getId()).build())
                 .ticketNumber(reservation1.getTicketNumber())
-                .payMethod(reservation1.getPayMethod())
                 .totalPrice(reservation1.getTotalPrice())
                 .status(reservation1.getStatus())
                 .requestLimit(reservation1.getRequestLimit() - 1).build());
