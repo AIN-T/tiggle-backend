@@ -16,13 +16,10 @@ public class ExchangePersistenceAdapter implements ExchangePort {
 
     @Override
     public ExchangeEntity read(Exchange exchange) throws BaseException {
-
 //        TODO: 3번 조회 => exchange 조회 후 r1 r2 조회
-        ExchangeEntity result = exchangeRepository.findById(exchange.getId()).orElseThrow(
+        return  exchangeRepository.findById(exchange.getId()).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAIL_LOAD_EXCHANGE_OFFER)
         );
-
-        return result;
     }
 
     @Override

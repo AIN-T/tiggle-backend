@@ -53,7 +53,6 @@ public class ReadExchangeOfferService implements ReadExchangeOfferUseCase {
                 .myTicketInfo(createSummaryExchange(reservation2))
                 .otherTicketInfo(createSummaryExchange(reservation1))
                 .diffPrice(reservation2.getTotalPrice() - reservation1.getTotalPrice())
-                .point(reservation1.getTotalPrice() * 0.1)
                 .build();
     }
 

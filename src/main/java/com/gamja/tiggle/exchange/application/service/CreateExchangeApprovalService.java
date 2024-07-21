@@ -12,7 +12,6 @@ import com.gamja.tiggle.reservation.application.port.out.ReadReservationPort;
 import com.gamja.tiggle.reservation.application.port.out.SaveReservationPort;
 import com.gamja.tiggle.reservation.domain.Reservation;
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
-import com.gamja.tiggle.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,9 +35,8 @@ public class CreateExchangeApprovalService implements CreateExchangeApprovalUseC
     @Override
     @Transactional
     public void create(ExchangeEntity exchangeEntity, CreateExchangeApprovalCommand command) throws BaseException {
-//        reservation 찾아오기
-        ReservationEntity reservation1 = readReservationPort.read(Reservation.builder().id(command.getReservationId1()).build());
-        ReservationEntity reservation2 = readReservationPort.read(Reservation.builder().id(command.getReservationId2()).build());
+        ReservationEntity reservation1 = readReservationPort.read(command.getReservationId1());
+        ReservationEntity reservation2 = readReservationPort.read(command.getReservationId2());
 
         if(!reservation1.getStatus().equals(ReservationType.COMPLETED) || !reservation2.getStatus().equals(ReservationType.COMPLETED)){
             throw new BaseException(BaseResponseStatus.UNAVAILABLE_EXCHANGE_OFFER);

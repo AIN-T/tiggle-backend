@@ -31,8 +31,8 @@ public class CreateExchangeOfferService implements CreateExchangeOfferUseCase {
     @Override
     @Transactional
     public void create(CreateExchangeOfferCommand command) throws BaseException {
-        ReservationEntity reservation1 = readReservationPort.read(Reservation.builder().id(command.getReservationId1()).build());
-        ReservationEntity reservation2 = readReservationPort.read(Reservation.builder().id(command.getReservationId2()).build());
+        ReservationEntity reservation1 = readReservationPort.read(command.getReservationId1());
+        ReservationEntity reservation2 = readReservationPort.read(command.getReservationId2());
 
         if (!Objects.equals(command.getUser().getId(), reservation1.getUser().getId()))
             throw new BaseException(BaseResponseStatus.WRONG_EXCHANGE_OFFER);
