@@ -23,6 +23,8 @@ public class CreateProgramService implements CreateProgramUseCase {
         List<String> uploadFilePaths = s3UploadPort.uploadProductImages(command.getImageFiles());
 
         Program program = Program.builder()
+                .locationId(command.getLocationId())
+                .categoryId(command.getCategoryId())
                 .programName(command.getProgramName())
                 .programInfo(command.getProgramInfo())
                 .reservationOpenDate(command.getReservationOpenDate())
@@ -33,8 +35,8 @@ public class CreateProgramService implements CreateProgramUseCase {
                 .programStartDate(command.getProgramStartDate())
                 .programEndDate(command.getProgramEndDate())
                 .imageUrls(uploadFilePaths)
-                .categoryId(command.getCategoryId())
                 .build();
+
         createPersistencePort.createProgram(program);
     }
 

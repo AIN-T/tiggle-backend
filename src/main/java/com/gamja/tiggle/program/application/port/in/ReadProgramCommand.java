@@ -10,6 +10,11 @@ import java.time.LocalDateTime;
 public class ReadProgramCommand {
 
     private Long categoryId;
+    private Long locationId;
     private LocalDateTime currentDateTime;
+
+    // 페이징 처리 하려고
+    private Integer page;
+    private Integer size;
 
 }

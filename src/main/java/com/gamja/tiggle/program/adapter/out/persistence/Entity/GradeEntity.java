@@ -1,3 +1,4 @@
+
 package com.gamja.tiggle.program.adapter.out.persistence.Entity;
 
 import jakarta.persistence.*;
@@ -17,7 +18,6 @@ public class GradeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String gradeName;
 
 }

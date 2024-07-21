@@ -34,16 +34,24 @@ public enum BaseResponseStatus {
     NOT_MATCH_USERDATA_TOKEN(false,400,"토큰의 정보와 유저의 데이터가 일치 하지 않습니다."),
     UNSIGNED_FORMAT_TOKEN(false,400,"지원하지 않는 형태의 JWT 토큰 양식 입니다."),
 
-
     /**
      * 3000: 프로그램
      */
-
     NOT_FOUND_PROGRAM(false, 3100, "프로그램이 존재하지 않습니다."),
+    INVALID_PROGRAM_CREATION_REQUEST(false, 3101, "공연 생성에 실패했습니다."),
 
     NOT_FOUND_CATEGORY(false, 3200, "카테고리가 존재하지 않습니다."),
     DUPLICATE_CATEGORY(false, 3201, "이미 존재하는 카테고리입니다."),
     CATEGORY_CREATION_FAILED(false, 3202, "카테고리 생성에 실패했습니다."),
+    INVALID_CATEGORY_DATA(false, 3203, "유효하지 않은 카테고리 데이터입니다."),
+
+    NOT_FOUND_LOCATION(false, 3300, "로케이션이 존재하지 않습니다."),
+    NOT_FOUND_LOCATION_ID(false, 3301, "해당 로케이션이 존재하지 않습니다."),
+    DUPLICATE_LOCATION(false, 3302, "이미 존재하는 로케이션입니다."),
+    LOCATION_CREATION_FAILED(false, 3303, "로케이션 생성에 실패했습니다."),
+    INVALID_LOCATION_DATA(false, 3304, "유효하지 않은 로케이션 데이터입니다."),
+
+
     /**
      * 4000: 결제
      */
@@ -95,8 +103,8 @@ public enum BaseResponseStatus {
      * 8000: 공통 에러
      */
     INTERNAL_SERVER_ERROR(false, 8000, "일시적인 오류로 서비스 접속에 실패했습니다. 잠시 후 다시 시도 해 주세요."),
-    BAD_REQUEST(false, 8001, "필수 값이 비어있거나, 유효성 검사에 실패했습니다.");
-
+    BAD_REQUEST(false, 8001, "필수 값이 비어있거나, 유효성 검사에 실패했습니다."),
+    INVALID_INPUT_CHARACTER(false, 8002, "특수문자 또는 허용되지 않는 값이 포함되어 있습니다.");
     private final boolean isSuccess;
     private final int code;
     private final String message;

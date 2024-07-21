@@ -1,6 +1,7 @@
 package com.gamja.tiggle.program.adapter.out.persistence;
 
 import com.gamja.tiggle.common.BaseException;
+
 import com.gamja.tiggle.program.adapter.out.persistence.Entity.CategoryEntity;
 import lombok.RequiredArgsConstructor;
 import com.gamja.tiggle.program.application.port.out.CreateCategoryPort;
