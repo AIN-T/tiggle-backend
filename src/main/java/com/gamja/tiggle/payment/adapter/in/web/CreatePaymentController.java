@@ -48,7 +48,7 @@ public class CreatePaymentController {
 
         if (requestChk == true) {
             CreatePaymentCommand command = CreatePaymentCommand.builder()
-                    .username(user.getEmail())
+                    .username(user.getName())
                     .reservationId(request.getReservationId())
                     .ticketPrice(request.getTicketPrice())
                     .usePoint(request.getUsePoint())

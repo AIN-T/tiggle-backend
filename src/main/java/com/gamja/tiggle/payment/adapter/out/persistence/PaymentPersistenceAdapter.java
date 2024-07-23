@@ -48,9 +48,7 @@ public class PaymentPersistenceAdapter implements PaymentPersistencePort {
         PaymentEntity result = jpaPaymentRepository.findByReservationEntity_Id(id);
         Optional<ReservationEntity> reservation = jpaReservationRepository.findById(id);
         Boolean reservationChk = false;
-        if ((reservation.get().getPayMethod().equals(result.getPayType()))
-                &&(reservation.get().getStatus().equals(ReservationType.IN_PROGRESS))
-                &&(reservation.get().getTotalPrice() == (result.getTicketPrice()+result.getFee()- result.getUsePoint()))){
+        if ((reservation.get().getPayMethod() == result.getPayType())&&reservation.get().getStatus().equals("IN_PROGRESS")&&(reservation.get().getTotalPrice() == (result.getTicketPrice()+result.getFee()- result.getUsePoint()))){
             reservationChk = true;
         }
 
@@ -100,17 +98,7 @@ public class PaymentPersistenceAdapter implements PaymentPersistencePort {
             else {
                 ReservationEntity result = ReservationEntity.builder()
                         .id(reservation.get().getId())
-                        .programEntity(reservation.get().getProgramEntity())
-                        .seatEntity(reservation.get().getSeatEntity())
-                        .timesEntity(reservation.get().getTimesEntity())
-                        .user(reservation.orElseThrow().getUser())
-                        .payMethod(reservation.get().getPayMethod())
-                        .ticketNumber(reservation.get().getTicketNumber())
                         .status(ReservationType.COMPLETED)
-                        .requestLimit(reservation.get().getRequestLimit())
-                        .totalPrice(reservation.get().getTotalPrice())
-
-
                         .build();
 
                 jpaReservationRepository.save(result);
