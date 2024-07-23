@@ -49,7 +49,7 @@
 
 
 ## ✔️ API 명세서
-[API 명세서](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/1.-API-%EB%AA%85%EC%84%B8%EC%84%9C-swagger%E2%80%90ui)
+[API 명세서](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/1.-API-%EB%AA%85%EC%84%B8%EC%84%9C-(swagger%E2%80%90ui))
 
 
 ## ✔️ 시퀀스 다이어그램
