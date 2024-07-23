@@ -60,8 +60,9 @@
 [성능 개선 테스트](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/3.-%EC%84%B1%EB%8A%A5-%EA%B0%9C%EC%84%A0) 
 
 
-## ✔️ 코딩 컨벤션
-[코딩 컨벤션](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/4.-%EC%BD%94%EB%94%A9-%EC%BB%A8%EB%B2%A4%EC%85%98)
+## ✔️ 코드 컨벤션
+[코드 컨벤션](https://github.com/beyond-sw-camp/be06-2nd-GAMJA-TIGGLE/wiki/4.-%EC%BD%94%EB%93%9C-%EC%BB%A8%EB%B2%A4%EC%85%98)
+
 
 
 ## ✔️ 시스템 아키텍처
