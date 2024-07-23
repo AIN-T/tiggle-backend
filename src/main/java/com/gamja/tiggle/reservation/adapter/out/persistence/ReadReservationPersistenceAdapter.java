@@ -22,9 +22,4 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
     public ReservationEntity read(Long reservationId) throws BaseException {
         return repository.findById(reservationId).orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_RESERVATION));
     }
-
-    @Override
-    public List<ReservationEntity> readExchangeOfferForMe(User user) {
-        return repository.findReservationByUser(user.getId());
-    }
 }

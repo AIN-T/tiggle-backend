@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface ReadReservationPort {
     ReservationEntity read(Long reservationId) throws BaseException;
-    List<ReservationEntity> readExchangeOfferForMe(User user);
 }
