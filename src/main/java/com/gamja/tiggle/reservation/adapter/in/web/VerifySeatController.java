@@ -9,7 +9,6 @@ import com.gamja.tiggle.reservation.application.port.in.VerifySeatCommand;
 import com.gamja.tiggle.reservation.application.port.in.VerifySeatUseCase;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,13 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @WebAdapter
 @RequiredArgsConstructor
 @RequestMapping("/verify")
-@Tag(name = "검증 컨트롤러", description = "선택한 좌석이 예약 가능한지 검증")
 public class VerifySeatController {
 
     private final VerifySeatUseCase verifySeatUseCase;
 
     @PostMapping
-    @Operation(summary = "좌석 예약 검증")
+    @Operation(summary = "좌석 예약 검증",  description = "선택한 좌석이 예약 가능한지 검증하는 API 입니다.")
     public BaseResponse<Void> verifySeatController(
             @RequestBody @Valid VerifySeatRequest request,
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {

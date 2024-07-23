@@ -7,6 +7,7 @@ import com.gamja.tiggle.common.annotation.WebAdapter;
 import com.gamja.tiggle.program.adapter.in.web.request.CreateLocationRequest;
 import com.gamja.tiggle.program.application.port.in.CreateLocationCommand;
 import com.gamja.tiggle.program.application.port.in.CreateLocationUseCase;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ public class CreateLocationController {
     private final CreateLocationUseCase createUseCase;
 
     @PostMapping("/create")
+    @Operation(summary = "공연장 위치 정보 등록")
     public BaseResponse<String> create(@RequestBody CreateLocationRequest request){
         try {
             CreateLocationCommand command = CreateLocationCommand.builder()
