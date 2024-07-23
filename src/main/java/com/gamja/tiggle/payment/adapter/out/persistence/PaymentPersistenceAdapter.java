@@ -90,7 +90,16 @@ public class PaymentPersistenceAdapter implements PaymentPersistencePort {
             if (searchedEntity.getFee() != null) {
                 ReservationEntity result = ReservationEntity.builder()
                         .id(reservation.get().getId())
+                        .programEntity(reservation.get().getProgramEntity())
+                        .seatEntity(reservation.get().getSeatEntity())
+                        .timesEntity(reservation.get().getTimesEntity())
+                        .user(reservation.get().getUser())
+                        .payMethod(reservation.get().getPayMethod())
+                        .ticketNumber(reservation.get().getTicketNumber())
+                        .totalPrice(reservation.get().getTotalPrice())
                         .status(ReservationType.EXCHANGED)
+                        .requestLimit(reservation.get().getRequestLimit())
+                        .available(true)
                         .build();
 
                 jpaReservationRepository.save(result);
@@ -98,7 +107,16 @@ public class PaymentPersistenceAdapter implements PaymentPersistencePort {
             else {
                 ReservationEntity result = ReservationEntity.builder()
                         .id(reservation.get().getId())
+                        .programEntity(reservation.get().getProgramEntity())
+                        .seatEntity(reservation.get().getSeatEntity())
+                        .timesEntity(reservation.get().getTimesEntity())
+                        .user(reservation.get().getUser())
+                        .payMethod(reservation.get().getPayMethod())
+                        .ticketNumber(reservation.get().getTicketNumber())
+                        .totalPrice(reservation.get().getTotalPrice())
                         .status(ReservationType.COMPLETED)
+                        .requestLimit(reservation.get().getRequestLimit())
+                        .available(true)
                         .build();
 
                 jpaReservationRepository.save(result);
