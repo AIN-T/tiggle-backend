@@ -36,7 +36,7 @@ public class SecurityConfig {
                                 "swagger-resources/**",
                                 "swagger-ui/**",
                                 "swagger/**").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
         );
 
         http.addFilterBefore(new JwtFilter(jwtUtil), LoginFilter.class);
