@@ -9,4 +9,6 @@ import lombok.Getter;
 @Getter
 public class ReadExchangeOfferListCommand {
     private User user;
+    private Integer page;
+    private Integer size;
 }

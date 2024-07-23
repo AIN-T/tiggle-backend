@@ -1,6 +1,7 @@
 package com.gamja.tiggle.program.adapter.in.web;
 
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import com.gamja.tiggle.program.adapter.in.web.request.CreateCategoryRequest;
 import com.gamja.tiggle.program.application.port.in.CreateCategoryCommand;
@@ -20,6 +21,7 @@ public class CreateCategoryController {
     private final CreateCategoryUseCase createCategoryUseCase;
 
     @PostMapping("/create")
+    @Operation(summary = "카테고리 등록")
     public BaseResponse<String> create(@RequestBody CreateCategoryRequest request) {
         // 예외 1. 카테고리 이름이 비어 있는지 확인
         if (request.getCategoryName() == null || request.getCategoryName().isEmpty()) {

@@ -6,13 +6,15 @@ import com.gamja.tiggle.common.BaseResponse;
 import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.WebAdapter;
 import com.gamja.tiggle.exchange.adapter.in.web.request.CreateExchangeApprovalRequest;
+import com.gamja.tiggle.exchange.adapter.in.web.request.CreateExchangeOfferRequest;
 import com.gamja.tiggle.exchange.adapter.out.persistence.ExchangeEntity;
 import com.gamja.tiggle.exchange.application.port.in.CreateExchangeApprovalCommand;
 import com.gamja.tiggle.exchange.application.port.in.CreateExchangeApprovalUseCase;
+import com.gamja.tiggle.exchange.application.port.in.CreateExchangeOfferCommand;
+import com.gamja.tiggle.exchange.application.port.in.CreateExchangeOfferUseCase;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
 import com.gamja.tiggle.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,9 +27,9 @@ import java.util.Objects;
 @WebAdapter
 @RequiredArgsConstructor
 @RequestMapping("/exchange")
-@Tag(name = "교환 요청 응답")
-public class CreateExchangeApprovalController {
-    private final CreateExchangeApprovalUseCase useCase;
+public class CreateExchangeController {
+    private final CreateExchangeApprovalUseCase approvalUseCasee;
+    private final CreateExchangeOfferUseCase exchangeOfferUseCase;
 
     @PostMapping("/approval")
     @Operation(summary = "교환 요청 응답", description = "교환 요청 동의나 거절로 응답하는 API 입니다.")
@@ -42,7 +44,7 @@ public class CreateExchangeApprovalController {
 
         try {
 //            TODO: 1번 실행
-            ExchangeEntity exchangeEntity = useCase.findExchangeEntity(command.getExchangeId());
+            ExchangeEntity exchangeEntity = approvalUseCasee.findExchangeEntity(command.getExchangeId());
 
 //            TODO: 2번 실행
             if (!Objects.equals(exchangeEntity.getReservation2().getUser().getId(), user.getId())) {
@@ -59,9 +61,9 @@ public class CreateExchangeApprovalController {
                         .build();
 
                 if (command.getIsAgree()) {
-                    useCase.create(exchangeEntity, command);
+                    approvalUseCasee.create(exchangeEntity, command);
                 } else {
-                    useCase.reject(exchangeEntity);
+                    approvalUseCasee.reject(exchangeEntity);
                     return new BaseResponse<>(BaseResponseStatus.EXCHANGE_REJECT_SUCCESS);
                 }
             } else{
@@ -77,5 +79,25 @@ public class CreateExchangeApprovalController {
         }
 
         return new BaseResponse<>(BaseResponseStatus.EXCHANGE_APPROVAL_SUCCESS);
+    }
+
+    @PostMapping("/offer")
+    @Operation(summary = "교환 요청", description = "공연 티켓 교환을 요청하는 API 입니다.")
+    public BaseResponse<BaseResponseStatus> createOffer(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody CreateExchangeOfferRequest request) {
+        User user = customUserDetails.getUser();
+
+        CreateExchangeOfferCommand command = CreateExchangeOfferCommand.builder()
+                .user(user)
+                .reservationId1(request.getId1())
+                .reservationId2(request.getId2())
+                .build();
+
+        try {
+            exchangeOfferUseCase.create(command);
+        } catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
+
+        return new BaseResponse<>(BaseResponseStatus.EXCHANGE_OFFER_SUCCESS);
     }
 }

@@ -8,14 +8,13 @@ import com.gamja.tiggle.payment.application.port.in.CreatePaymentCommand;
 import com.gamja.tiggle.payment.application.port.in.CreatePaymentUseCase;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
 import com.gamja.tiggle.user.domain.User;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-;
 
 @RestController
 @RequestMapping("/payment")
@@ -24,10 +23,11 @@ public class CreatePaymentController {
     private final CreatePaymentUseCase createPaymentUseCase;
 
     @PostMapping
+    @Operation(summary = "결제 요청", description = "결제 내역을 생성하는 API 입니다.")
     BaseResponse create(@RequestBody CreatePaymentRequest request, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         Boolean requestChk = false;
         User user = null;
-        //CustomUserDetails를 확인하여 로그인한 사용자의 정보와 Role을 확인
+        //CustomUserDetails 를 확인하여 로그인한 사용자의 정보와 Role 을 확인
         if (customUserDetails != null) {
             user = customUserDetails.getUser();
             if (request.getAgree()) {

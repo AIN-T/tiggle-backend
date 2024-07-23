@@ -10,7 +10,7 @@ import com.gamja.tiggle.reservation.application.port.in.GetAvailableSeatCommand;
 import com.gamja.tiggle.reservation.application.port.in.GetAvailableSeatUseCase;
 import com.gamja.tiggle.reservation.domain.Seat;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,13 +22,13 @@ import java.util.List;
 @WebAdapter
 @RequiredArgsConstructor
 @RequestMapping("/seat")
-@Tag(name = "예약 가능 좌석 조회 컨트롤러", description = "programId,timesId,sectionId를 입력하면 해당 공연의 예약 가능 좌석 리스트를 응답")
 public class GetSeatController {
 
     private final GetAvailableSeatUseCase getAvailableSeatUseCase;
 
 
     @PostMapping
+    @Operation(summary = "예약 가능 좌석 조회", description = "특정 공연의 예약 가능 좌석을 조회하는 API 입니다.")
     public BaseResponse<List<GetAvailableSeatResponse>> getAvailableSeat(
             @RequestBody GetAvailableSeatRequest request,
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {

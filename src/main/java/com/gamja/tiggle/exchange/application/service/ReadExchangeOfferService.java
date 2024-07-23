@@ -14,7 +14,6 @@ import com.gamja.tiggle.exchange.application.port.in.ReadExchangeOfferUseCase;
 import com.gamja.tiggle.exchange.application.port.out.ExchangePort;
 import com.gamja.tiggle.exchange.domain.Exchange;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
-import com.gamja.tiggle.reservation.application.port.out.ReadReservationPort;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -26,7 +25,6 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ReadExchangeOfferService implements ReadExchangeOfferUseCase {
     private final ExchangePort exchangePort;
-    private final ReadReservationPort readReservationPort;
 
 
     @Override
@@ -58,21 +56,18 @@ public class ReadExchangeOfferService implements ReadExchangeOfferUseCase {
 
     @Override
     public List<ReadExchangeOfferListResponse> readAll(ReadExchangeOfferListCommand command) {
-        List<ReservationEntity> reservations = readReservationPort.readExchangeOfferForMe(command.getUser());
+        List<ExchangeEntity> exchanges = exchangePort.readExchangeOfferForMe(command.getUser(), command.getPage(), command.getSize());
 
         List<ReadExchangeOfferListResponse> result = new ArrayList<>();
 
-        reservations.forEach(reservation -> {
-            reservation.getExchangeEntity2List().forEach(exchange -> {
-                result.add(ReadExchangeOfferListResponse.builder()
-                        .exchangeId(exchange.getId())
-                        .otherEmail(reservation.getUser().getEmail())
-                        .programName(reservation.getProgramEntity().getProgramName())
-                        .location(reservation.getProgramEntity().getLocationEntity().getLocationName())
-                        .otherTicketInfo(createSummaryExchange(reservation))
-                        .isWatch(false)
-                        .build());
-            });
+        exchanges.forEach(exchange -> {
+            result.add(ReadExchangeOfferListResponse.builder()
+                    .exchangeId(exchange.getId())
+                    .programName(exchange.getReservation1().getProgramEntity().getProgramName())
+                    .location(exchange.getReservation1().getProgramEntity().getLocationEntity().getLocationName())
+                    .otherTicketInfo(createSummaryExchange(exchange.getReservation1()))
+                    .isWatch(false)
+                    .build());
         });
 
         return result;
@@ -80,6 +75,7 @@ public class ReadExchangeOfferService implements ReadExchangeOfferUseCase {
 
     private ReadSummaryExchange createSummaryExchange(ReservationEntity reservation) {
         return ReadSummaryExchange.builder()
+                .email(reservation.getUser().getEmail())
                 .grade(reservation.getSeatEntity().getSectionEntity().getGradeEntity().getGradeName())
                 .sectionName(reservation.getSeatEntity().getSectionEntity().getSectionName())
                 .seatNumber(reservation.getSeatEntity().getSeatNumber())

@@ -8,7 +8,6 @@ import lombok.Getter;
 @Builder
 public class ReadExchangeOfferListResponse {
     private Long exchangeId;
-    private String otherEmail;
     private String programName;
     private String location;
     private ReadSummaryExchange otherTicketInfo;

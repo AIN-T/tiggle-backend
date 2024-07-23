@@ -7,6 +7,7 @@ import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.user.adapter.in.web.request.SignupUserRequest;
 import com.gamja.tiggle.user.application.port.in.SignupUserCommand;
 import com.gamja.tiggle.user.application.port.in.SignupUserUseCase;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,7 @@ public class SignupUserController {
     private final SignupUserUseCase signupUserUseCase;
 
     @PostMapping("/signup")
+    @Operation(summary = "회원가입")
     BaseResponse signup(@RequestBody SignupUserRequest request) {
         if (request.getEmail() == null) {
             return new BaseResponse<>(USER_EMPTY_EMAIL);

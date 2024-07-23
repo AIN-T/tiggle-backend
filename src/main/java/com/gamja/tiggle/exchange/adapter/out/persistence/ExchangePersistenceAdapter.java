@@ -7,7 +7,13 @@ import com.gamja.tiggle.exchange.application.port.in.CreateExchangeOfferCommand;
 import com.gamja.tiggle.exchange.application.port.out.ExchangePort;
 import com.gamja.tiggle.exchange.domain.Exchange;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
+import com.gamja.tiggle.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
+import java.util.List;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
@@ -17,7 +23,7 @@ public class ExchangePersistenceAdapter implements ExchangePort {
     @Override
     public ExchangeEntity read(Exchange exchange) throws BaseException {
 //        TODO: 3번 조회 => exchange 조회 후 r1 r2 조회
-        return  exchangeRepository.findById(exchange.getId()).orElseThrow(
+        return exchangeRepository.findById(exchange.getId()).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAIL_LOAD_EXCHANGE_OFFER)
         );
     }
@@ -56,8 +62,15 @@ public class ExchangePersistenceAdapter implements ExchangePort {
 
     @Override
     public void update(ExchangeEntity exchange) {
-        
+
 //        TODO: 조인하면서 문제 발생
         exchangeRepository.save(exchange);
+    }
+
+    @Override
+    public List<ExchangeEntity> readExchangeOfferForMe(User user,Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
+
+        return exchangeRepository.findExchangeByUser(user.getId(), pageable);
     }
 }

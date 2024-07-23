@@ -13,8 +13,4 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
 
     Optional<ReservationEntity> findBySeatEntityId(Long seatId);
     List<ReservationEntity> findAllBySeatEntityId(Long seatId);
-
-
-    @Query("SELECT r FROM ReservationEntity r JOIN FETCH r.exchangeEntity2List e  WHERE e.reservation2.user.id = :userId")
-    List<ReservationEntity> findReservationByUser (Long userId);
 }
