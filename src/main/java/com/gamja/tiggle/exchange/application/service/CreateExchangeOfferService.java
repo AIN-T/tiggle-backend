@@ -34,7 +34,7 @@ public class CreateExchangeOfferService implements CreateExchangeOfferUseCase {
         ReservationEntity reservation1 = readReservationPort.read(command.getReservationId1());
         ReservationEntity reservation2 = readReservationPort.read(command.getReservationId2());
 
-        if (!Objects.equals(command.getUser().getId(), reservation1.getUser().getId()))
+        if (!Objects.equals(command.getUser().getId(), reservation1.getUserEntity().getId()))
             throw new BaseException(BaseResponseStatus.WRONG_EXCHANGE_OFFER);
 
         if (exchangePort.find(command))
@@ -43,14 +43,14 @@ public class CreateExchangeOfferService implements CreateExchangeOfferUseCase {
         if(reservation1.getRequestLimit()<1)
             throw  new BaseException(BaseResponseStatus.NOT_REMAIN_EXCHANGE_OFFER);
 
-        if(Objects.equals(reservation1.getUser().getId(), reservation2.getUser().getId()))
+        if(Objects.equals(reservation1.getUserEntity().getId(), reservation2.getUserEntity().getId()))
             throw new BaseException(BaseResponseStatus.WRONG_EXCHANGE_OFFER);
 
         if (!Objects.equals(reservation1.getProgramEntity().getId(), reservation2.getProgramEntity().getId()) || !Objects.equals(reservation1.getTimesEntity().getId(), reservation2.getTimesEntity().getId()))
             throw new BaseException(BaseResponseStatus.WRONG_EXCHANGE_OFFER);
 
         saveReservationPort.save(Reservation.builder()
-                .userId(reservation1.getUser().getId())
+                .userId(reservation1.getUserEntity().getId())
                 .programId(reservation2.getProgramEntity().getId())
                 .seatId(reservation2.getSeatEntity().getId())
                 .timesId(reservation2.getTimesEntity().getId())

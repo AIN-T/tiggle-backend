@@ -40,7 +40,7 @@ public class ReadExchangeOfferService implements ReadExchangeOfferUseCase {
         ReservationEntity reservation1 = exchangeEntity.getReservation1();
         ReservationEntity reservation2 = exchangeEntity.getReservation2();
 
-        if (!Objects.equals(command.getUser().getId(), reservation2.getUser().getId()))
+        if (!Objects.equals(command.getUser().getId(), reservation2.getUserEntity().getId()))
             throw new BaseException(BaseResponseStatus.NOT_FOUND_USER);
 
         exchangePort.update(exchangeEntity.watched());
@@ -66,7 +66,7 @@ public class ReadExchangeOfferService implements ReadExchangeOfferUseCase {
             reservation.getExchangeEntity2List().forEach(exchange -> {
                 result.add(ReadExchangeOfferListResponse.builder()
                         .exchangeId(exchange.getId())
-                        .otherEmail(reservation.getUser().getEmail())
+                        .otherEmail(reservation.getUserEntity().getEmail())
                         .programName(reservation.getProgramEntity().getProgramName())
                         .location(reservation.getProgramEntity().getLocationEntity().getLocationName())
                         .otherTicketInfo(createSummaryExchange(reservation))

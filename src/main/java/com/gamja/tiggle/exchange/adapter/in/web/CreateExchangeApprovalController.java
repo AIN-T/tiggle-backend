@@ -45,7 +45,7 @@ public class CreateExchangeApprovalController {
             ExchangeEntity exchangeEntity = useCase.findExchangeEntity(command.getExchangeId());
 
 //            TODO: 2번 실행
-            if (!Objects.equals(exchangeEntity.getReservation2().getUser().getId(), user.getId())) {
+            if (!Objects.equals(exchangeEntity.getReservation2().getUserEntity().getId(), user.getId())) {
                 throw new BaseException(BaseResponseStatus.WRONG_EXCHANGE_OFFER);
             }
 
