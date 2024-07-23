@@ -12,7 +12,7 @@
 <br>
 
 
-## ✔️ 프로젝트 소개
+## 👩‍💻 프로젝트 소개
 
 - 문화 생활을 즐기는 사람들이 늘어나 **티켓 사이트에 대한 관심과 사용량이 증가** 하고 있는만큼,   
   **티켓 거래를 하는 사람도 늘어났다** 
@@ -24,7 +24,7 @@
 
 
 
-## ✔️ 팀원 소개
+## 🍟 팀원 소개
 |<img src="https://avatars.githubusercontent.com/u/81555158?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/96894900?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/117149045?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/121721219?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/152248322?v=4" width="150" height="150"/>|
 |:-:|:-:|:-:|:-:|:-:|
 |👑김동욱<br/>[@postrel63](https://github.com/postrel63)|지연희<br/>[@Aqulog](https://github.com/Aqulog)|차윤슬<br/>[@yunseul-dev](https://github.com/yunseul-dev)|이재룡<br/>[@ashd89](https://github.com/ashd89)|김은선<br/>[@kkkeess](https://github.com/kkkeess)|
@@ -32,7 +32,7 @@
 
 
 
-## ✔️ 기술 스택
+## 💻 기술 스택
 
 **Environment**
 <img src="https://img.shields.io/badge/Github-181717?style=flat-square&logo=Github&logoColor=white"/></a></a>
