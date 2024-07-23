@@ -9,6 +9,7 @@ import com.gamja.tiggle.program.adapter.in.web.response.ReadProgramResponse;
 import com.gamja.tiggle.program.application.port.in.ReadLocationCommand;
 import com.gamja.tiggle.program.application.port.in.ReadLocationUseCase;
 import com.gamja.tiggle.program.domain.Location;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ public class ReadLocationController {
     private final ReadLocationUseCase readUseCase;
 
     @GetMapping("/readProgram")
+    @Operation(summary = "장소별 공연 정보 조회", description = "해당 공연장에서 주최하는 공연 정보들을 조회하는 API 입니다.")
     public BaseResponse<List<ReadLocationResponse>> readProgram(@RequestParam Long locationId) {
         List<ReadLocationResponse> responses = null;
         try {

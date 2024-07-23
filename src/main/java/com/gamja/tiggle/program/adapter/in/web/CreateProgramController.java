@@ -1,5 +1,6 @@
 package com.gamja.tiggle.program.adapter.in.web;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponse;
@@ -19,6 +20,7 @@ public class CreateProgramController {
     private final CreateProgramUseCase createUseCase;
 
     @PostMapping("/create")
+    @Operation(summary = "공연 정보 등록")
     public BaseResponse<String> create(@RequestPart CreateProgramRequest request, @RequestPart MultipartFile[] files) {
         try {
             // 필수 값 입력 체크

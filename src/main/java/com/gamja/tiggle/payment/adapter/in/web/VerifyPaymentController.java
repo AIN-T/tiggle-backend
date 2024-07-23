@@ -8,6 +8,7 @@ import com.gamja.tiggle.payment.application.port.in.VerifyPaymentCommand;
 import com.gamja.tiggle.payment.application.port.in.VerifyPaymentUseCase;
 import com.gamja.tiggle.payment.application.service.PGPaymentService;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ public class VerifyPaymentController {
     private final PGPaymentService pgPaymentService;
 
     @PostMapping("/verify")
+    @Operation(summary = "결제 검증", description = "요청 온 결제에 대한 검증을 진행하는 API 입니다.")
     BaseResponse verify(@RequestBody VerifyPaymentRequest request, @AuthenticationPrincipal CustomUserDetails customUserDetails){
         VerifyPaymentCommand command = VerifyPaymentCommand.builder()
                 .paymentId(request.getPaymentId())

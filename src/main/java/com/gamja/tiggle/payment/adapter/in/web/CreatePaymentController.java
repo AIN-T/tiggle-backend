@@ -8,6 +8,7 @@ import com.gamja.tiggle.payment.application.port.in.CreatePaymentCommand;
 import com.gamja.tiggle.payment.application.port.in.CreatePaymentUseCase;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
 import com.gamja.tiggle.user.domain.User;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ public class CreatePaymentController {
     private final CreatePaymentUseCase createPaymentUseCase;
 
     @PostMapping
+    @Operation(summary = "결제 요청", description = "결제 내역을 생성하는 API 입니다.")
     BaseResponse create(@RequestBody CreatePaymentRequest request, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         Boolean requestChk = false;
         User user = null;

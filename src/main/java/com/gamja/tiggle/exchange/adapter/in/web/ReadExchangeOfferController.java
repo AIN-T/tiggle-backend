@@ -24,7 +24,6 @@ import java.util.List;
 @WebAdapter
 @RequiredArgsConstructor
 @RequestMapping("/exchange")
-@Tag(name = "교환 요청 조회", description = "교환 요청을 조회하는 API 입니다.")
 public class ReadExchangeOfferController {
     private final ReadExchangeOfferUseCase useCase;
 
@@ -50,7 +49,7 @@ public class ReadExchangeOfferController {
     }
 
     @GetMapping("/list")
-    @Operation(summary = "교환 요청 리스트 조회", description = "사용자가 받은 교환 요청들을 조회하는 API 입니다.")
+    @Operation(summary = "교환 요청 리스트 조회", description = "사용자가 받은 교환 요청들을 page별로 조회하는 API 입니다.")
     public BaseResponse<List<ReadExchangeOfferListResponse>> readAll(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam Integer page, @RequestParam Integer size) {
         User user = customUserDetails.getUser();
 
