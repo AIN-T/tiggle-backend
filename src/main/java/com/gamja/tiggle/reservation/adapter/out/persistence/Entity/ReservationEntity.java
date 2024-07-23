@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 
@@ -56,10 +57,11 @@ public class ReservationEntity extends BaseEntity {
     @Column(columnDefinition = "boolean default false")
     private boolean available;
 
+    @BatchSize(size = 10)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation1")
     private List<ExchangeEntity> exchangeEntity1List;
 
+    @BatchSize(size = 10)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation2")
     private List<ExchangeEntity> exchangeEntity2List;
-
 }

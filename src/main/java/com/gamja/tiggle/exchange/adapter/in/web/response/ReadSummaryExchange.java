@@ -6,6 +6,7 @@ import lombok.Getter;
 @Builder
 @Getter
 public class ReadSummaryExchange {
+    private String email;
     private String grade;
     private String sectionName;
     private Integer seatNumber;
