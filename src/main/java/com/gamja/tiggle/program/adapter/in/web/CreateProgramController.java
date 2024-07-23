@@ -2,14 +2,12 @@ package com.gamja.tiggle.program.adapter.in.web;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponse;
 import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.WebAdapter;
 import com.gamja.tiggle.program.adapter.in.web.request.CreateProgramRequest;
 import com.gamja.tiggle.program.application.port.in.CreateProgramCommand;
 import com.gamja.tiggle.program.application.port.in.CreateProgramUseCase;
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

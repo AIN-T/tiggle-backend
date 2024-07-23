@@ -9,7 +9,6 @@ import com.gamja.tiggle.reservation.application.port.in.VerifySeatCommand;
 import com.gamja.tiggle.reservation.application.port.in.VerifySeatUseCase;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

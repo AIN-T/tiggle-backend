@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-;
-
 @RestController
 @RequestMapping("/payment")
 @RequiredArgsConstructor
@@ -29,7 +27,7 @@ public class CreatePaymentController {
     BaseResponse create(@RequestBody CreatePaymentRequest request, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         Boolean requestChk = false;
         User user = null;
-        //CustomUserDetails를 확인하여 로그인한 사용자의 정보와 Role을 확인
+        //CustomUserDetails 를 확인하여 로그인한 사용자의 정보와 Role 을 확인
         if (customUserDetails != null) {
             user = customUserDetails.getUser();
             if (request.getAgree()) {

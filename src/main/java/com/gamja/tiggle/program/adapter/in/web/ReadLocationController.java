@@ -2,16 +2,13 @@ package com.gamja.tiggle.program.adapter.in.web;
 
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponse;
-import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.WebAdapter;
 import com.gamja.tiggle.program.adapter.in.web.response.ReadLocationResponse;
-import com.gamja.tiggle.program.adapter.in.web.response.ReadProgramResponse;
 import com.gamja.tiggle.program.application.port.in.ReadLocationCommand;
 import com.gamja.tiggle.program.application.port.in.ReadLocationUseCase;
 import com.gamja.tiggle.program.domain.Location;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

@@ -11,7 +11,6 @@ import com.gamja.tiggle.reservation.application.port.in.GetAvailableSeatUseCase;
 import com.gamja.tiggle.reservation.domain.Seat;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;

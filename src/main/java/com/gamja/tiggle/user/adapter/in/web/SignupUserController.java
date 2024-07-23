@@ -8,7 +8,6 @@ import com.gamja.tiggle.user.adapter.in.web.request.SignupUserRequest;
 import com.gamja.tiggle.user.application.port.in.SignupUserCommand;
 import com.gamja.tiggle.user.application.port.in.SignupUserUseCase;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

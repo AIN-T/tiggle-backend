@@ -12,7 +12,6 @@ import com.gamja.tiggle.exchange.application.port.in.ReadExchangeOfferUseCase;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
 import com.gamja.tiggle.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;

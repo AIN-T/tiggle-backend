@@ -3,7 +3,6 @@ package com.gamja.tiggle.user.adapter.in.web;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
