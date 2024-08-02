@@ -7,6 +7,7 @@ import com.gamja.tiggle.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -77,8 +78,15 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         String token = jwtUtil.createToken(id, username, role);
 
-        response.addHeader("Authorization", "Bearer " + token);
-        PrintWriter out = response.getWriter();
-        out.println("{\"isSuccess\": true, \"accessToken\": \"" + token + "\"}");
+        Cookie loginCookie = new Cookie("AToken", token);
+        loginCookie.setHttpOnly(true);
+        loginCookie.setSecure(true);
+        loginCookie.setPath("/");
+        loginCookie.setMaxAge(60*60*1);
+
+        response.addCookie(loginCookie);
+//        response.addHeader("Authorization", "Bearer " + token);
+//        PrintWriter out = response.getWriter();
+//        out.println("{\"isSuccess\": true, \"accessToken\": \"" + token + "\"}");
     }
 }
