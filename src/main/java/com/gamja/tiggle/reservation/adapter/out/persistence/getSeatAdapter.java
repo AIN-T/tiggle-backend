@@ -6,7 +6,7 @@ import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.SeatEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Response.GetSeatResponse;
 import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.ReservationRepository;
 import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.SeatRepository;
-import com.gamja.tiggle.reservation.application.port.out.GetAvailableSeatPort;
+import com.gamja.tiggle.reservation.application.port.out.GetSeatPort;
 import com.gamja.tiggle.reservation.domain.Seat;
 import lombok.RequiredArgsConstructor;
 
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class getAvailableSeatAdapter implements GetAvailableSeatPort {
+public class getSeatAdapter implements GetSeatPort {
 
     private final SeatRepository seatRepository;
     private final ReservationRepository reservationRepository;
@@ -77,6 +77,14 @@ public class getAvailableSeatAdapter implements GetAvailableSeatPort {
                         .sectionId(getSeatResponse.getSectionId())
                         .build()).toList();
         return list;
+    }
+
+
+    @Override
+    public List<Seat> getAllSeat(Long programId, Long sectionId, Long timesId, int rowCount, int columnCount) {
+
+
+        return null;
     }
 }
 

@@ -5,6 +5,8 @@ import com.gamja.tiggle.reservation.domain.Seat;
 
 import java.util.List;
 
-public interface GetAvailableSeatUseCase {
+public interface GetSeatUseCase {
     List<Seat> getAvailableSeat(GetAvailableSeatCommand command) throws BaseException;
+
+    List<Seat> getAllSeat(GetAllSeatCommand command) throws  BaseException;
 }
