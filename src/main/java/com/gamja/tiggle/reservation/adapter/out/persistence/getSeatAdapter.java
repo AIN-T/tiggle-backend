@@ -1,5 +1,7 @@
 package com.gamja.tiggle.reservation.adapter.out.persistence;
 
+import com.gamja.tiggle.common.BaseException;
+import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.PersistenceAdapter;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.SeatEntity;
@@ -26,10 +28,11 @@ public class getSeatAdapter implements GetSeatPort {
      * getAvailableSeatByJpa -> getAvailableSeatByQuery
      */
     @Override
-    public List<Seat> getAvailableSeatByJpa(Long programId, Long timesId, Long sectionId) {
+    public List<Seat> getAvailableSeatByJpa(Long programId, Long timesId, Long sectionId) throws BaseException {
         // sectionId로 먼저 좌석 조회
-        List<SeatEntity> seats = seatRepository.findAllBySectionEntityId(sectionId);
-        System.out.println("seats = " + seats);
+        List<SeatEntity> seats = seatRepository.findAllBySectionEntityId(sectionId).orElseThrow(() ->
+                new BaseException(BaseResponseStatus.NOT_FOUND_SEAT));
+
 
         List<SeatEntity> result = new ArrayList<>();
         for (SeatEntity seat : seats) {
@@ -74,17 +77,28 @@ public class getSeatAdapter implements GetSeatPort {
                 Seat.builder()
                         .id(getSeatResponse.getSeatId())
                         .seatNumber(getSeatResponse.getSeatNumber())
-                        .sectionId(getSeatResponse.getSectionId())
+                        .row(getSeatResponse.getRow())
                         .build()).toList();
         return list;
     }
 
 
     @Override
-    public List<Seat> getAllSeat(Long programId, Long sectionId, Long timesId, int rowCount, int columnCount) {
+    public List<Seat> getAllSeat(Long programId, Long sectionId, Long timesId) throws BaseException {
 
+        List<SeatEntity> seats = seatRepository.findAllBySectionEntityIdByQuery(sectionId);
+        if (seats.isEmpty()) {
+            throw new BaseException(BaseResponseStatus.NOT_FOUND_SEAT);
+        }
 
-        return null;
+        return seats.stream().map(seatEntity ->
+                Seat.builder()
+                        .id(seatEntity.getId())
+                        .row(seatEntity.getRow())
+                        .seatNumber(seatEntity.getSeatNumber())
+                        .active(seatEntity.getActive())
+                        .build()
+        ).toList();
     }
 }
 

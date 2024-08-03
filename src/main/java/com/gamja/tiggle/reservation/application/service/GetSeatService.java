@@ -8,9 +8,13 @@ import com.gamja.tiggle.reservation.application.port.in.GetAllSeatCommand;
 import com.gamja.tiggle.reservation.application.port.in.GetAvailableSeatCommand;
 import com.gamja.tiggle.reservation.application.port.in.GetSeatUseCase;
 import com.gamja.tiggle.reservation.application.port.out.GetSeatPort;
+import com.gamja.tiggle.reservation.application.port.out.GetSectionPort;
 import com.gamja.tiggle.reservation.domain.Seat;
+import com.gamja.tiggle.reservation.domain.Section;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @UseCase
@@ -18,6 +22,7 @@ import java.util.List;
 public class GetSeatService implements GetSeatUseCase {
     private final GetSeatPort getSeatPort;
     private final ProgramPort programPort;
+    private final GetSectionPort sectionPort;
 
 
     @Override
@@ -33,13 +38,30 @@ public class GetSeatService implements GetSeatUseCase {
     }
 
     @Override
-    public List<Seat> getAllSeat(GetAllSeatCommand command) throws BaseException {
+    public List<List<Seat>> getAllSeat(GetAllSeatCommand command) throws BaseException {
 
-        return getSeatPort.getAllSeat(command.getProgramId(),
+        List<Seat> allSeat = getSeatPort.getAllSeat(command.getProgramId(),
                 command.getSectionId(),
-                command.getTimesId(),
-                command.getRowCount(),
-                command.getColumnCount());
+                command.getTimesId()
+        );
+        Section section = sectionPort.getRowColumn(command.getSectionId());
+
+        int rowCount = section.getRowCount();
+        int columnCount = section.getColumnCount();
+        List<List<Seat>> ArraySeat = new ArrayList<>();
+
+        for (int i = 0; i < rowCount; i++) {
+            ArraySeat.add(new ArrayList<>(Collections.nCopies(columnCount, null)));
+        }
+
+        for (Seat seat : allSeat) {
+            int rowIndex = seat.getRow().charAt(0) - 'A';
+            int colIndex = seat.getSeatNumber() - 1;
+            ArraySeat.get(rowIndex).set(colIndex, seat);
+        }
+
+
+        return ArraySeat;
     }
 
 
