@@ -42,7 +42,7 @@ INSERT INTO tiggle.program (id, age, program_end_date, program_info, program_nam
                                                                                            '2024-05-01 12:00:00.000000', 100, 2, 5);
 INSERT INTO tiggle.section (location_id, grade_id, section_name, row_count, column_count) VALUES
                                                                                        (1, 1, 'Square', 5, 5),
-                                                                                       (1, 1, 'Rectangle', 5, 3),
+                                                                                       (1, 1, 'Rectangle', 5, 5),
                                                                                        (1, 1, 'Cross', 5, 5),
                                                                                        (1, 1, 'L Shape', 4, 4),
                                                                                        (1, 1, 'Inverted L Shape', 4, 4);

@@ -9,4 +9,6 @@ public interface GetSectionPort {
 
     List<Section> getSection(Long id) throws BaseException;
     Section getRowColumn(Long id) throws BaseException;
+
+    void correctSection(Long sectionId, Long locationId) throws BaseException;
 }

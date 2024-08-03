@@ -19,12 +19,20 @@ public class GetTimesAdapter implements GetTimesPort {
 
     @Override
     public List<Times> getTimes(Long id) throws BaseException {
-        // TODO 회차가 없는 경우 예외
         List<TimesEntity> TimesList = timesRepository.findAllByProgramEntityId(id);
         if (TimesList.isEmpty()) {
             throw new BaseException(BaseResponseStatus.NOT_FOUND_TIMES);
         }
         return getList(TimesList);
+    }
+
+    @Override
+    public void verifyTimes(Long timesId, Long programId) throws BaseException {
+
+        if (!timesRepository.existsByProgramEntityIdAndId(programId, timesId)) {
+            throw new BaseException(BaseResponseStatus.NOT_EXIST_TIMES);
+        }
+
     }
 
     private static List<Times> getList(List<TimesEntity> TimesList) {

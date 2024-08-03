@@ -37,7 +37,6 @@ public class GetSeatController {
             @RequestBody GetAllSeatRequest request,
             @AuthenticationPrincipal CustomUserDetails customUserDetails) throws BaseException {
 
-
         List<List<GetAllSeatResponse>> AllSeatResponse;
         try {
             List<List<Seat>> allSeat = getSeatUseCase.getAllSeat(toAllSeatCommand(request));

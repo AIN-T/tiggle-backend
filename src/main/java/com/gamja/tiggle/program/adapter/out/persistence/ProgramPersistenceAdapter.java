@@ -147,8 +147,20 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
     }
 
     @Override
-    public boolean existProgram(Long id) {
-        return jpaProgramRepository.existsById(id);
+    public boolean existProgram(Long id) throws BaseException {
+        if(!jpaProgramRepository.existsById(id)){
+            throw new BaseException(BaseResponseStatus.NOT_FOUND_PROGRAM);
+        }
+        return true;
+    }
+
+    @Override
+    public Long getLocationId(Long programId) throws BaseException {
+        Long locationIdById = jpaProgramRepository.findLocationIdById(programId);
+        if (locationIdById == null){
+            throw new BaseException(BaseResponseStatus.NOT_FOUND_LOCATION_ID);
+        }
+        return locationIdById;
     }
 
 }

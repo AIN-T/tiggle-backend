@@ -11,7 +11,5 @@ public class GetSectionListResponse {
     private String sectionName;
     private Long gradeId;
 
-    private int rowCount;
-    private int columnCount;
 
 }

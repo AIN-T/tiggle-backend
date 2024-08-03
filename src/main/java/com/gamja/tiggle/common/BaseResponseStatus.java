@@ -80,6 +80,9 @@ public enum BaseResponseStatus {
     NOT_FOUND_RESERVATION(false, 5001, "결제 정보가 존재하지 않습니다."),
     NOT_FOUND_TIMES(false, 5002, "회차 정보가 존재하지 않습니다."),
     NOT_FOUND_SEAT(false, 5003, "좌석 정보가 존재하지 않습니다."),
+    NOT_MATCH_ROW(false,5004,"행 정보가 일치하지 않습니다."),
+    NOT_MATCH_COLUMN(false,5004,"열 정보가 일치하지 않습니다."),
+    NOT_EXIST_TIMES(false,5005,"공연 회차정보가 존재하지 않습니다."),
 
 
     /**
@@ -101,7 +104,8 @@ public enum BaseResponseStatus {
      * 7000: 공연장, 구역, 좌석, 등급
      */
     NOT_FOUND_SECTION(false, 7000, "구역이 존재하지 않습니다."),
-    NOT_FOUND_PRICE(false, 7001, "등급별 가격 정보가 존재하지 않습니다."),
+    NOT_MATCH_SECTION(false, 7001, "해당 공연의 구역 정보가 존재하지 않습니다."),
+    NOT_FOUND_PRICE(false, 7002, "등급별 가격 정보가 존재하지 않습니다."),
 
     /**
      * 8000: 공통 에러

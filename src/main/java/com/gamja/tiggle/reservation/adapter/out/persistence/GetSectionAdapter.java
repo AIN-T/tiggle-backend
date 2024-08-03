@@ -33,6 +33,13 @@ public class GetSectionAdapter implements GetSectionPort {
         return from(sectionEntity);
     }
 
+    @Override
+    public void correctSection(Long sectionId, Long locationId) throws BaseException {
+        if(!sectionRepository.existsByIdAndLocationEntityId(sectionId, locationId)){
+            throw new BaseException(BaseResponseStatus.NOT_MATCH_SECTION);
+        }
+    }
+
     private List<Section> from(List<SectionEntity> allByLocationId) {
         return allByLocationId.stream().map(sectionEntity ->
                 Section.builder()

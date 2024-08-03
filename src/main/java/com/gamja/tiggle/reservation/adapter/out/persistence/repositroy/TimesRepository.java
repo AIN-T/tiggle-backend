@@ -9,4 +9,6 @@ import java.util.List;
 public interface TimesRepository extends JpaRepository<TimesEntity, Long> {
 
     List<TimesEntity> findAllByProgramEntityId(Long id);
+
+    Boolean existsByProgramEntityIdAndId(Long programId, Long TimesId);
 }
