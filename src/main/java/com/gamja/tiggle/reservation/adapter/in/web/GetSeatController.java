@@ -37,7 +37,6 @@ public class GetSeatController {
             @RequestBody GetAllSeatRequest request,
             @AuthenticationPrincipal CustomUserDetails customUserDetails) throws BaseException {
 
-        // TODO 조회된 회차의 구역이 아니라 다른 구역을 선택했을떄도 값이 출력, 예외처리해야함
         List<List<GetAllSeatResponse>> AllSeatResponse;
         try {
             List<List<Seat>> allSeat = getSeatUseCase.getAllSeat(toAllSeatCommand(request));
