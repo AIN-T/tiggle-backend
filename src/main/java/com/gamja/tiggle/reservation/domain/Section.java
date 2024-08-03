@@ -11,4 +11,7 @@ public class Section {
     private Long locationId;
     private String sectionName;
     private Long gradeId;
+
+    private int rowCount; // 행
+    private int columnCount; // 열
 }

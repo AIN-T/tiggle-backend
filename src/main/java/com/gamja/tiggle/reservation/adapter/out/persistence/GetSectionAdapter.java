@@ -19,14 +19,18 @@ public class GetSectionAdapter implements GetSectionPort {
 
     @Override
     public List<Section> getSection(Long id) throws BaseException {
-        System.out.println("aa");
         List<SectionEntity> allByLocationId = sectionRepository.findAllByLocationEntityId(id);
         if (allByLocationId.isEmpty()) {
             throw new BaseException(BaseResponseStatus.NOT_FOUND_SECTION);
         }
-        System.out.println(allByLocationId);
-        System.out.println(allByLocationId.get(0).getId());
         return from(allByLocationId);
+    }
+
+    @Override
+    public Section getRowColumn(Long id) throws BaseException {
+        SectionEntity sectionEntity = sectionRepository.findById(id).orElseThrow(() ->
+                new BaseException(BaseResponseStatus.NOT_FOUND_SECTION));
+        return from(sectionEntity);
     }
 
     private List<Section> from(List<SectionEntity> allByLocationId) {
@@ -38,5 +42,13 @@ public class GetSectionAdapter implements GetSectionPort {
                         .sectionName(sectionEntity.getSectionName())
                         .build()
         ).toList();
+    }
+
+    private Section from(SectionEntity entity) {
+        return Section
+                .builder()
+                .rowCount(entity.getRowCount())
+                .columnCount(entity.getColumnCount())
+                .build();
     }
 }

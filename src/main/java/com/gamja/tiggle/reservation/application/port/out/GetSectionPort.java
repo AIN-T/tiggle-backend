@@ -8,4 +8,5 @@ import java.util.List;
 public interface GetSectionPort {
 
     List<Section> getSection(Long id) throws BaseException;
+    Section getRowColumn(Long id) throws BaseException;
 }
