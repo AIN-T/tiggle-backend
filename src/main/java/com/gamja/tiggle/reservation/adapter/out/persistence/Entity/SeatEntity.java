@@ -24,6 +24,9 @@ public class SeatEntity {
 
     private int seatNumber;
 
+    private String row;
+    private Boolean active;
+
     public SeatEntity(Long id) {
         this.id = id;
     }
