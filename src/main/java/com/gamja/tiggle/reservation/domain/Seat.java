@@ -13,7 +13,11 @@ public class Seat {
     private Location location;
     private Grade grade;
     private Long sectionId;
-    private ReservationType status;
+
+    private String row;
     private int seatNumber;
+    private Boolean active;
+
+    private ReservationType status;
     private Boolean available;
 }

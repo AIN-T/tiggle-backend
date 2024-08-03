@@ -17,7 +17,6 @@ public class GetSectionService implements GetSectionUseCase {
 
     @Override
     public List<Section> getSection(Long locationId) throws BaseException {
-        System.out.println("locationId = " + locationId);
         return getSectionPort.getSection(locationId);
     }
 }

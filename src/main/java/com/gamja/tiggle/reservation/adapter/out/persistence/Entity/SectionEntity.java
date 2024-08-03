@@ -21,6 +21,9 @@ public class SectionEntity {
     private Long id;
     private String sectionName;
 
+    private int rowCount; // 행
+    private int columnCount; // 열
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
     private LocationEntity locationEntity;

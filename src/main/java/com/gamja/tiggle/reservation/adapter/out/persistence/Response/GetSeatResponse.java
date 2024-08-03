@@ -10,12 +10,13 @@ public class GetSeatResponse {
     private Long seatId;
     private Long sectionId;
     private int seatNumber;
+    private String row;
 
 
-    public GetSeatResponse(Long seatId, Long sectionId, int seatNumber) {
+    public GetSeatResponse(Long seatId, Long sectionId, int seatNumber, String row) {
         this.seatId = seatId;
         this.sectionId = sectionId;
         this.seatNumber = seatNumber;
-
+        this.row = row;
     }
 }

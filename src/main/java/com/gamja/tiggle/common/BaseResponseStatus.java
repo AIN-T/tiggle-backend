@@ -11,7 +11,6 @@ public enum BaseResponseStatus {
     FAIL(false, 500, "요청 실패"),
 
 
-
     /**
      * 1000 : 요청 성공
      */
@@ -25,19 +24,19 @@ public enum BaseResponseStatus {
     /**
      * 2000: 유저
      */
-    NOT_FOUND_USER(false,2000,"허가되지 않은 사용자 접근 입니다."),
-    USER_EMPTY_EMAIL(false,2001,"이메일 등록란은 필수 항목입니다."),
-    USER_EMPTY_NAME(false,2002,"이름 등록란은 필수 항목입니다."),
-    USER_EMPTY_PASSWORD(false,2003,"패스워드 입력란은 필수 항목입니다."),
+    NOT_FOUND_USER(false, 2000, "허가되지 않은 사용자 접근 입니다."),
+    USER_EMPTY_EMAIL(false, 2001, "이메일 등록란은 필수 항목입니다."),
+    USER_EMPTY_NAME(false, 2002, "이름 등록란은 필수 항목입니다."),
+    USER_EMPTY_PASSWORD(false, 2003, "패스워드 입력란은 필수 항목입니다."),
 
 
     /**
      * 필터 단계에서 확인되는 에러는 실제 에러코드 형태여야 함.
      */
-    EXPIRED_TOKEN(false,400,"만료된 토큰 입니다."),
-    NOT_INSERT_TOKEN(false,400,"요청 헤더에 토큰이 존재하지 않습니다."),
-    NOT_MATCH_USERDATA_TOKEN(false,400,"토큰의 정보와 유저의 데이터가 일치 하지 않습니다."),
-    UNSIGNED_FORMAT_TOKEN(false,400,"지원하지 않는 형태의 JWT 토큰 양식 입니다."),
+    EXPIRED_TOKEN(false, 400, "만료된 토큰 입니다."),
+    NOT_INSERT_TOKEN(false, 400, "요청 헤더에 토큰이 존재하지 않습니다."),
+    NOT_MATCH_USERDATA_TOKEN(false, 400, "토큰의 정보와 유저의 데이터가 일치 하지 않습니다."),
+    UNSIGNED_FORMAT_TOKEN(false, 400, "지원하지 않는 형태의 JWT 토큰 양식 입니다."),
 
     /**
      * 3000: 프로그램
@@ -60,28 +59,27 @@ public enum BaseResponseStatus {
     /**
      * 4000: 결제
      */
-    NOT_FOUND_PAYMENT(false,4000,"결제 정보가 존재하지 않습니다."),
-    INCORRECT_PAYMENT_INFO(false,4100,"잘못된 결제 정보 입니다."),
-    WRONG_API_SECRET(false,4101,"잘못된 API KEY 입니다. 데이터와 만료 시기를 확인해 주시기 바랍니다."),
-    WRONG_PAYMENT_ID(false,4102,"결제 ID 코드값을 다시 확인해 주시기 바랍니다."),
+    NOT_FOUND_PAYMENT(false, 4000, "결제 정보가 존재하지 않습니다."),
+    INCORRECT_PAYMENT_INFO(false, 4100, "잘못된 결제 정보 입니다."),
+    WRONG_API_SECRET(false, 4101, "잘못된 API KEY 입니다. 데이터와 만료 시기를 확인해 주시기 바랍니다."),
+    WRONG_PAYMENT_ID(false, 4102, "결제 ID 코드값을 다시 확인해 주시기 바랍니다."),
 
-    NOT_AGREE_PAYMENT_RULE(false,4101,"결제 주의 사항에 동의가 반드시 필요합니다."),
-    INCORRECT_RESERVATION_DATA(false,4200,"잘못된 예매 정보입니다."),
-    ALREADY_PAID_TICKET(false,4201,"이미 결제된 티켓입니다."),
+    NOT_AGREE_PAYMENT_RULE(false, 4101, "결제 주의 사항에 동의가 반드시 필요합니다."),
+    INCORRECT_RESERVATION_DATA(false, 4200, "잘못된 예매 정보입니다."),
+    ALREADY_PAID_TICKET(false, 4201, "이미 결제된 티켓입니다."),
 
-    NOT_FOUND_PAYMENT_DATA(false,4300,"진행되지 않은 결제 데이터입니다."),
-    FAIL_CANCELED_PAYMENT(false,4301,"잘못된 결제 데이터로 인해 시스템 결제 취소를 시도했으나 실패하였습니다. 결제 기록을 확인하고 환불 처리를 신청해주시길 바랍니다."),
-    INCORRECT_DATA_CANCEL_SUCCESS(false,4302,"잘못된 결제과정에서 오류가 발생하여 결제를 정상 취소했습니다."),
-
-
+    NOT_FOUND_PAYMENT_DATA(false, 4300, "진행되지 않은 결제 데이터입니다."),
+    FAIL_CANCELED_PAYMENT(false, 4301, "잘못된 결제 데이터로 인해 시스템 결제 취소를 시도했으나 실패하였습니다. 결제 기록을 확인하고 환불 처리를 신청해주시길 바랍니다."),
+    INCORRECT_DATA_CANCEL_SUCCESS(false, 4302, "잘못된 결제과정에서 오류가 발생하여 결제를 정상 취소했습니다."),
 
 
     /**
      * 5000: 예매
      */
-    ALREADY_CHOSEN_SEAT(false,5000,"이미 선택된 좌석입니다."),
-    NOT_FOUND_RESERVATION(false,5001,"결제 정보가 존재하지 않습니다."),
+    ALREADY_CHOSEN_SEAT(false, 5000, "이미 선택된 좌석입니다."),
+    NOT_FOUND_RESERVATION(false, 5001, "결제 정보가 존재하지 않습니다."),
     NOT_FOUND_TIMES(false, 5002, "회차 정보가 존재하지 않습니다."),
+    NOT_FOUND_SEAT(false, 5003, "좌석 정보가 존재하지 않습니다."),
 
 
     /**
@@ -99,12 +97,11 @@ public enum BaseResponseStatus {
     NOT_EXCHANGE_OFFER(false, 6008, "요청받은 교환이 존재하지 않습니다."),
 
 
-
     /**
      * 7000: 공연장, 구역, 좌석, 등급
      */
-    NOT_FOUND_SECTION(false,7000,"구역이 존재하지 않습니다."),
-    NOT_FOUND_PRICE(false,7001,"등급별 가격 정보가 존재하지 않습니다."),
+    NOT_FOUND_SECTION(false, 7000, "구역이 존재하지 않습니다."),
+    NOT_FOUND_PRICE(false, 7001, "등급별 가격 정보가 존재하지 않습니다."),
 
     /**
      * 8000: 공통 에러

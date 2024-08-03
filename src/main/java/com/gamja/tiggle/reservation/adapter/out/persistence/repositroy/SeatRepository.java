@@ -7,15 +7,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SeatRepository extends JpaRepository<SeatEntity, Long> {
 
 
-    List<SeatEntity> findAllBySectionEntityId(Long sectionId);
+    Optional<List<SeatEntity>> findAllBySectionEntityId(Long sectionId);
 
-//예약 가능 좌석만 조회
+    @Query("SELECT s FROM SeatEntity s WHERE s.sectionEntity.id = :sectionId ORDER BY s.row, s.seatNumber")
+    List<SeatEntity> findAllBySectionEntityIdByQuery(@Param("sectionId") Long sectionId);
+
+    //예약 가능 좌석만 조회
     @Query("SELECT new com.gamja.tiggle.reservation.adapter.out.persistence.Response" +
-            ".GetSeatResponse(s.id, s.sectionEntity.id, s.seatNumber) " +
+            ".GetSeatResponse(s.id, s.sectionEntity.id, s.seatNumber, s.row) " +
             "FROM SeatEntity s " +
             "LEFT JOIN ReservationEntity r ON s.id = r.seatEntity.id " +
             "AND r.programEntity.id = :programId " +
