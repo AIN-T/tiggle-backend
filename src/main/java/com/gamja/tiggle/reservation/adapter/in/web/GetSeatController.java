@@ -32,6 +32,7 @@ public class GetSeatController {
 
 
     @PostMapping("/all")
+    @Operation(summary = "전체 좌석 조회", description = "특정 공연의 전체 좌석을 조회하는 API 입니다.")
     public BaseResponse<List<List<GetAllSeatResponse>>> getAllSeat(
             @RequestBody GetAllSeatRequest request,
             @AuthenticationPrincipal CustomUserDetails customUserDetails) throws BaseException {
