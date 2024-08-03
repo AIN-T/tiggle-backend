@@ -9,6 +9,7 @@ import com.gamja.tiggle.reservation.application.port.in.GetAvailableSeatCommand;
 import com.gamja.tiggle.reservation.application.port.in.GetSeatUseCase;
 import com.gamja.tiggle.reservation.application.port.out.GetSeatPort;
 import com.gamja.tiggle.reservation.application.port.out.GetSectionPort;
+import com.gamja.tiggle.reservation.application.port.out.GetTimesPort;
 import com.gamja.tiggle.reservation.domain.Seat;
 import com.gamja.tiggle.reservation.domain.Section;
 import lombok.RequiredArgsConstructor;
@@ -23,14 +24,18 @@ public class GetSeatService implements GetSeatUseCase {
     private final GetSeatPort getSeatPort;
     private final ProgramPort programPort;
     private final GetSectionPort sectionPort;
+    private final GetTimesPort timesPort;
 
 
     @Override
     public List<Seat> getAvailableSeat(GetAvailableSeatCommand command) throws BaseException {
 
-        if (!programPort.existProgram(command.getProgramId())) {
-            throw new BaseException(BaseResponseStatus.NOT_FOUND_PROGRAM);
-        }
+        Long locationId = programPort.getLocationId(command.getProgramId());
+        programPort.existProgram(command.getProgramId());
+        timesPort.verifyTimes(command.getTimesId(), command.getProgramId());
+        sectionPort.correctSection(command.getSectionId(), locationId);
+
+
         return getSeatPort.getAvailableSeatByQuery(
                 command.getProgramId(),
                 command.getTimesId(),
@@ -44,8 +49,12 @@ public class GetSeatService implements GetSeatUseCase {
                 command.getSectionId(),
                 command.getTimesId()
         );
-        Section section = sectionPort.getRowColumn(command.getSectionId());
+        Long locationId = programPort.getLocationId(command.getProgramId());
+        programPort.existProgram(command.getProgramId());
+        timesPort.verifyTimes(command.getTimesId(), command.getProgramId());
+        sectionPort.correctSection(command.getSectionId(), locationId);
 
+        Section section = sectionPort.getRowColumn(command.getSectionId());
         int rowCount = section.getRowCount();
         int columnCount = section.getColumnCount();
         List<List<Seat>> ArraySeat = new ArrayList<>();
@@ -57,6 +66,11 @@ public class GetSeatService implements GetSeatUseCase {
         for (Seat seat : allSeat) {
             int rowIndex = seat.getRow().charAt(0) - 'A';
             int colIndex = seat.getSeatNumber() - 1;
+
+            if (colIndex >= columnCount) throw new BaseException(BaseResponseStatus.NOT_MATCH_ROW);
+
+            if (rowIndex >= rowCount) throw new BaseException(BaseResponseStatus.NOT_MATCH_COLUMN);
+
             ArraySeat.get(rowIndex).set(colIndex, seat);
         }
 

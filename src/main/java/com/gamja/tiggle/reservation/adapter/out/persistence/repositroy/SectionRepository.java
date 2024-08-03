@@ -9,4 +9,6 @@ public interface SectionRepository extends JpaRepository<SectionEntity, Long> {
 
     // TODO locationENtity ID
     List<SectionEntity> findAllByLocationEntityId(Long id);
+
+    Boolean existsByIdAndLocationEntityId(Long sectionId, Long LocationId);
 }

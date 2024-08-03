@@ -27,6 +27,15 @@ public class GetTimesAdapter implements GetTimesPort {
         return getList(TimesList);
     }
 
+    @Override
+    public void verifyTimes(Long timesId, Long programId) throws BaseException {
+
+        if (!timesRepository.existsByProgramEntityIdAndId(programId, timesId)) {
+            throw new BaseException(BaseResponseStatus.NOT_EXIST_TIMES);
+        }
+
+    }
+
     private static List<Times> getList(List<TimesEntity> TimesList) {
         return TimesList.stream().map(timesEntity -> Times.builder()
                 .id(timesEntity.getId())
