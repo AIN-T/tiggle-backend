@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -103,13 +104,14 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
     public List<Program> readRealTimeAllPaged(ReadProgramCommand command) throws BaseException {
         int page = command.getPage();
         int size = command.getSize();
-        LocalDateTime currentDateTime = command.getCurrentDateTime();
+        LocalDateTime currentDateTime = LocalDateTime.now();
 
         Pageable pageable = PageRequest.of(page, size);
         Page<ProgramEntity> programEntityPage = jpaProgramRepository.findAll(pageable);
+
         List<Program> programs = programEntityPage.stream()
                 .filter(p -> p.getReservationOpenDate().isAfter(currentDateTime))
-                .sorted((p1, p2) -> p1.getReservationOpenDate().compareTo(p2.getReservationOpenDate()))
+                .sorted(Comparator.comparing(ProgramEntity::getReservationOpenDate)) // 예약 오픈 날짜 기준 정렬
                 .map(p -> Program.builder()
                         .categoryId(p.getCategoryEntity().getId())
                         .programName(p.getProgramName())
@@ -117,12 +119,13 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
                         .programStartDate(p.getProgramStartDate())
                         .programEndDate(p.getProgramEndDate())
                         .reservationOpenDate(p.getReservationOpenDate())
-                        .imageUrls(p.getProgramImageEntities().stream().map(programImageEntity -> programImageEntity.getImgUrl()).collect(Collectors.toList()))
+                        .imageUrls(p.getProgramImageEntities().stream()
+                                .map(programImageEntity -> programImageEntity.getImgUrl())
+                                .collect(Collectors.toList()))
                         .build())
                 .collect(Collectors.toUnmodifiableList());
 
         return programs;
-
     }
 
     @Override
