@@ -38,15 +38,15 @@ public class ReadProgramController {
             List<ReadProgramResponse> responses = program.stream()
                     .map(p -> ReadProgramResponse.builder()
                             .programName(p.getProgramName())
+                            .reservationOpenDate(p.getReservationOpenDate())
                             .programInfo(p.getProgramInfo())
+                            .reservationOpenDate(p.getReservationOpenDate())
                             .programStartDate(p.getProgramStartDate())
                             .programEndDate(p.getProgramEndDate())
                             .imageFiles(p.getImageUrls())
                             .build())
                     .collect(Collectors.toList());
-
             return new BaseResponse<>(BaseResponseStatus.SUCCESS, responses);
-
         } catch (BaseException e) {
             return new BaseResponse<>(BaseResponseStatus.FAIL, null);
         }
