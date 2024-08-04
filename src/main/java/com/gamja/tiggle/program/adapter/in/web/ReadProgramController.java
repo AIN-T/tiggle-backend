@@ -55,16 +55,9 @@ public class ReadProgramController {
     @GetMapping("/readRealTime")
     @Operation(summary = "티켓 오픈 시간이 임박한 공연을 페이지 별로 조회")
     public BaseResponse<List<ReadProgramResponse>> readPage(@RequestParam Integer page,
-                                                            @RequestParam Integer size,
-                                                            @RequestParam(required = false) LocalDateTime currentDateTime) {
-
+                                                            @RequestParam Integer size) {
         try{
-            if (currentDateTime == null) {
-                currentDateTime = LocalDateTime.now();
-            }
-
             ReadProgramCommand command = ReadProgramCommand.builder()
-                    .currentDateTime(currentDateTime)
                     .page(page)
                     .size(size)
                     .build();
