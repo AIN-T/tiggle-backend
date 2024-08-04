@@ -65,6 +65,7 @@ public class ReadProgramController {
             List<ReadProgramResponse> responses = program.stream()
                     .map(p -> ReadProgramResponse.builder()
                             .programName(p.getProgramName())
+                            .locationName(p.getLocationName())
                             .reservationOpenDate(p.getReservationOpenDate())
                             .programInfo(p.getProgramInfo())
                             .programStartDate(p.getProgramStartDate())
