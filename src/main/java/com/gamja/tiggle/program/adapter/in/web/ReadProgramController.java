@@ -39,6 +39,7 @@ public class ReadProgramController {
                     .map(p -> ReadProgramResponse.builder()
                             .programName(p.getProgramName())
                             .programInfo(p.getProgramInfo())
+                            .reservationOpenDate(p.getReservationOpenDate())
                             .programStartDate(p.getProgramStartDate())
                             .programEndDate(p.getProgramEndDate())
                             .imageFiles(p.getImageUrls())
