@@ -40,7 +40,6 @@ public class ReadProgramController {
                             .programName(p.getProgramName())
                             .reservationOpenDate(p.getReservationOpenDate())
                             .programInfo(p.getProgramInfo())
-                            .reservationOpenDate(p.getReservationOpenDate())
                             .programStartDate(p.getProgramStartDate())
                             .programEndDate(p.getProgramEndDate())
                             .imageFiles(p.getImageUrls())
