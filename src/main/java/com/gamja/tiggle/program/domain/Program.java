@@ -21,6 +21,7 @@ public class Program {
     private LocalDateTime currentDateTime;
 
     private List<String> imageUrls;
+    private String locationName;
 
     private Integer age;
     private Integer runtime;

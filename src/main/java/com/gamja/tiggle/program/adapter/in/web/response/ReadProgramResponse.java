@@ -14,4 +14,5 @@ public class ReadProgramResponse {
     private LocalDateTime reservationOpenDate;
     private LocalDateTime programEndDate;
     private List<String> imageFiles;
+    private String locationName;
 }
