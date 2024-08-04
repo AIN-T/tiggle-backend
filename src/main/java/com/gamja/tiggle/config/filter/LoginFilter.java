@@ -7,6 +7,7 @@ import com.gamja.tiggle.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +19,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 
@@ -55,15 +55,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String username = loginUserRequest.getEmail();
         String password = loginUserRequest.getPassword();
 
-        // 그림에서 2번
         UsernamePasswordAuthenticationToken authToken =
-                new UsernamePasswordAuthenticationToken(username, password, null);
-
-        // 그림에서 3번
+                new UsernamePasswordAuthenticationToken(username,
+                        password, null);
         return authenticationManager.authenticate(authToken);
     }
 
-    // 그림에서 10번
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
@@ -77,8 +74,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         String token = jwtUtil.createToken(id, username, role);
 
-        response.addHeader("Authorization", "Bearer " + token);
-        PrintWriter out = response.getWriter();
-        out.println("{\"isSuccess\": true, \"accessToken\": \"" + token + "\"}");
+        Cookie loginCookie = new Cookie("AToken", token);
+        loginCookie.setHttpOnly(true);
+        loginCookie.setSecure(true);
+        loginCookie.setPath("/");
+        loginCookie.setMaxAge(60*60*1);
+
+        response.addCookie(loginCookie);
     }
 }

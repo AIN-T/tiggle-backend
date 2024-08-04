@@ -1,5 +1,6 @@
 package com.gamja.tiggle.config.filter;
 
+import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponse;
 import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
@@ -9,6 +10,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,9 +23,20 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
 
-
     public JwtFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
+    }
+
+    public String getCookieValue(HttpServletRequest request, String cookieName){
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(cookieName)) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
     }
 
     @Override
@@ -32,17 +45,15 @@ public class JwtFilter extends OncePerRequestFilter {
         String authorization = null;
         String token = null;
 
-        authorization = request.getHeader("Authorization");
+        authorization = getCookieValue(request, "AToken");
 
-
-        if (authorization == null || !authorization.startsWith("Bearer ")) {
-            System.out.println("Bearer 토큰이 없음");
+        if (authorization == null) {
+            System.out.println("토큰이 없음");
             filterChain.doFilter(request, response);
             return;
-
         }
         try {
-            token = authorization.split(" ")[1];
+            token = authorization;
         } catch (NullPointerException e) {
             CustomAuthenticationEntryPoint authenticationEntryPoint = new CustomAuthenticationEntryPoint();
             BaseResponse br = new BaseResponse(BaseResponseStatus.NOT_INSERT_TOKEN);
