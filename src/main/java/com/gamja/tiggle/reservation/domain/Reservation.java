@@ -7,6 +7,7 @@ import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -29,5 +30,12 @@ public class Reservation {
 
     private Integer requestLimit;
     private Integer refund;
+
+    // 예매 받아올 값
+    private LocalDateTime createdAt; // 예약 날짜
+    private LocalDateTime programStartDate; // 공연 날짜
+    private String locationName; // 공연장
+    private String name; // 예매자
+    private String seatInfo; // 좌석 정보
 
 }

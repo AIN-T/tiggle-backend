@@ -6,10 +6,8 @@ import com.gamja.tiggle.common.annotation.PersistenceAdapter;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.ReservationRepository;
 import com.gamja.tiggle.reservation.application.port.out.ReadReservationPort;
-import com.gamja.tiggle.user.domain.User;
+import com.gamja.tiggle.reservation.domain.Reservation;
 import lombok.RequiredArgsConstructor;
-
-import java.util.List;
 
 
 @PersistenceAdapter
@@ -21,5 +19,20 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
     @Override
     public ReservationEntity read(Long reservationId) throws BaseException {
         return repository.findById(reservationId).orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_RESERVATION));
+    }
+
+    @Override
+    public Reservation readReservation(Reservation reservation) throws BaseException {
+        ReservationEntity result = repository.findReservationWithDetails(reservation.getId());
+        Reservation reservations = Reservation.builder()
+                .ticketNumber(result.getTicketNumber())
+                .createdAt(result.getCreatedAt())
+                .programStartDate(result.getProgramEntity().getProgramStartDate())
+                .locationName(result.getProgramEntity().getLocationEntity().getLocationName())
+                .name(result.getUser().getName())
+                .seatInfo(result.getSeatEntity().getRow())
+                .totalPrice(result.getTotalPrice())
+                .build();
+        return reservations;
     }
 }
