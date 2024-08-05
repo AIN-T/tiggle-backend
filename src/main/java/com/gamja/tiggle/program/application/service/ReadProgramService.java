@@ -35,7 +35,6 @@ public class ReadProgramService implements ReadProgramUseCase {
     @Override
     public List<Program> readRealTimeAllPaged(ReadProgramCommand command) throws BaseException {
         return readProgramPort.readRealTimeAllPaged(command);
-
     }
 
     @Override

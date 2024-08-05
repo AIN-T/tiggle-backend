@@ -113,6 +113,7 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
                 .filter(p -> p.getReservationOpenDate().isAfter(currentDateTime))
                 .sorted(Comparator.comparing(ProgramEntity::getReservationOpenDate)) // 예약 오픈 날짜 기준 정렬
                 .map(p -> Program.builder()
+                        .id(p.getId())
                         .categoryId(p.getCategoryEntity().getId())
                         .programName(p.getProgramName())
                         .programInfo(p.getProgramInfo())
