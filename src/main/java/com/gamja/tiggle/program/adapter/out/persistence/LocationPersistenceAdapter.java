@@ -60,6 +60,19 @@ public class LocationPersistenceAdapter implements CreateLocationPort, ReadLocat
         return locations;
     }
 
+    @Override
+    public Location readLocation(Long locationId) throws BaseException {
+        LocationEntity locationEntity = jpaLocationRepository.findById(locationId).orElseThrow(() ->
+                new BaseException(BaseResponseStatus.NOT_FOUND_LOCATION));
+
+        return Location
+                .builder()
+                .locationName(locationEntity.getLocationName())
+                .addressName(locationEntity.getAddressName())
+                .build();
+    }
+
+
     // 특수 문자 허용하지 않는
     private static final String INVALID_CHAR_PATTERN = "[^a-zA-Z0-9 ]";
 }
