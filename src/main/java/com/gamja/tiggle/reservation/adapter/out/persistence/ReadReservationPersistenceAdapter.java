@@ -27,11 +27,14 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
         Reservation reservations = Reservation.builder()
                 .ticketNumber(result.getTicketNumber())
                 .createdAt(result.getCreatedAt())
-                .programStartDate(result.getProgramEntity().getProgramStartDate())
+                .date(result.getTimesEntity().getDate())
                 .locationName(result.getProgramEntity().getLocationEntity().getLocationName())
                 .name(result.getUser().getName())
-                .seatInfo(result.getSeatEntity().getRow())
+                .seatInfo(
+                        result.getSeatEntity().getRow()+"구역 " +result.getSeatEntity().getSectionEntity().getColumnCount()+"열 "+result.getSeatEntity().getSeatNumber()+"번")
                 .totalPrice(result.getTotalPrice())
+                .gradeName(result.getSeatEntity().getSectionEntity().getGradeEntity().getGradeName())
+                .status(result.getStatus())
                 .build();
         return reservations;
     }

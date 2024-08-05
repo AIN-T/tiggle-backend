@@ -1,5 +1,4 @@
 package com.gamja.tiggle.reservation.adapter.in.web;
-
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponse;
 import com.gamja.tiggle.common.BaseResponseStatus;
@@ -67,12 +66,13 @@ public class GetSectionController {
             ReadReservationResponse response = new ReadReservationResponse(
                     reservation.getTicketNumber(),
                     reservation.getCreatedAt(),
-                    reservation.getProgramStartDate(),
+                    reservation.getDate(),
                     reservation.getLocationName(),
                     reservation.getName(),
                     reservation.getSeatInfo(),
-                    reservation.getTotalPrice()
-            );
+                    reservation.getTotalPrice(),
+                    reservation.getGradeName(),
+                    reservation.getStatus());
             // 성공 응답 반환
             return new BaseResponse<>(BaseResponseStatus.SUCCESS, response);
         } catch (BaseException e) {
