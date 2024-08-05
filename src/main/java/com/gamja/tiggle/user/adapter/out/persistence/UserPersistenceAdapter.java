@@ -1,11 +1,13 @@
 package com.gamja.tiggle.user.adapter.out.persistence;
 
 import com.gamja.tiggle.common.BaseException;
-import com.gamja.tiggle.user.application.port.out.EmailVerifyPort;
+import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.user.application.port.out.UserPersistencePort;
 import com.gamja.tiggle.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -60,6 +62,28 @@ public class UserPersistenceAdapter implements UserPersistencePort {
         entity.createdAt();
 
         jpaUserRepository.save(entity);
+    }
+
+    @Override
+    public User searchUser(Long id) throws BaseException {
+        Optional<UserEntity> userEntity = jpaUserRepository.findById(id);
+        if (userEntity.isPresent()) {
+            return User.builder()
+                    .name(userEntity.get().getName())
+                    .email(userEntity.get().getEmail())
+                    .password(userEntity.get().getPassword())
+                    .loginType(userEntity.get().getLoginType())
+                    .status(userEntity.get().getStatus())
+                    .enable(userEntity.get().getEnable())
+                    .region_1depth_name(userEntity.get().getRegion_1depth_name())
+                    .region_2depth_name(userEntity.get().getRegion_2depth_name())
+                    .region_3depth_name(userEntity.get().getRegion_3depth_name())
+                    .region_4depth_name(userEntity.get().getRegion_4depth_name())
+                    .phoneNumber(userEntity.get().getPhoneNumber()).build();
+        }
+        else {
+            throw new BaseException(BaseResponseStatus.NOT_FOUND_USER);
+        }
     }
 }
 

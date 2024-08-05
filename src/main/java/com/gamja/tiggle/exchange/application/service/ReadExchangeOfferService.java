@@ -44,6 +44,7 @@ public class ReadExchangeOfferService implements ReadExchangeOfferUseCase {
         exchangePort.update(exchangeEntity.watched());
 
         return ReadExchangeOfferResponse.builder()
+                .exchangeId(exchange.getId())
                 .reservationId(reservation2.getId())
                 .programName(reservation2.getProgramEntity().getProgramName())
                 .ticketNumber(reservation2.getTicketNumber())
@@ -51,6 +52,7 @@ public class ReadExchangeOfferService implements ReadExchangeOfferUseCase {
                 .myTicketInfo(createSummaryExchange(reservation2))
                 .otherTicketInfo(createSummaryExchange(reservation1))
                 .diffPrice(reservation2.getTotalPrice() - reservation1.getTotalPrice())
+                .isDone(exchangeEntity.getIsSuccess() != null)
                 .build();
     }
 
@@ -66,7 +68,7 @@ public class ReadExchangeOfferService implements ReadExchangeOfferUseCase {
                     .programName(exchange.getReservation1().getProgramEntity().getProgramName())
                     .location(exchange.getReservation1().getProgramEntity().getLocationEntity().getLocationName())
                     .otherTicketInfo(createSummaryExchange(exchange.getReservation1()))
-                    .isWatch(false)
+                    .isWatch(exchange.getIsWatch())
                     .build());
         });
 

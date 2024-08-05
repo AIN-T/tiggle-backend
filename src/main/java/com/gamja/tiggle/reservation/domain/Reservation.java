@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -37,5 +38,9 @@ public class Reservation {
     private String name; // 예매자
     private String seatInfo; // 좌석 정보
     private String gradeName; // 좌석 등급
+    private String programName; // 공연 이름
+    private LocalDateTime programStartDate; // 공연 날짜
+    private LocalDateTime programEndDate;
+    private List<String> imageFiles; // 이미지
 
 }
