@@ -13,4 +13,7 @@ public interface JpaProgramRepository extends JpaRepository<ProgramEntity, Long>
     @Query("SELECT p.locationEntity.id FROM ProgramEntity p WHERE p.id = :programId")
     Long findLocationIdById(Long programId);
 
+
+    ProgramEntity findByLocationEntityIdAndId(Long locationId, Long programId);
+
 }

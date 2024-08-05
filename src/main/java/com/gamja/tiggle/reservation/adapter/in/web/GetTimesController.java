@@ -25,8 +25,7 @@ public class GetTimesController {
 
     @GetMapping("/{id}/seq")
     @Operation(summary = "날짜 및 회차 조회", description = "ProgramId를 입력하여 해당 공연의 날짜 및 회차를 조회하는 API 입니다.")
-    public BaseResponse<List<GetTimesResponse>> getTimes(@PathVariable Long id,
-                                                         @AuthenticationPrincipal CustomUserDetails customUserDetails)  {
+    public BaseResponse<List<GetTimesResponse>> getTimes(@PathVariable Long id)  {
         List<GetTimesResponse> list;
         try {
             list = getList(id);

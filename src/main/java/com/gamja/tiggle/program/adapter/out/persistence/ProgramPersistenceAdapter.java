@@ -146,6 +146,7 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
                 .locationName(programEntity.getLocationEntity().getLocationName())
                 .programStartDate(programEntity.getProgramStartDate())
                 .programEndDate(programEntity.getProgramEndDate())
+                .locationName(programEntity.getLocationEntity().getLocationName())
                 .runtime(programEntity.getRuntime())
                 .imageUrls(imgList)
                 .programInfo(programEntity.getProgramInfo())
