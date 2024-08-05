@@ -8,6 +8,7 @@ import java.util.List;
 @Builder
 @Getter
 public class ReadProgramResponse {
+    private Long programId;
     private String programName;
     private String programInfo;
     private LocalDateTime programStartDate;

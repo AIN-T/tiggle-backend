@@ -6,6 +6,7 @@ import lombok.Getter;
 @Builder
 @Getter
 public class ReadExchangeOfferResponse {
+    private Long exchangeId;
     private Long reservationId;
     private String programName;
     private String ticketNumber;
@@ -14,4 +15,5 @@ public class ReadExchangeOfferResponse {
     private ReadSummaryExchange otherTicketInfo;
     private Integer diffPrice;
     private Double point;
+    private Boolean isDone;
 }

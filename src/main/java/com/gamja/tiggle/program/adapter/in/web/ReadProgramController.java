@@ -63,6 +63,7 @@ public class ReadProgramController {
             List<Program> program = readUseCase.readRealTimeAllPaged(command);
             List<ReadProgramResponse> responses = program.stream()
                     .map(p -> ReadProgramResponse.builder()
+                            .programId(p.getId())
                             .programName(p.getProgramName())
                             .locationName(p.getLocationName())
                             .reservationOpenDate(p.getReservationOpenDate())
