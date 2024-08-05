@@ -106,6 +106,7 @@ public class ReadProgramController {
                 .programName(program.getProgramName())
                 .imageUrls(program.getImageUrls())
                 .locationId(program.getLocationId())
+                .locationName(program.getLocationName())
                 .programEndDate(program.getProgramEndDate())
                 .programStartDate(program.getProgramStartDate())
                 .programInfo(program.getProgramInfo())

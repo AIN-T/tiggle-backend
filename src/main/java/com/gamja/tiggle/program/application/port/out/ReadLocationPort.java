@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ReadLocationPort {
     List<Location> readProgramAll(Location location) throws BaseException;
+
+    Location readLocation(Long locationId) throws BaseException;
 }

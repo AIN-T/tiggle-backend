@@ -32,7 +32,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests((auth) ->
                 auth
                         .requestMatchers("swagger-ui/**",
-                                "user/**", "login/**","program/**",
+                                "user/**", "login/**","program/**","times/**",
                                 "swagger-ui.html/**",
                                 "v3/api-docs/**",
                                 "v2/api-docs/**",
@@ -53,6 +53,7 @@ public class SecurityConfig {
 
         config.addAllowedOrigin("http://127.0.0.1");
         config.addAllowedOrigin("http://localhost:8081");
+        config.addAllowedOrigin("http://localhost:8082");
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
         config.setAllowCredentials(true);
