@@ -1,7 +1,6 @@
 package com.gamja.tiggle.reservation.domain;
 
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
-import com.gamja.tiggle.user.domain.User;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Builder;
@@ -33,9 +32,10 @@ public class Reservation {
 
     // 예매 받아올 값
     private LocalDateTime createdAt; // 예약 날짜
-    private LocalDateTime programStartDate; // 공연 날짜
+    private LocalDateTime date; // 공연 날짜
     private String locationName; // 공연장
     private String name; // 예매자
     private String seatInfo; // 좌석 정보
+    private String gradeName; // 좌석 등급
 
 }
