@@ -12,6 +12,7 @@ public class GetProgramDetailResponse {
 
     private String programName;
     private Long locationId;
+    private String locationName;
     private int age;
     private LocalDateTime programStartDate;
     private LocalDateTime programEndDate;
