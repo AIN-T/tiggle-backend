@@ -9,13 +9,16 @@ import com.gamja.tiggle.point.application.port.in.CreatePointHistoryCommand;
 import com.gamja.tiggle.point.application.port.in.CreatePointHistoryUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/point")
-public class PointCreateController {
+public class CreatePointController {
     private final CreatePointHistoryUseCase createPointHistoryUseCase;
 
     @PostMapping
