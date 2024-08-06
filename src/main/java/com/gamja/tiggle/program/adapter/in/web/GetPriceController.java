@@ -30,6 +30,7 @@ public class GetPriceController {
                     GetPriceResponse.builder()
                             .gradeName(programGrade.getGradeName())
                             .price(programGrade.getPrice())
+                            .gradeId(programGrade.getGradeId())
                             .programGradeId(programGrade.getId())
                             .build()
             ).toList();
