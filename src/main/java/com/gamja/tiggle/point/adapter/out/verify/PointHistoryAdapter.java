@@ -23,8 +23,8 @@ public class PointHistoryAdapter implements PointHistoryPort {
         List<PointHistory> pointHistoryList = new ArrayList<>();
 
         List<PointEntity> pointEntityList = jpaPointRepository.findAllByUserId(userId);
-        for (PointEntity p : pointEntityList) {
-            if (p.getGetOrUse().equals(method)) {
+        if (method.equals(GetOrUse.ALL)){
+            for (PointEntity p : pointEntityList){
                 PointHistory pointHistory = PointHistory.builder()
                         .id(p.getId())
                         .userId(p.getUserId())
@@ -35,8 +35,24 @@ public class PointHistoryAdapter implements PointHistoryPort {
                         .build();
                 pointHistoryList.add(pointHistory);
             }
+            return pointHistoryList;
         }
-        return pointHistoryList;
+        else {
+            for (PointEntity p : pointEntityList) {
+                if (p.getGetOrUse().equals(method)) {
+                    PointHistory pointHistory = PointHistory.builder()
+                            .id(p.getId())
+                            .userId(p.getUserId())
+                            .value(p.getValue())
+                            .description(p.getDescription())
+                            .getOrUse(p.getGetOrUse())
+                            .modifiedAt(p.getModifiedAt())
+                            .build();
+                    pointHistoryList.add(pointHistory);
+                }
+            }
+            return pointHistoryList;
+        }
     }
 
     @Override
