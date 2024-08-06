@@ -33,6 +33,7 @@ public class UserEntity {
     private String region_3depth_name;
     private String region_4depth_name;
     private String phoneNumber;
+    private Integer point;
 
     //    @Column(updatable = false, nullable = false)
     private Date createdAt;

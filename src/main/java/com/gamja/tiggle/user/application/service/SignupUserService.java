@@ -32,6 +32,7 @@ public class SignupUserService implements SignupUserUseCase {
                 .region_3depth_name(command.getRegion_3depth_name())
                 .region_4depth_name(command.getRegion_4depth_name())
                 .phoneNumber(command.getPhoneNumber())
+                .point(0)
                 .build();
 
         userPersistencePort.saveUser(user);

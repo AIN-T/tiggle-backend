@@ -22,6 +22,7 @@ public class User {
     private String region_3depth_name;
     private String region_4depth_name;
     private String phoneNumber;
+    private Integer point;
     private Date createdAt;
     private Date verifiedAt;
 }
