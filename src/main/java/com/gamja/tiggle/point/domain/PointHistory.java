@@ -11,8 +11,10 @@ public class PointHistory {
     private Long id;
     private Long userId;
     private Integer value;
+    private Integer remainPoint;
     private String description;
     private GetOrUse getOrUse;
+
 
     private Date modifiedAt;
 }

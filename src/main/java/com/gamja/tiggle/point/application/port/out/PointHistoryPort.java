@@ -4,6 +4,7 @@ import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.point.adapter.out.persistence.PointEntity;
 import com.gamja.tiggle.point.domain.GetOrUse;
 import com.gamja.tiggle.point.domain.PointHistory;
+import com.gamja.tiggle.user.domain.User;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

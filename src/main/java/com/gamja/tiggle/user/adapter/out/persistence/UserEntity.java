@@ -33,7 +33,7 @@ public class UserEntity {
     private String region_3depth_name;
     private String region_4depth_name;
     private String phoneNumber;
-
+    private Integer point;
     //    @Column(updatable = false, nullable = false)
     private Date createdAt;
 
@@ -51,5 +51,9 @@ public class UserEntity {
     @PreUpdate
     void verifiedAt() {
         this.verifiedAt = Timestamp.from(Instant.now());
+    }
+
+    public void setPoint(Integer point) {
+        this.point = point;
     }
 }

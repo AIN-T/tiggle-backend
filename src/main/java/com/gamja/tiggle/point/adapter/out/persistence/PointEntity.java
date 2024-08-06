@@ -1,6 +1,8 @@
 package com.gamja.tiggle.point.adapter.out.persistence;
 
 import com.gamja.tiggle.point.domain.GetOrUse;
+import com.gamja.tiggle.user.adapter.out.persistence.UserEntity;
+import com.gamja.tiggle.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,10 +23,15 @@ public class PointEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long userId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity userEntity;
+
     private Integer value;
     private String description;
     private GetOrUse getOrUse;
+    private Integer remainPoint;
     private Date modifiedAt;
 
     @PrePersist

@@ -12,5 +12,7 @@ public interface UserPersistencePort {
     void verifyUser(String email) throws BaseException;
 
     User searchUser(Long id) throws BaseException;
+
+    void savePoint(Long id, Integer point) throws BaseException;
 }
 
