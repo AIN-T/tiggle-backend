@@ -36,12 +36,14 @@ public class CreatePointController {
             return new BaseResponse(BaseResponseStatus.NOT_FOUND_USER);
         }
 
-        CreatePointHistoryCommand command = CreatePointHistoryCommand.builder()
-                .userId(request.getUserId())
-                .value(request.getValue())
-                .description(request.getDescription())
-                .build();
         try {
+            User findUser = createPointHistoryUseCase.findByUserId(request.getUserId());
+            CreatePointHistoryCommand command = CreatePointHistoryCommand.builder()
+                    .userId(request.getUserId())
+                    .value(request.getValue())
+                    .hasPoint(findUser.getPoint())
+                    .description(request.getDescription())
+                    .build();
             createPointHistoryUseCase.create(command);
 
         } catch (BaseException e) {

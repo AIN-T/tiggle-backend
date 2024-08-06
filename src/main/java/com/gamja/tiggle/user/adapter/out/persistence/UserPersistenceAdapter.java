@@ -33,6 +33,7 @@ public class UserPersistenceAdapter implements UserPersistencePort {
                     .region_3depth_name(result.getRegion_3depth_name())
                     .region_4depth_name(result.getRegion_4depth_name())
                     .createdAt(result.getCreatedAt())
+                    .point(result.getPoint())
                     .build();
 
             entity.verifiedAt();
@@ -57,6 +58,7 @@ public class UserPersistenceAdapter implements UserPersistencePort {
                 .region_3depth_name(user.getRegion_3depth_name())
                 .region_4depth_name(user.getRegion_4depth_name())
                 .phoneNumber(user.getPhoneNumber())
+                .point(user.getPoint())
                 .build();
 
         entity.createdAt();
@@ -79,11 +81,20 @@ public class UserPersistenceAdapter implements UserPersistencePort {
                     .region_2depth_name(userEntity.get().getRegion_2depth_name())
                     .region_3depth_name(userEntity.get().getRegion_3depth_name())
                     .region_4depth_name(userEntity.get().getRegion_4depth_name())
-                    .phoneNumber(userEntity.get().getPhoneNumber()).build();
+                    .phoneNumber(userEntity.get().getPhoneNumber())
+                    .point(userEntity.get().getPoint())
+                    .build();
         }
         else {
             throw new BaseException(BaseResponseStatus.NOT_FOUND_USER);
         }
+    }
+
+    @Override
+    public void savePoint(Long id, Integer point) throws BaseException {
+        Optional<UserEntity> userEntity = jpaUserRepository.findById(id);
+        userEntity.get().setPoint(userEntity.get().getPoint() + point);
+        jpaUserRepository.save(userEntity.get());
     }
 }
 
