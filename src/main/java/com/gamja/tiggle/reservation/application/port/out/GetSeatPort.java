@@ -10,5 +10,8 @@ public interface GetSeatPort {
 
     List<Seat> getAvailableSeatByJpa(Long programId, Long timesId, Long sectionId) throws BaseException;
 
-    List<Seat> getAllSeat(Long programId, Long sectionId, Long timesId) throws BaseException;
+    List<Seat> getAllSeat(Long sectionId) throws BaseException;
+
+    List<Seat> getAllSeatWithEnable(Long programId, Long sectionId, Long timesId) throws BaseException;
+
 }

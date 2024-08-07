@@ -5,18 +5,19 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class GetSeatResponse {
+public class GetAllSeatResponse {
 
     private Long seatId;
-    private Long sectionId;
     private int seatNumber;
     private String row;
+    private Boolean active;
+    private Boolean enable;
 
-
-    public GetSeatResponse(Long seatId, Long sectionId, int seatNumber, String row) {
-        this.seatId = seatId;
-        this.sectionId = sectionId;
+    public GetAllSeatResponse(Long id, int seatNumber, String row, Boolean active, Boolean enable) {
+        this.seatId = id;
         this.seatNumber = seatNumber;
         this.row = row;
+        this.active = active;
+        this.enable = enable;
     }
 }

@@ -19,5 +19,5 @@ public class Seat {
     private Boolean active;
 
     private ReservationType status;
-    private Boolean available;
+    private Boolean enable;
 }

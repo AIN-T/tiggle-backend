@@ -13,5 +13,6 @@ public class GetAllSeatResponse {
     private String row;
     private int seatNumber;
     private Boolean active;
+    private Boolean enable;
 
 }
