@@ -59,6 +59,23 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
     }
 
     @Override
+    public Reservation readTemporaryReservation(Reservation reservation) {
+        ReservationEntity result = repository.findReservationWithDetails(reservation.getId());
+
+        return Reservation.builder()
+                .ticketNumber(result.getTicketNumber())
+                .date(result.getTimesEntity().getDate())
+                .locationName(result.getProgramEntity().getLocationEntity().getLocationName())
+                .seatInfo(
+                        result.getSeatEntity().getRow()+"구역 " +result.getSeatEntity().getSectionEntity().getColumnCount()+"열 "+result.getSeatEntity().getSeatNumber()+"번")
+                .gradeName(result.getSeatEntity().getSectionEntity().getGradeEntity().getGradeName())
+                .programName(result.getProgramEntity().getProgramName())
+                .programInfo(result.getProgramEntity().getProgramInfo())
+                .myPoint(result.getUser().getPoint())
+                .build();
+    }
+
+    @Override
     public List<Reservation> myRead(ReadReservationCommand command) throws BaseException {
         int page = command.getPage();
         int size = command.getSize();
@@ -95,4 +112,6 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
 
         return reservations;
     }
+
+
 }
