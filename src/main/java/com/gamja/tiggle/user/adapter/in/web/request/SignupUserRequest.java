@@ -14,9 +14,6 @@ public class SignupUserRequest {
     private String email;
     private String password;
     private String loginType;
-    private String region_1depth_name;
-    private String region_2depth_name;
-    private String region_3depth_name;
-    private String region_4depth_name;
+    private String address;
     private String phoneNumber;
 }
