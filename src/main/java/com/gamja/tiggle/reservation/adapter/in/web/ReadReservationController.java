@@ -46,7 +46,15 @@ public class ReadReservationController {
                     reservation.getSeatInfo(),
                     reservation.getTotalPrice(),
                     reservation.getGradeName(),
-                    reservation.getStatus());
+                    reservation.getProgramName(),
+                    reservation.getProgramInfo(),
+                    reservation.getImageFiles(),
+                    reservation.getPayType(),
+                    reservation.getTicketPrice(),
+                    reservation.getUsePoint(),
+                    reservation.getStatus()
+            );
+
             // 성공 응답 반환
             return new BaseResponse<>(BaseResponseStatus.SUCCESS, response);
         } catch (BaseException e) {
