@@ -5,15 +5,14 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class GetSeatResponse {
+public class GetAvailableSeatResponse {
 
     private Long seatId;
     private Long sectionId;
     private int seatNumber;
     private String row;
 
-
-    public GetSeatResponse(Long seatId, Long sectionId, int seatNumber, String row) {
+    public GetAvailableSeatResponse(Long seatId, Long sectionId, int seatNumber, String row) {
         this.seatId = seatId;
         this.sectionId = sectionId;
         this.seatNumber = seatNumber;
