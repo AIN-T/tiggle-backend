@@ -64,10 +64,14 @@ public class ReadReservationController {
     }
 
     @GetMapping("/myRead")
-    public BaseResponse<List<ReadMyReservationResponse>> myRead(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    public BaseResponse<List<ReadMyReservationResponse>> myRead(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                                                @RequestParam Integer page,
+                                                                @RequestParam Integer size) {
         User user = customUserDetails.getUser();
         ReadReservationCommand command = ReadReservationCommand.builder()
                 .user(user)
+                .page(page)
+                .size(size)
                 .build();
         try {
             List<Reservation> reservation = readReservationUseCase.myRead(command);
