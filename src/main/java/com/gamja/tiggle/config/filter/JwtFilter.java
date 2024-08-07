@@ -1,6 +1,5 @@
 package com.gamja.tiggle.config.filter;
 
-import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponse;
 import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
@@ -107,8 +106,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
 
         filterChain.doFilter(request, response);
-
-
     }
 }
 
