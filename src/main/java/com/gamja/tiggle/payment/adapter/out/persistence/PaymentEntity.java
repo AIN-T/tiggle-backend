@@ -33,7 +33,7 @@ public class PaymentEntity {
     //@JoinColumn(name = "user_id")
     //private User user;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
     private ReservationEntity reservationEntity;
 
