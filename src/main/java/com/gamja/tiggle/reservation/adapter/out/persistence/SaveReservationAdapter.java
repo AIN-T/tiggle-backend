@@ -19,11 +19,13 @@ public class SaveReservationAdapter implements SaveReservationPort {
     private final ReservationRepository reservationRepository;
 
     @Override
-    public void save(Reservation reservation) {
-
+    public Long save(Reservation reservation) {
         ReservationEntity reservationEntity = from(reservation);
-        reservationRepository.save(reservationEntity);
+        ReservationEntity savedEntity = reservationRepository.save(reservationEntity);
+
+        return savedEntity.getId();
     }
+
 
     private static ReservationEntity from(Reservation reservation) {
         return ReservationEntity.builder()
