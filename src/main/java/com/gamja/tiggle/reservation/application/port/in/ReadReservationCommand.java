@@ -9,4 +9,8 @@ import lombok.Getter;
 public class ReadReservationCommand {
     private User user;
     private Long reservationId;
+
+    // 페이징 처리 하려고
+    private Integer page;
+    private Integer size;
 }

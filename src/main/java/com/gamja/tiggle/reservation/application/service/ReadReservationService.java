@@ -31,6 +31,6 @@ public class ReadReservationService implements ReadReservationUseCase {
         if (user == null) {
             throw new BaseException(BaseResponseStatus.FAIL);
         }
-        return readReservationPort.myRead(user);
+        return readReservationPort.myRead(command);
     }
 }
