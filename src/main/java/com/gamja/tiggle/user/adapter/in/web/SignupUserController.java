@@ -43,10 +43,7 @@ public class SignupUserController {
                 .loginType(request.getLoginType())
                 .status(true)
                 .enable(false)
-                .region_1depth_name(request.getRegion_1depth_name())
-                .region_2depth_name(request.getRegion_2depth_name())
-                .region_3depth_name(request.getRegion_3depth_name())
-                .region_4depth_name(request.getRegion_4depth_name())
+                .address(request.getAddress())
                 .phoneNumber(request.getPhoneNumber())
                 .build();
 
