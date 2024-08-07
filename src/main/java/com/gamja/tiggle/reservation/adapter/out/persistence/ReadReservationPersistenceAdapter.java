@@ -29,6 +29,10 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
     @Override
     public Reservation readReservation(Reservation reservation) throws BaseException {
         ReservationEntity result = repository.findReservationWithDetails(reservation.getId());
+        List<String> imageFiles = result.getProgramEntity().getProgramImageEntities().stream()
+                .map(programImageEntity -> programImageEntity.getImgUrl())
+                .collect(Collectors.toList());
+
         Reservation reservations = Reservation.builder()
                 .ticketNumber(result.getTicketNumber())
                 .createdAt(result.getCreatedAt())
@@ -40,6 +44,12 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
                 .totalPrice(result.getTotalPrice())
                 .gradeName(result.getSeatEntity().getSectionEntity().getGradeEntity().getGradeName())
                 .status(result.getStatus())
+                .programName(result.getProgramEntity().getProgramName())
+                .programInfo(result.getProgramEntity().getProgramInfo())
+                .imageFiles(imageFiles)
+                .payType(result.getPaymentEntity().getPayType())
+                .ticketPrice(result.getPaymentEntity().getTicketPrice())
+                .usePoint(result.getPaymentEntity().getUsePoint())
                 .build();
         return reservations;
     }
