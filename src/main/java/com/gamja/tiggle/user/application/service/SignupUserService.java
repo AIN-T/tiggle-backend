@@ -20,17 +20,13 @@ public class SignupUserService implements SignupUserUseCase {
     @Override
     public String signup(SignupUserCommand command) throws BaseException {
         User user = User.builder()
-
                 .name(command.getName())
                 .email(command.getEmail())
                 .password(passwordEncoder.encode(command.getPassword()))
                 .loginType(command.getLoginType())
                 .status(command.getStatus())
                 .enable(command.getEnable())
-                .region_1depth_name(command.getRegion_1depth_name())
-                .region_2depth_name(command.getRegion_2depth_name())
-                .region_3depth_name(command.getRegion_3depth_name())
-                .region_4depth_name(command.getRegion_4depth_name())
+                .address(command.getAddress())
                 .phoneNumber(command.getPhoneNumber())
                 .point(0)
                 .build();
