@@ -2,9 +2,9 @@ package com.gamja.tiggle.reservation.adapter.in.web;
 
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponse;
-import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.WebAdapter;
 import com.gamja.tiggle.reservation.adapter.in.web.request.VerifySeatRequest;
+import com.gamja.tiggle.reservation.adapter.in.web.response.VerifySeatResponse;
 import com.gamja.tiggle.reservation.application.port.in.VerifySeatCommand;
 import com.gamja.tiggle.reservation.application.port.in.VerifySeatUseCase;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
@@ -25,14 +25,14 @@ public class VerifySeatController {
 
     @PostMapping
     @Operation(summary = "좌석 예약 검증",  description = "선택한 좌석이 예약 가능한지 검증하는 API 입니다.")
-    public BaseResponse<Void> verifySeatController(
+    public BaseResponse<VerifySeatResponse> verifySeatController(
             @RequestBody @Valid VerifySeatRequest request,
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 
         VerifySeatCommand command = from(request,customUserDetails.getUser().getId());
         try {
-            verifySeatUseCase.verifySeat(command);
-            return new BaseResponse<>(BaseResponseStatus.SUCCESS);
+            VerifySeatResponse response =  verifySeatUseCase.verifySeat(command);
+            return new BaseResponse<>(response);
         } catch (BaseException e) {
             return new BaseResponse<>(e.getStatus());
         }
