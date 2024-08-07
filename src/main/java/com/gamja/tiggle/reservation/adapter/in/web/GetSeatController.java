@@ -30,7 +30,7 @@ public class GetSeatController {
 
     private final GetSeatUseCase getSeatUseCase;
 
-
+    //좌석 조회 시 예약 여부가 필요없다면 getSeatUseCase.getAllSeat으로
     @PostMapping("/all")
     @Operation(summary = "전체 좌석 조회", description = "특정 공연의 전체 좌석을 조회하는 API 입니다.")
     public BaseResponse<List<List<GetAllSeatResponse>>> getAllSeat(
@@ -39,7 +39,7 @@ public class GetSeatController {
 
         List<List<GetAllSeatResponse>> AllSeatResponse;
         try {
-            List<List<Seat>> allSeat = getSeatUseCase.getAllSeat(toAllSeatCommand(request));
+            List<List<Seat>> allSeat = getSeatUseCase.getAllSeatWithEnable(toAllSeatCommand(request));
             AllSeatResponse = allSeat.stream()
                     .map(row -> row.stream()
                             .map(this::toGetAllSeatResponse)
@@ -56,8 +56,9 @@ public class GetSeatController {
         return GetAllSeatResponse.builder()
                 .seatId(seat.getId())
                 .seatNumber(seat.getSeatNumber())
-                .active(seat.getActive())
                 .row(seat.getRow())
+                .active(seat.getActive())
+                .enable(seat.getEnable())
                 .build();
     }
 

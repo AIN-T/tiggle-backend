@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Builder
@@ -24,6 +25,13 @@ public class ReadReservationResponse {
     private String seatInfo; // 좌석 정보 : A구역 1층 3열 N번
     private Integer totalPrice; // 가격 정보
     private String gradeName; // 좌석 등급
+
+    private String programName; // 공연 이름
+    private String programInfo; // 공연 정보
+    private List<String> imageFiles; // 이미지
+    private String payType; // 결제 방식
+    private Integer ticketPrice; // 티켓 가격
+    private Integer usePoint; // 포인트 사용
 
     @Enumerated(EnumType.STRING)
     private ReservationType status; // 예매 상태

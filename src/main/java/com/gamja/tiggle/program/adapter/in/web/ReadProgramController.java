@@ -90,6 +90,7 @@ public class ReadProgramController {
         try {
             Program program = readUseCase.GetProgramDetail(id);
             GetProgramDetailResponse getProgramDetailResponse = from(program);
+            System.out.println(getProgramDetailResponse.getReservationOpenDate());
             return new BaseResponse<>(getProgramDetailResponse);
 
         } catch (BaseException e) {
@@ -109,6 +110,7 @@ public class ReadProgramController {
                 .locationName(program.getLocationName())
                 .programEndDate(program.getProgramEndDate())
                 .programStartDate(program.getProgramStartDate())
+                .reservationOpenDate(program.getReservationOpenDate())
                 .programInfo(program.getProgramInfo())
                 .runtime(program.getRuntime())
                 .build();

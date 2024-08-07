@@ -29,7 +29,7 @@ public class ProgramEntity {
     private int age;
     private int runtime;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy.MM.dd HH:mm:ss")
     private LocalDateTime reservationOpenDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime programStartDate;

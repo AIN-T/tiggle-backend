@@ -2,6 +2,7 @@ package com.gamja.tiggle.reservation.adapter.out.persistence.Entity;
 
 import com.gamja.tiggle.exchange.adapter.out.persistence.ExchangeEntity;
 import com.gamja.tiggle.common.BaseEntity;
+import com.gamja.tiggle.payment.adapter.out.persistence.PaymentEntity;
 import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramEntity;
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
 import com.gamja.tiggle.user.adapter.out.persistence.UserEntity;
@@ -42,6 +43,9 @@ public class ReservationEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "times_id")
     private TimesEntity timesEntity;
+
+    @OneToOne(mappedBy = "reservationEntity", fetch = FetchType.LAZY)
+    private PaymentEntity paymentEntity;
 
     private String ticketNumber;
     private Integer totalPrice;

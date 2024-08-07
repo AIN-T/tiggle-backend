@@ -19,6 +19,7 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
             "JOIN FETCH r.seatEntity s " +
             "JOIN FETCH r.programEntity p " +
             "JOIN FETCH r.user u " +
+            "LEFT JOIN FETCH r.paymentEntity pe " +
             "WHERE r.id = :reservationId")
     ReservationEntity findReservationWithDetails(@Param("reservationId") Long reservationId);
 

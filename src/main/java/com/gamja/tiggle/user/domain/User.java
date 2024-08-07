@@ -16,11 +16,7 @@ public class User {
     private Boolean status;
     private Boolean enable;
     private String role;
-
-    private String region_1depth_name;
-    private String region_2depth_name;
-    private String region_3depth_name;
-    private String region_4depth_name;
+    private String address;
     private String phoneNumber;
     private Integer point;
     private Date createdAt;
