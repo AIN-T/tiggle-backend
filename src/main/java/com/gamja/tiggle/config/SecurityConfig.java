@@ -41,6 +41,7 @@ public class SecurityConfig {
                                 "swagger/**", "auth/**").permitAll()
                         .anyRequest().authenticated()
         );
+        http.logout((auth) -> auth.deleteCookies("AToken").logoutSuccessUrl("http://localhost:8081/"));
 
         http.addFilterBefore(new JwtFilter(jwtUtil), LoginFilter.class);
         http.addFilterAt(new LoginFilter(jwtUtil, authenticationManager(authenticationConfiguration)), UsernamePasswordAuthenticationFilter.class);
@@ -73,4 +74,6 @@ public class SecurityConfig {
 
         return configuration.getAuthenticationManager();
     }
+
+
 }
