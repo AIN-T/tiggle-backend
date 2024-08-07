@@ -39,7 +39,7 @@ public class GetPointController {
 
         List<PointHistory> pointHistoryList;
         GetPointHistoryCommand command = GetPointHistoryCommand.builder()
-                .userId(request.getUserId())
+                .userId(user.getId())
                 .getOrUse(request.getGetOrUse())
                 .build();
         try {

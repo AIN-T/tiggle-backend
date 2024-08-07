@@ -11,6 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetPointRequest {
-    private Long userId;
     private GetOrUse getOrUse;
 }
