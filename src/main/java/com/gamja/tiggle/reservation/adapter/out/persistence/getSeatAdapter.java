@@ -5,7 +5,8 @@ import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.PersistenceAdapter;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.SeatEntity;
-import com.gamja.tiggle.reservation.adapter.out.persistence.Response.GetSeatResponse;
+import com.gamja.tiggle.reservation.adapter.out.persistence.Response.GetAllSeatResponse;
+import com.gamja.tiggle.reservation.adapter.out.persistence.Response.GetAvailableSeatResponse;
 import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.ReservationRepository;
 import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.SeatRepository;
 import com.gamja.tiggle.reservation.application.port.out.GetSeatPort;
@@ -71,20 +72,26 @@ public class getSeatAdapter implements GetSeatPort {
 
     @Override
     public List<Seat> getAvailableSeatByQuery(Long programId, Long timesId, Long sectionId) {
-        List<GetSeatResponse> availableSeat = seatRepository.findAvailableSeat(programId, timesId, sectionId);
+        List<GetAvailableSeatResponse> availableSeat = seatRepository.findAvailableSeat(programId, timesId, sectionId);
 
-        List<Seat> list = availableSeat.stream().map(getSeatResponse ->
+        List<Seat> list = availableSeat.stream().map(getAvailableSeatResponse ->
                 Seat.builder()
-                        .id(getSeatResponse.getSeatId())
-                        .seatNumber(getSeatResponse.getSeatNumber())
-                        .row(getSeatResponse.getRow())
+                        .id(getAvailableSeatResponse.getSeatId())
+                        .seatNumber(getAvailableSeatResponse.getSeatNumber())
+                        .row(getAvailableSeatResponse.getRow())
                         .build()).toList();
         return list;
     }
 
 
+    /**
+     * 전체 좌석 조회 (예약 가능 여부까지는 X, 단순 좌석 배치도만 보내줌)
+     * @param sectionId
+     * @return
+     * @throws BaseException
+     */
     @Override
-    public List<Seat> getAllSeat(Long programId, Long sectionId, Long timesId) throws BaseException {
+    public List<Seat> getAllSeat(Long sectionId) throws BaseException {
 
         List<SeatEntity> seats = seatRepository.findAllBySectionEntityIdByQuery(sectionId);
         if (seats.isEmpty()) {
@@ -97,6 +104,37 @@ public class getSeatAdapter implements GetSeatPort {
                         .row(seatEntity.getRow())
                         .seatNumber(seatEntity.getSeatNumber())
                         .active(seatEntity.getActive())
+                        .build()
+        ).toList();
+    }
+
+    /**
+     * 예약 여부까지  포함해서 전체 좌석을 보내줌
+     * @param programId
+     * @param sectionId
+     * @param timesId
+     * @return
+     * @throws BaseException
+     */
+    @Override
+    public List<Seat> getAllSeatWithEnable(Long programId, Long sectionId, Long timesId) throws BaseException {
+
+        List<GetAllSeatResponse> allSeat = seatRepository.findAllSeat(programId, sectionId, timesId);
+        for (int i = 0; i < allSeat.size(); i++) {
+        System.out.println(allSeat.get(i).getActive());
+        System.out.println(allSeat.get(i).getEnable());
+            System.out.println("--");
+        }
+
+        return allSeat.stream().map(response ->
+                Seat
+                        .builder()
+                        .id(response.getSeatId())
+                        .enable(response.getEnable())
+                        .seatNumber(response.getSeatNumber())
+                        .row(response.getRow())
+                        .active(response.getActive())
+                        .enable(response.getEnable())
                         .build()
         ).toList();
     }
