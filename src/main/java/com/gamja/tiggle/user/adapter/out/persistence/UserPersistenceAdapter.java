@@ -44,6 +44,7 @@ public class UserPersistenceAdapter implements UserPersistencePort {
     @Override
     public void saveUser(User user) throws BaseException {
         UserEntity entity = UserEntity.builder()
+                .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
                 .password(user.getPassword())
@@ -65,6 +66,7 @@ public class UserPersistenceAdapter implements UserPersistencePort {
         Optional<UserEntity> userEntity = jpaUserRepository.findById(id);
         if (userEntity.isPresent()) {
             return User.builder()
+                    .id(userEntity.get().getId())
                     .name(userEntity.get().getName())
                     .email(userEntity.get().getEmail())
                     .password(userEntity.get().getPassword())

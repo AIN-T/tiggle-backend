@@ -10,7 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreatePointHistoryRequest {
-    private Long userId;
     private Integer value;
     private String description;
 }
