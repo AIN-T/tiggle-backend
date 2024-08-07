@@ -6,6 +6,7 @@ import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.WebAdapter;
 import com.gamja.tiggle.reservation.adapter.in.web.response.ReadMyReservationResponse;
 import com.gamja.tiggle.reservation.adapter.in.web.response.ReadReservationResponse;
+import com.gamja.tiggle.reservation.adapter.in.web.response.ReadTemporaryReservationResponse;
 import com.gamja.tiggle.reservation.application.port.in.ReadReservationCommand;
 import com.gamja.tiggle.reservation.application.port.in.ReadReservationUseCase;
 import com.gamja.tiggle.reservation.domain.Reservation;
@@ -62,6 +63,37 @@ public class ReadReservationController {
             return new BaseResponse<>(BaseResponseStatus.FAIL, null);
         }
     }
+
+
+    @GetMapping("/temporary")
+    public BaseResponse<ReadTemporaryReservationResponse> readTemporary(@RequestParam Long reservationId) {
+        try {
+
+            ReadReservationCommand command = ReadReservationCommand.builder()
+                    .reservationId(reservationId)
+                    .build();
+
+            Reservation reservation = readReservationUseCase.readTemporaryReservation(command);
+
+            ReadTemporaryReservationResponse response = new ReadTemporaryReservationResponse(
+                    reservation.getTicketNumber(),
+                    reservation.getDate(),
+                    reservation.getLocationName(),
+                    reservation.getSeatInfo(),
+                    reservation.getTotalPrice(),
+                    reservation.getGradeName(),
+                    reservation.getProgramName(),
+                    reservation.getProgramInfo(),
+                    reservation.getMyPoint()
+            );
+
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS, response);
+        } catch (BaseException e) {
+
+            return new BaseResponse<>(BaseResponseStatus.FAIL, null);
+        }
+    }
+
 
     @GetMapping("/myRead")
     public BaseResponse<List<ReadMyReservationResponse>> myRead(@AuthenticationPrincipal CustomUserDetails customUserDetails,
