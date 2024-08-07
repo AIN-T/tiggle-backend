@@ -5,10 +5,14 @@ import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.PersistenceAdapter;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.ReservationRepository;
+import com.gamja.tiggle.reservation.application.port.in.ReadReservationCommand;
 import com.gamja.tiggle.reservation.application.port.out.ReadReservationPort;
 import com.gamja.tiggle.reservation.domain.Reservation;
-import com.gamja.tiggle.user.domain.User;
+import com.gamja.tiggle.reservation.domain.type.ReservationType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Collections;
 import java.util.List;
@@ -55,9 +59,14 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
     }
 
     @Override
-    public List<Reservation> myRead(User user) throws BaseException {
-        List<ReservationEntity> result = repository.findReservationsByUserId(user.getId());
+    public List<Reservation> myRead(ReadReservationCommand command) throws BaseException {
+        int page = command.getPage();
+        int size = command.getSize();
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ReservationEntity> result = repository.findReservationsByUserId(command.getUser().getId(), pageable);
+
         List<Reservation> reservations = result.stream()
+                .filter(r -> ReservationType.COMPLETED.equals(r.getStatus()))
                 .map(r -> {
                     // 이미지를 2개씩 가지고 오길래 한 개만 가지고 오도록 추가
                     String firstImageUrl = r.getProgramEntity()
@@ -79,12 +88,11 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
                             .programEndDate(r.getProgramEntity().getProgramEndDate())
                             .status(r.getStatus())
                             .requestLimit(r.getRequestLimit())
-                            .imageFiles(imageFilesList) // 리스트에 단일 이미지 URL만 설정
+                            .imageFiles(imageFilesList)
                             .build();
                 })
                 .collect(Collectors.toUnmodifiableList());
 
-        // 3. 결과 리스트를 반환합니다.
         return reservations;
     }
 }

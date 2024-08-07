@@ -37,9 +37,9 @@ public class CreatePointController {
         }
 
         try {
-            User findUser = createPointHistoryUseCase.findByUserId(request.getUserId());
+            User findUser = createPointHistoryUseCase.findByUserId(user.getId());
             CreatePointHistoryCommand command = CreatePointHistoryCommand.builder()
-                    .userId(request.getUserId())
+                    .userId(findUser.getId())
                     .value(request.getValue())
                     .hasPoint(findUser.getPoint())
                     .description(request.getDescription())
