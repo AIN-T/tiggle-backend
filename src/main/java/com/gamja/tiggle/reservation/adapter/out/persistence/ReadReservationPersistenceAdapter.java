@@ -23,16 +23,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ReadReservationPersistenceAdapter implements ReadReservationPort {
 
-    private final ReservationRepository repository;
+    private final ReservationRepository reservationRepository;
 
     @Override
     public ReservationEntity read(Long reservationId) throws BaseException {
-        return repository.findById(reservationId).orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_RESERVATION));
+        return reservationRepository.findById(reservationId).orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_RESERVATION));
     }
 
     @Override
     public Reservation readReservation(Reservation reservation) throws BaseException {
-        ReservationEntity result = repository.findReservationWithDetails(reservation.getId());
+        ReservationEntity result = reservationRepository.findReservationWithDetails(reservation.getId());
         List<String> imageFiles = result.getProgramEntity().getProgramImageEntities().stream()
                 .map(programImageEntity -> programImageEntity.getImgUrl())
                 .collect(Collectors.toList());
@@ -63,7 +63,7 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
         int page = command.getPage();
         int size = command.getSize();
         Pageable pageable = PageRequest.of(page, size);
-        Page<ReservationEntity> result = repository.findReservationsByUserId(command.getUser().getId(), pageable);
+        Page<ReservationEntity> result = reservationRepository.findReservationsByUserId(command.getUser().getId(), pageable);
 
         List<Reservation> reservations = result.stream()
                 .filter(r -> ReservationType.COMPLETED.equals(r.getStatus()))
@@ -94,5 +94,10 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
                 .collect(Collectors.toUnmodifiableList());
 
         return reservations;
+    }
+
+    @Override
+    public Long getReservationCnt(Long userid) throws BaseException {
+        return reservationRepository.countReservationsByUserId(userid);
     }
 }

@@ -29,4 +29,10 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
             "JOIN FETCH r.user u " +
             "WHERE u.id = :userId")
     Page<ReservationEntity> findReservationsByUserId(@Param("userId") Long userId, Pageable pageable);
+
+
+    @Query("SELECT COUNT(r) FROM ReservationEntity r " +
+            "JOIN r.user u " +
+            "WHERE u.id = :userId")
+    Long countReservationsByUserId(@Param("userId") Long userId);
 }
