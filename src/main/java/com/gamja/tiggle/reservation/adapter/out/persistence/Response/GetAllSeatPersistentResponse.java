@@ -2,22 +2,27 @@ package com.gamja.tiggle.reservation.adapter.out.persistence.Response;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 @Builder
 @Getter
-public class GetAllSeatResponse {
+@ToString
+public class GetAllSeatPersistentResponse {
 
     private Long seatId;
-    private int seatNumber;
     private String row;
+    private int seatNumber;
     private Boolean active;
     private Boolean enable;
+    private Long sectionId;
 
-    public GetAllSeatResponse(Long id, int seatNumber, String row, Boolean active, Boolean enable) {
+    public GetAllSeatPersistentResponse(Long id, String row, int seatNumber, Boolean active, Boolean enable, Long sectionId) {
         this.seatId = id;
-        this.seatNumber = seatNumber;
         this.row = row;
+        this.seatNumber = seatNumber;
         this.active = active;
         this.enable = enable;
+        this.sectionId = sectionId;
     }
+
 }

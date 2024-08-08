@@ -5,7 +5,7 @@ import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.PersistenceAdapter;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.SeatEntity;
-import com.gamja.tiggle.reservation.adapter.out.persistence.Response.GetAllSeatResponse;
+import com.gamja.tiggle.reservation.adapter.out.persistence.Response.GetAllSeatPersistentResponse;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Response.GetAvailableSeatResponse;
 import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.ReservationRepository;
 import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.SeatRepository;
@@ -119,12 +119,9 @@ public class getSeatAdapter implements GetSeatPort {
     @Override
     public List<Seat> getAllSeatWithEnable(Long programId, Long sectionId, Long timesId) throws BaseException {
 
-        List<GetAllSeatResponse> allSeat = seatRepository.findAllSeat(programId, sectionId, timesId);
-        for (int i = 0; i < allSeat.size(); i++) {
-        System.out.println(allSeat.get(i).getActive());
-        System.out.println(allSeat.get(i).getEnable());
-            System.out.println("--");
-        }
+
+        List<GetAllSeatPersistentResponse> allSeat
+                = seatRepository.findAllSeat(programId, timesId, sectionId);
 
         return allSeat.stream().map(response ->
                 Seat

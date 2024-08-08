@@ -10,6 +10,8 @@ public class GetSectionListResponse {
     private Long id;
     private String sectionName;
     private Long gradeId;
+    private String gradeName;
+    private int price;
 
 
 }
