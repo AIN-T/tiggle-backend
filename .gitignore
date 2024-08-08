@@ -36,7 +36,7 @@ out/
 ### VS Code ###
 .vscode/
 
-appplication.yml
+appplication-local.yml
 /gradle/wrapper/gradle-wrapper.jar
 /gradle/wrapper/gradle-wrapper.properties
 /gradlew

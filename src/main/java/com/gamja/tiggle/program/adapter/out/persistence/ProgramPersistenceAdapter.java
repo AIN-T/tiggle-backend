@@ -104,14 +104,15 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
     public List<Program> readRealTimeAllPaged(ReadProgramCommand command) throws BaseException {
         int page = command.getPage();
         int size = command.getSize();
-        LocalDateTime currentDateTime = LocalDateTime.now();
+        // 현재 시간을 기준으로 예매 끝난 공연은 나오지 않게 하는 filter
+//        LocalDateTime currentDateTime = LocalDateTime.now();
 
         Pageable pageable = PageRequest.of(page, size);
         Page<ProgramEntity> programEntityPage = jpaProgramRepository.findAll(pageable);
 
         List<Program> programs = programEntityPage.stream()
-                .filter(p -> p.getReservationOpenDate().isAfter(currentDateTime))
-                .sorted(Comparator.comparing(ProgramEntity::getReservationOpenDate)) // 예약 오픈 날짜 기준 정렬
+//                .filter(p -> p.getReservationOpenDate().isAfter(currentDateTime))
+                .sorted(Comparator.comparing(ProgramEntity::getProgramEndDate)) // 예약 오픈 날짜 기준 정렬
                 .map(p -> Program.builder()
                         .id(p.getId())
                         .categoryId(p.getCategoryEntity().getId())
