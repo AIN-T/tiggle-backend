@@ -29,10 +29,6 @@ public class PaymentEntity {
     private String payType;
     private Boolean verify;
 
-    //@ManyToOne
-    //@JoinColumn(name = "user_id")
-    //private User user;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
     private ReservationEntity reservationEntity;
