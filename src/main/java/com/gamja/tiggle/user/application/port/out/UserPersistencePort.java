@@ -14,5 +14,7 @@ public interface UserPersistencePort {
     User searchUser(Long id) throws BaseException;
 
     void savePoint(Long id, Integer point) throws BaseException;
+
+    void existUser(Long id) throws BaseException;
 }
 

@@ -12,6 +12,7 @@ import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.SeatRepos
 import com.gamja.tiggle.reservation.application.port.out.GetSeatPort;
 import com.gamja.tiggle.reservation.domain.Seat;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,7 +123,19 @@ public class getSeatAdapter implements GetSeatPort {
 
         List<GetAllSeatPersistentResponse> allSeat
                 = seatRepository.findAllSeat(programId, timesId, sectionId);
+        return getSeatList(allSeat);
+    }
 
+    @Override
+    public List<Seat> getAllSeatWithEnableExchange(Long programId, Long sectionId, Long timesId) throws BaseException {
+
+        List<GetAllSeatPersistentResponse> allSeat
+                = seatRepository.findAllSeatEnableExchange(programId, timesId, sectionId);
+        return getSeatList(allSeat);
+    }
+
+    @NotNull
+    private static List<Seat> getSeatList(List<GetAllSeatPersistentResponse> allSeat) {
         return allSeat.stream().map(response ->
                 Seat
                         .builder()

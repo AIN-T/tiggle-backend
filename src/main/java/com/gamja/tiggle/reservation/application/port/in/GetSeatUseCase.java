@@ -11,4 +11,7 @@ public interface GetSeatUseCase {
     List<List<Seat>> getAllSeat(GetAllSeatCommand command) throws BaseException;
 
     List<List<Seat>> getAllSeatWithEnable(GetAllSeatCommand command) throws BaseException;
+
+    List<List<Seat>> getAllSeatWithEnableExchange(GetAllSeatCommand command) throws BaseException;
+
 }

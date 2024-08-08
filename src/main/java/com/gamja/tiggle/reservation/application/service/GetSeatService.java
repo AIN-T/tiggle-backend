@@ -12,6 +12,7 @@ import com.gamja.tiggle.reservation.application.port.out.GetSectionPort;
 import com.gamja.tiggle.reservation.application.port.out.GetTimesPort;
 import com.gamja.tiggle.reservation.domain.Seat;
 import com.gamja.tiggle.reservation.domain.Section;
+import com.gamja.tiggle.user.application.port.out.UserPersistencePort;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class GetSeatService implements GetSeatUseCase {
     private final ProgramPort programPort;
     private final GetSectionPort sectionPort;
     private final GetTimesPort timesPort;
+    private final UserPersistencePort userPersistencePort;
 
 
     @Override
@@ -81,11 +83,47 @@ public class GetSeatService implements GetSeatUseCase {
     @Override
     public List<List<Seat>> getAllSeatWithEnable(GetAllSeatCommand command) throws BaseException {
 
-        List<Seat> allSeat = getSeatPort.getAllSeatWithEnable(command.getProgramId(),
+        List<Seat> allSeat = getSeatPort.getAllSeatWithEnableExchange(command.getProgramId(),
                 command.getSectionId(), command.getTimesId()
         );
 
+        userPersistencePort.existUser(command.getUserId());
+        Long locationId = programPort.getLocationId(command.getProgramId());
+        programPort.existProgram(command.getProgramId());
+        timesPort.verifyTimes(command.getTimesId(), command.getProgramId());
+        sectionPort.correctSection(command.getSectionId(), locationId);
 
+        Section section = sectionPort.getRowColumn(command.getSectionId());
+        int rowCount = section.getRowCount();
+        int columnCount = section.getColumnCount();
+        List<List<Seat>> ArraySeat = new ArrayList<>();
+
+        for (int i = 0; i < rowCount; i++) {
+            ArraySeat.add(new ArrayList<>(Collections.nCopies(columnCount, null)));
+        }
+
+        for (Seat seat : allSeat) {
+            int rowIndex = seat.getRow().charAt(0) - 'A';
+            int colIndex = seat.getSeatNumber() - 1;
+
+            if (colIndex >= columnCount) throw new BaseException(BaseResponseStatus.NOT_MATCH_ROW);
+
+            if (rowIndex >= rowCount) throw new BaseException(BaseResponseStatus.NOT_MATCH_COLUMN);
+
+            ArraySeat.get(rowIndex).set(colIndex, seat);
+        }
+
+
+        return ArraySeat;
+    }
+
+    @Override
+    public List<List<Seat>> getAllSeatWithEnableExchange(GetAllSeatCommand command) throws BaseException {
+
+        List<Seat> allSeat = getSeatPort.getAllSeatWithEnableExchange(command.getProgramId(),
+                command.getSectionId(), command.getTimesId()
+        );
+        userPersistencePort.existUser(command.getUserId());
         Long locationId = programPort.getLocationId(command.getProgramId());
         programPort.existProgram(command.getProgramId());
         timesPort.verifyTimes(command.getTimesId(), command.getProgramId());

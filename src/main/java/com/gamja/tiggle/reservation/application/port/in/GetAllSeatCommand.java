@@ -10,4 +10,5 @@ public class GetAllSeatCommand {
     private Long programId;
     private Long timesId;
     private Long sectionId;
+    private Long userId;
 }
