@@ -22,8 +22,9 @@ public interface JpaExchangeRepository extends JpaRepository<ExchangeEntity,Long
         )
         List<ExchangeEntity> findExchangeByUser (Long userId, Pageable page);
 
-        @Query("SELECT COUNT(r) FROM ReservationEntity r " +
+        @Query("SELECT COUNT(e) FROM ExchangeEntity e "+
+                "JOIN e.reservation2 r " +
                 "JOIN r.user u " +
-                "WHERE u.id = :userId")
-        Long countReservationsByUserId(@Param("userId") Long userId);
+                "WHERE u.id = :userId AND e.isWatch = false")
+        Long countExchangeByUserId(@Param("userId") Long userId);
 }

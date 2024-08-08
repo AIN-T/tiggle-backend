@@ -33,6 +33,6 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
 
     @Query("SELECT COUNT(r) FROM ReservationEntity r " +
             "JOIN r.user u " +
-            "WHERE u.id = :userId")
+            "WHERE u.id = :userId AND r.status='COMPLETED'")
     Long countReservationsByUserId(@Param("userId") Long userId);
 }
