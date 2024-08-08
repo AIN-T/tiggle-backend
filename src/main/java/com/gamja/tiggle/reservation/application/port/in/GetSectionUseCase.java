@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface GetSectionUseCase {
 
-    List<Section> getSection(Long locationId) throws BaseException;
+    List<Section> getSection(Long locationId, Long programId) throws BaseException;
 }

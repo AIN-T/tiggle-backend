@@ -56,7 +56,7 @@ public enum BaseResponseStatus {
     DUPLICATE_LOCATION(false, 3302, "이미 존재하는 로케이션입니다."),
     LOCATION_CREATION_FAILED(false, 3303, "로케이션 생성에 실패했습니다."),
     INVALID_LOCATION_DATA(false, 3304, "유효하지 않은 로케이션 데이터입니다."),
-
+    PROGRAM_NOT_IN_LOCATION(false, 3305, "해당 공연장에 해당 공연이 존재하지 않습니다."),
 
     /**
      * 4000: 결제
@@ -105,7 +105,7 @@ public enum BaseResponseStatus {
     /**
      * 7000: 공연장, 구역, 좌석, 등급
      */
-    NOT_FOUND_SECTION(false, 7000, "구역이 존재하지 않습니다."),
+    NOT_FOUND_SECTION(false, 7000, "구역 정보가 존재하지 않습니다."),
     NOT_MATCH_SECTION(false, 7001, "해당 공연의 구역 정보가 존재하지 않습니다."),
     NOT_FOUND_PRICE(false, 7002, "등급별 가격 정보가 존재하지 않습니다."),
 

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @WebAdapter
@@ -42,6 +43,7 @@ public class GetSeatController {
             List<List<Seat>> allSeat = getSeatUseCase.getAllSeatWithEnable(toAllSeatCommand(request));
             AllSeatResponse = allSeat.stream()
                     .map(row -> row.stream()
+                            .filter(Objects::nonNull)
                             .map(this::toGetAllSeatResponse)
                             .collect(Collectors.toList()))
                     .collect(Collectors.toList());
