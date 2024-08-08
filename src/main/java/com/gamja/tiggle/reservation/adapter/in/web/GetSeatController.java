@@ -13,8 +13,10 @@ import com.gamja.tiggle.reservation.application.port.in.GetAvailableSeatCommand;
 import com.gamja.tiggle.reservation.application.port.in.GetSeatUseCase;
 import com.gamja.tiggle.reservation.domain.Seat;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
+import com.gamja.tiggle.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,13 +42,8 @@ public class GetSeatController {
 
         List<List<GetAllSeatResponse>> AllSeatResponse;
         try {
-            List<List<Seat>> allSeat = getSeatUseCase.getAllSeatWithEnable(toAllSeatCommand(request));
-            AllSeatResponse = allSeat.stream()
-                    .map(row -> row.stream()
-                            .filter(Objects::nonNull)
-                            .map(this::toGetAllSeatResponse)
-                            .collect(Collectors.toList()))
-                    .collect(Collectors.toList());
+            List<List<Seat>> allSeat = getSeatUseCase.getAllSeatWithEnable(toAllSeatCommand(request,customUserDetails.getUser()));
+            AllSeatResponse = getAllSeatResponse(allSeat);
         } catch (BaseException e) {
             return new BaseResponse<>(e.getStatus());
         }
@@ -54,15 +51,25 @@ public class GetSeatController {
 
     }
 
-    public GetAllSeatResponse toGetAllSeatResponse(Seat seat) {
-        return GetAllSeatResponse.builder()
-                .seatId(seat.getId())
-                .seatNumber(seat.getSeatNumber())
-                .row(seat.getRow())
-                .active(seat.getActive())
-                .enable(seat.getEnable())
-                .build();
+    @PostMapping("/exchange")
+    @Operation(summary = "교환 가능 좌석 조회", description = "특정 공연의 교환 가능 좌석을 조회하는 API 입니다.")
+    public BaseResponse<List<List<GetAllSeatResponse>>> getAllSeatEnableExchange(
+            @RequestBody GetAllSeatRequest request,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails) throws BaseException {
+
+        List<List<GetAllSeatResponse>> AllSeatResponse;
+        try {
+            List<List<Seat>> allSeat = getSeatUseCase.getAllSeatWithEnableExchange(toAllSeatCommand(request,customUserDetails.getUser()));
+            AllSeatResponse = getAllSeatResponse(allSeat);
+        } catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
+        return new BaseResponse<>(AllSeatResponse);
+
     }
+
+
+
 
     @PostMapping
     @Operation(summary = "예약 가능 좌석 조회", description = "특정 공연의 예약 가능 좌석을 조회하는 API 입니다.")
@@ -114,14 +121,32 @@ public class GetSeatController {
                 .build();
     }
 
-    private GetAllSeatCommand toAllSeatCommand(GetAllSeatRequest request) {
+    private GetAllSeatCommand toAllSeatCommand(GetAllSeatRequest request, User user) {
         return GetAllSeatCommand
                 .builder()
+                .userId(user.getId())
                 .programId(request.getProgramId())
                 .timesId(request.getTimesId())
                 .sectionId(request.getSectionId())
                 .build();
     }
 
-
+    public GetAllSeatResponse toGetAllSeatResponse(Seat seat) {
+        return GetAllSeatResponse.builder()
+                .seatId(seat.getId())
+                .seatNumber(seat.getSeatNumber())
+                .row(seat.getRow())
+                .active(seat.getActive())
+                .enable(seat.getEnable())
+                .build();
+    }
+    @NotNull
+    private List<List<GetAllSeatResponse>> getAllSeatResponse(List<List<Seat>> allSeat) {
+        return allSeat.stream()
+                .map(row -> row.stream()
+                        .filter(Objects::nonNull)
+                        .map(this::toGetAllSeatResponse)
+                        .collect(Collectors.toList()))
+                .collect(Collectors.toList());
+    }
 }

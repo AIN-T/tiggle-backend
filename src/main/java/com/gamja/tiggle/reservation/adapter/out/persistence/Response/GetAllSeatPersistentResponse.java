@@ -1,12 +1,12 @@
 package com.gamja.tiggle.reservation.adapter.out.persistence.Response;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
 @Builder
 @Getter
-@ToString
 public class GetAllSeatPersistentResponse {
 
     private Long seatId;
@@ -14,15 +14,13 @@ public class GetAllSeatPersistentResponse {
     private int seatNumber;
     private Boolean active;
     private Boolean enable;
-    private Long sectionId;
 
-    public GetAllSeatPersistentResponse(Long id, String row, int seatNumber, Boolean active, Boolean enable, Long sectionId) {
+    public GetAllSeatPersistentResponse(Long id, String row, int seatNumber, Boolean active, Boolean enable) {
         this.seatId = id;
         this.row = row;
         this.seatNumber = seatNumber;
         this.active = active;
         this.enable = enable;
-        this.sectionId = sectionId;
     }
 
 }

@@ -89,5 +89,13 @@ public class UserPersistenceAdapter implements UserPersistencePort {
         userEntity.get().setPoint(userEntity.get().getPoint() + point);
         jpaUserRepository.save(userEntity.get());
     }
+
+    @Override
+    public void existUser(Long id) throws BaseException {
+        boolean exists = jpaUserRepository.existsById(id);
+        if (!exists){
+            throw new BaseException(BaseResponseStatus.NOT_FOUND_USER);
+        }
+    }
 }
 
