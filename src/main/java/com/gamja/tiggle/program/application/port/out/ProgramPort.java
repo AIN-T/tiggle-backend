@@ -6,4 +6,6 @@ public interface ProgramPort {
     boolean existProgram(Long id) throws BaseException;
 
     Long getLocationId(Long programId) throws BaseException;
+
+    void findByProgramIdAndLocationId(Long programId, Long locationId) throws BaseException;
 }

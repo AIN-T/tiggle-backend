@@ -171,4 +171,11 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
         return locationIdById;
     }
 
+    @Override
+    public void findByProgramIdAndLocationId(Long programId, Long locationId) throws BaseException {
+        if (!jpaProgramRepository.existsProgramEntityByIdAndLocationEntityId(programId,locationId)) {
+            throw new BaseException(BaseResponseStatus.PROGRAM_NOT_IN_LOCATION);
+        }
+    }
+
 }

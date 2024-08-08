@@ -4,6 +4,7 @@ import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.PersistenceAdapter;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.SectionEntity;
+import com.gamja.tiggle.reservation.adapter.out.persistence.Response.GetSectionResponse;
 import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.SectionRepository;
 import com.gamja.tiggle.reservation.application.port.out.GetSectionPort;
 import com.gamja.tiggle.reservation.domain.Section;
@@ -18,8 +19,8 @@ public class GetSectionAdapter implements GetSectionPort {
     private final SectionRepository sectionRepository;
 
     @Override
-    public List<Section> getSection(Long id) throws BaseException {
-        List<SectionEntity> allByLocationId = sectionRepository.findAllByLocationEntityId(id);
+    public List<Section> getSection(Long locationId, Long programId) throws BaseException {
+        List<GetSectionResponse> allByLocationId = sectionRepository.findAllByLocationEntityId(locationId, programId);
         if (allByLocationId.isEmpty()) {
             throw new BaseException(BaseResponseStatus.NOT_FOUND_SECTION);
         }
@@ -40,13 +41,15 @@ public class GetSectionAdapter implements GetSectionPort {
         }
     }
 
-    private List<Section> from(List<SectionEntity> allByLocationId) {
+    private List<Section> from(List<GetSectionResponse> allByLocationId) {
         return allByLocationId.stream().map(sectionEntity ->
                 Section.builder()
-                        .id(sectionEntity.getId())
-                        .locationId(sectionEntity.getLocationEntity().getId())
-                        .gradeId(sectionEntity.getGradeEntity().getId())
+                        .id(sectionEntity.getSectionId())
+                        .locationId(sectionEntity.getSectionId())
+                        .gradeId(sectionEntity.getGradeId())
+                        .gradeName(sectionEntity.getGradeName())
                         .sectionName(sectionEntity.getSectionName())
+                        .price(sectionEntity.getPrice())
                         .build()
         ).toList();
     }
