@@ -36,6 +36,7 @@ public class Reservation {
     private String payType; // 결제 방식
     private Integer ticketPrice; // 티켓 가격
     private Integer usePoint; // 포인트 사용
+    private Integer myPoint;  // 내 포인트
 
     private LocalDateTime createdAt; // 예약 날짜
     private LocalDateTime date; // 공연 날짜

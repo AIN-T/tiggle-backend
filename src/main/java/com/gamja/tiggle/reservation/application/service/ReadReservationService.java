@@ -26,6 +26,14 @@ public class ReadReservationService implements ReadReservationUseCase {
     }
 
     @Override
+    public Reservation readTemporaryReservation(ReadReservationCommand command) throws BaseException {
+        Reservation reservation = Reservation.builder()
+                .id(command.getReservationId())
+                .build();
+        return readReservationPort.readTemporaryReservation(reservation);
+    }
+
+    @Override
     public List<Reservation> myRead(ReadReservationCommand command) throws BaseException {
         User user = command.getUser();
         if (user == null) {

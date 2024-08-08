@@ -11,4 +11,5 @@ public interface ReadReservationPort {
     Reservation readReservation(Reservation reservation) throws  BaseException;
     List<Reservation> myRead(ReadReservationCommand command) throws BaseException;
     Long getReservationCnt(Long userid) throws BaseException;
+    Reservation readTemporaryReservation(Reservation reservation);
 }
