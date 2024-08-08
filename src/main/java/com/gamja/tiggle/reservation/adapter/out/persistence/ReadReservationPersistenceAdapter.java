@@ -44,7 +44,7 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
                 .locationName(result.getProgramEntity().getLocationEntity().getLocationName())
                 .name(result.getUser().getName())
                 .seatInfo(
-                        result.getSeatEntity().getRow()+"구역 " +result.getSeatEntity().getSectionEntity().getColumnCount()+"열 "+result.getSeatEntity().getSeatNumber()+"번")
+                        result.getSeatEntity().getSectionEntity().getSectionName()+"구역 "+result.getSeatEntity().getRow()+"열 "+result.getSeatEntity().getSeatNumber()+"번")
                 .totalPrice(result.getTotalPrice())
                 .gradeName(result.getSeatEntity().getSectionEntity().getGradeEntity().getGradeName())
                 .status(result.getStatus())
