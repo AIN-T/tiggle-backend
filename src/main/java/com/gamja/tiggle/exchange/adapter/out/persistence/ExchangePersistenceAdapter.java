@@ -76,6 +76,6 @@ public class ExchangePersistenceAdapter implements ExchangePort {
 
     @Override
     public Long readExchangeOfferCnt(Long userId) {
-        return exchangeRepository.countReservationsByUserId(userId);
+        return exchangeRepository.countExchangeByUserId(userId);
     }
 }
