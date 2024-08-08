@@ -11,9 +11,16 @@ import java.util.List;
 
 public interface ExchangePort {
     ExchangeEntity read(Exchange exchange) throws BaseException;
+
     void save(Exchange exchange);
+
     Boolean find(CreateExchangeOfferCommand command);
+
     ExchangeEntity findById(Long id) throws BaseException;
+
     void update(ExchangeEntity exchange);
+
     List<ExchangeEntity> readExchangeOfferForMe(User user, Integer page, Integer size);
+
+    Long readExchangeOfferCnt(Long userId);
 }

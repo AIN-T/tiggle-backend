@@ -1,8 +1,6 @@
-package com.gamja.tiggle.point.adapter.out.verify;
+package com.gamja.tiggle.point.adapter.out.persistence;
 
 import com.gamja.tiggle.common.BaseException;
-import com.gamja.tiggle.point.adapter.out.persistence.JpaPointRepository;
-import com.gamja.tiggle.point.adapter.out.persistence.PointEntity;
 import com.gamja.tiggle.point.application.port.out.PointHistoryPort;
 import com.gamja.tiggle.point.domain.GetOrUse;
 import com.gamja.tiggle.point.domain.PointHistory;
@@ -22,11 +20,11 @@ public class PointHistoryAdapter implements PointHistoryPort {
     private final JpaUserRepository jpaUserRepository;
 
     @Override
-    public List<PointHistory> findPointHistorybyUserId(Long userId, GetOrUse method) {
+    public List<PointHistory> findPointHistorybyUserId(Long userId, GetOrUse useType) {
         List<PointHistory> pointHistoryList = new ArrayList<>();
 
         List<PointEntity> pointEntityList = jpaPointRepository.findAllByUserEntity_Id(userId);
-        if (method.equals(GetOrUse.ALL)){
+        if (useType.equals(GetOrUse.ALL)){
             for (PointEntity p : pointEntityList){
                 PointHistory pointHistory = PointHistory.builder()
                         .id(p.getId())
@@ -43,7 +41,7 @@ public class PointHistoryAdapter implements PointHistoryPort {
         }
         else {
             for (PointEntity p : pointEntityList) {
-                if (p.getGetOrUse().equals(method)) {
+                if (p.getGetOrUse().equals(useType)) {
                     PointHistory pointHistory = PointHistory.builder()
                             .id(p.getId())
                             .userId(p.getUserEntity().getId())
