@@ -17,7 +17,7 @@ public class Payment {
     private Integer ticketPrice;
     private Integer usePoint;
     private Integer fee;
-    private String payType;
+    private PayType payType;
     private Boolean verify;
     private Date createdAt;
     private Date verifiedAt;

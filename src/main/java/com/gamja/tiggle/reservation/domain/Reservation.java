@@ -1,5 +1,6 @@
 package com.gamja.tiggle.reservation.domain;
 
+import com.gamja.tiggle.payment.domain.PayType;
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -22,7 +23,6 @@ public class Reservation {
     private Long timesId;
 
     private String ticketNumber;
-    private String payMethod;
     private Integer totalPrice;
 
     @Enumerated(EnumType.STRING)
@@ -33,7 +33,7 @@ public class Reservation {
 
     // 예매 받아올 값
     private String programInfo; // 공연 정보
-    private String payType; // 결제 방식
+    private PayType payType; // 결제 방식
     private Integer ticketPrice; // 티켓 가격
     private Integer usePoint; // 포인트 사용
     private Integer myPoint;  // 내 포인트
