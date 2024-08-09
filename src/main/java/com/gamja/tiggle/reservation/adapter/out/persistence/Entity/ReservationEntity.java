@@ -3,6 +3,7 @@ package com.gamja.tiggle.reservation.adapter.out.persistence.Entity;
 import com.gamja.tiggle.exchange.adapter.out.persistence.ExchangeEntity;
 import com.gamja.tiggle.common.BaseEntity;
 import com.gamja.tiggle.payment.adapter.out.persistence.PaymentEntity;
+import com.gamja.tiggle.payment.domain.PayType;
 import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramEntity;
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
 import com.gamja.tiggle.user.adapter.out.persistence.UserEntity;
@@ -54,7 +55,7 @@ public class ReservationEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ReservationType status;
 
-    private String payMethod;
+    private PayType payType;
 
     // 예약 가능 True, 예약 불가능 false
     // 예약이 생성됐다는 건 예약 불가능 상태

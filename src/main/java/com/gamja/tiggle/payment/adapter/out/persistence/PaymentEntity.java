@@ -1,5 +1,6 @@
 package com.gamja.tiggle.payment.adapter.out.persistence;
 
+import com.gamja.tiggle.payment.domain.PayType;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,7 @@ public class PaymentEntity {
     private Integer ticketPrice;
     private Integer usePoint;
     private Integer fee;
-    private String payType;
+    private PayType payType;
     private Boolean verify;
 
     @OneToOne(fetch = FetchType.LAZY)

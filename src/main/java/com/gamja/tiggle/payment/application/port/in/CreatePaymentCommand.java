@@ -1,5 +1,6 @@
 package com.gamja.tiggle.payment.application.port.in;
 
+import com.gamja.tiggle.payment.domain.PayType;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,7 +12,7 @@ public class CreatePaymentCommand {
     private Integer ticketPrice;
     private Integer usePoint;
     private Integer fee;
-    private String payType;
+    private PayType payType;
     private Boolean verify;
 }
 
