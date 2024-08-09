@@ -48,7 +48,9 @@ public class PaymentPersistenceAdapter implements PaymentPersistencePort {
         PaymentEntity result = jpaPaymentRepository.findByReservationEntity_Id(id);
         Optional<ReservationEntity> reservation = jpaReservationRepository.findById(id);
         Boolean reservationChk = false;
-        if ((reservation.get().getPayMethod() == result.getPayType())&&reservation.get().getStatus().equals("IN_PROGRESS")&&(reservation.get().getTotalPrice() == (result.getTicketPrice()+result.getFee()- result.getUsePoint()))){
+        if ((reservation.get().getPayType()) == result.getPayType()
+                &&reservation.get().getStatus().equals("IN_PROGRESS")
+                &&(reservation.get().getTotalPrice() == (result.getTicketPrice()+result.getFee()- result.getUsePoint()))){
             reservationChk = true;
         }
 
@@ -94,7 +96,7 @@ public class PaymentPersistenceAdapter implements PaymentPersistencePort {
                         .seatEntity(reservation.get().getSeatEntity())
                         .timesEntity(reservation.get().getTimesEntity())
                         .user(reservation.get().getUser())
-                        .payMethod(reservation.get().getPayMethod())
+                        .payType(reservation.get().getPayType())
                         .ticketNumber(reservation.get().getTicketNumber())
                         .totalPrice(reservation.get().getTotalPrice())
                         .status(ReservationType.EXCHANGED)
@@ -111,7 +113,7 @@ public class PaymentPersistenceAdapter implements PaymentPersistencePort {
                         .seatEntity(reservation.get().getSeatEntity())
                         .timesEntity(reservation.get().getTimesEntity())
                         .user(reservation.get().getUser())
-                        .payMethod(reservation.get().getPayMethod())
+                        .payType(reservation.get().getPayType())
                         .ticketNumber(reservation.get().getTicketNumber())
                         .totalPrice(reservation.get().getTotalPrice())
                         .status(ReservationType.COMPLETED)
