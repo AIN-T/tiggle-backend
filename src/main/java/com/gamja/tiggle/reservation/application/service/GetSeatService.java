@@ -83,7 +83,7 @@ public class GetSeatService implements GetSeatUseCase {
     @Override
     public List<List<Seat>> getAllSeatWithEnable(GetAllSeatCommand command) throws BaseException {
 
-        List<Seat> allSeat = getSeatPort.getAllSeatWithEnableExchange(command.getProgramId(),
+        List<Seat> allSeat = getSeatPort.getAllSeatWithEnable(command.getProgramId(),
                 command.getSectionId(), command.getTimesId()
         );
 
