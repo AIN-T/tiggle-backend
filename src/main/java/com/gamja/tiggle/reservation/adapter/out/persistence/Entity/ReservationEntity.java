@@ -55,6 +55,7 @@ public class ReservationEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ReservationType status;
 
+    @Enumerated(EnumType.STRING)
     private PayType payType;
 
     // 예약 가능 True, 예약 불가능 false

@@ -1,5 +1,7 @@
 package com.gamja.tiggle.payment.domain;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +19,7 @@ public class Payment {
     private Integer ticketPrice;
     private Integer usePoint;
     private Integer fee;
+    @Enumerated(EnumType.STRING)
     private PayType payType;
     private Boolean verify;
     private Date createdAt;
