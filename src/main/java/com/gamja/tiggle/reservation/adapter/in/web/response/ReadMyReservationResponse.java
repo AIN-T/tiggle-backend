@@ -16,7 +16,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReadMyReservationResponse {
+    private Long programId;
+    private Long timesId;
+    private Long sectionId;
     private Long reservationId; // 예매 id
+
     private String ticketNumber; // 예약 번호
     private LocalDateTime createdAt; // 예약 날짜
     private LocalDateTime date; // 관람 날짜

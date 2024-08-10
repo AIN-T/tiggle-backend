@@ -109,6 +109,9 @@ public class ReadReservationController {
             List<Reservation> reservation = readReservationUseCase.myRead(command);
             List<ReadMyReservationResponse> responses = reservation.stream()
                     .map(r -> ReadMyReservationResponse.builder()
+                            .programId(r.getProgramId())
+                            .timesId(r.getTimesId())
+                            .sectionId(r.getSectionId())
                             .reservationId(r.getId())
                             .ticketNumber(r.getTicketNumber())
                             .createdAt(r.getCreatedAt())
