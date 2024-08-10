@@ -33,6 +33,7 @@ public class Reservation {
 
     // 예매 받아올 값
     private String programInfo; // 공연 정보
+    @Enumerated(EnumType.STRING)
     private PayType payType; // 결제 방식
     private Integer ticketPrice; // 티켓 가격
     private Integer usePoint; // 포인트 사용

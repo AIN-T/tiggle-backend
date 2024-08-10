@@ -27,6 +27,7 @@ public class PaymentEntity {
     private Integer ticketPrice;
     private Integer usePoint;
     private Integer fee;
+    @Enumerated(EnumType.STRING)
     private PayType payType;
     private Boolean verify;
 
