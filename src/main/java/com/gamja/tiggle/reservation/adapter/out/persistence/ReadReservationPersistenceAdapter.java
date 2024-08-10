@@ -96,6 +96,9 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
                     List<String> imageFilesList = firstImageUrl == null ? Collections.emptyList() : Collections.singletonList(firstImageUrl);
                     return Reservation.builder()
                             .id(r.getId())
+                            .timesId(r.getTimesEntity().getId())
+                            .programId(r.getProgramEntity().getId())
+                            .sectionId(r.getSeatEntity().getSectionEntity().getId())
                             .ticketNumber(r.getTicketNumber())
                             .createdAt(r.getCreatedAt())
                             .date(r.getTimesEntity().getDate())
