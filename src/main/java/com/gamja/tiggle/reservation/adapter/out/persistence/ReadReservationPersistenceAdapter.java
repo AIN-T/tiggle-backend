@@ -67,7 +67,7 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
                 .date(result.getTimesEntity().getDate())
                 .locationName(result.getProgramEntity().getLocationEntity().getLocationName())
                 .seatInfo(
-                        result.getSeatEntity().getRow()+"구역 " +result.getSeatEntity().getSectionEntity().getColumnCount()+"열 "+result.getSeatEntity().getSeatNumber()+"번")
+                        result.getSeatEntity().getSectionEntity().getSectionName()+"구역 "+result.getSeatEntity().getRow()+"열 "+result.getSeatEntity().getSeatNumber()+"번")
                 .gradeName(result.getSeatEntity().getSectionEntity().getGradeEntity().getGradeName())
                 .programName(result.getProgramEntity().getProgramName())
                 .programInfo(result.getProgramEntity().getProgramInfo())
