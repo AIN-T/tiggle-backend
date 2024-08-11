@@ -4,4 +4,6 @@ import com.gamja.tiggle.common.BaseException;
 
 public interface SignupUserUseCase {
     String signup(SignupUserCommand command) throws BaseException;
+
+    Boolean duplicatedEmail(DuplicatedEmailCommand command);
 }

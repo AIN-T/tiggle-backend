@@ -28,8 +28,8 @@ public enum BaseResponseStatus {
     USER_EMPTY_EMAIL(false, 2001, "이메일 등록란은 필수 항목입니다."),
     USER_EMPTY_NAME(false, 2002, "이름 등록란은 필수 항목입니다."),
     USER_EMPTY_PASSWORD(false, 2003, "패스워드 입력란은 필수 항목입니다."),
+    EXISTED_EMAIL(false,2004,"이미 가입된 이메일(아이디)입니다."),
     POINT_NOT_ENOUGH(false, 2101, "소유 포인트 보다 높은 포인트는 사용할 수 없습니다."),
-
 
 
     /**

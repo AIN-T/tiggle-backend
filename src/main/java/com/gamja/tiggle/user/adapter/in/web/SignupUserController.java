@@ -4,7 +4,9 @@ package com.gamja.tiggle.user.adapter.in.web;
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponse;
 import com.gamja.tiggle.common.BaseResponseStatus;
+import com.gamja.tiggle.user.adapter.in.web.request.DuplicatedEmailRequest;
 import com.gamja.tiggle.user.adapter.in.web.request.SignupUserRequest;
+import com.gamja.tiggle.user.application.port.in.DuplicatedEmailCommand;
 import com.gamja.tiggle.user.application.port.in.SignupUserCommand;
 import com.gamja.tiggle.user.application.port.in.SignupUserUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,9 +32,9 @@ public class SignupUserController {
             return new BaseResponse<>(USER_EMPTY_EMAIL);
         }
         if (request.getName() == null) {
-           return new BaseResponse<>(USER_EMPTY_NAME);
-       }
-        if(request.getPassword() == null) {
+            return new BaseResponse<>(USER_EMPTY_NAME);
+        }
+        if (request.getPassword() == null) {
             return new BaseResponse<>(USER_EMPTY_PASSWORD);
         }
 
@@ -56,4 +58,10 @@ public class SignupUserController {
         return new BaseResponse(BaseResponseStatus.SUCCESS);
     }
 
+    @PostMapping("/duplicatedEmail")
+    public BaseResponse<Boolean> duplicatedEmail(@RequestBody DuplicatedEmailRequest request) {
+        Boolean result = signupUserUseCase.duplicatedEmail(DuplicatedEmailCommand
+                .builder().email(request.getEmail()).build());
+        return new BaseResponse<>(result);
+    }
 }
