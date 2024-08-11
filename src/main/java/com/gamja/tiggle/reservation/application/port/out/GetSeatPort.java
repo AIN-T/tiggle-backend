@@ -15,4 +15,6 @@ public interface GetSeatPort {
     List<Seat> getAllSeatWithEnable(Long programId, Long sectionId, Long timesId) throws BaseException;
 
     List<Seat> getAllSeatWithEnableExchange(Long programId, Long sectionId, Long timesId) throws BaseException;
+
+    List<Seat> getAvailableExchang(Long programId, Long sectionId, Long timesId, Long userId);
 }

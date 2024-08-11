@@ -7,6 +7,7 @@ import com.gamja.tiggle.common.annotation.WebAdapter;
 import com.gamja.tiggle.reservation.adapter.in.web.request.GetAllSeatRequest;
 import com.gamja.tiggle.reservation.adapter.in.web.request.GetAvailableSeatRequest;
 import com.gamja.tiggle.reservation.adapter.in.web.response.GetAllSeatResponse;
+import com.gamja.tiggle.reservation.adapter.in.web.response.GetAvailableExchangeSeatResponse;
 import com.gamja.tiggle.reservation.adapter.in.web.response.GetAvailableSeatResponse;
 import com.gamja.tiggle.reservation.application.port.in.GetAllSeatCommand;
 import com.gamja.tiggle.reservation.application.port.in.GetAvailableSeatCommand;
@@ -67,6 +68,23 @@ public class GetSeatController {
         return new BaseResponse<>(AllSeatResponse);
 
     }
+
+    @PostMapping("/available/exchange")
+    @Operation(summary = "교환 가능 좌석 조회", description = "교환 가능 좌석을 조회하는 API 입니다.")
+    public BaseResponse<List<List<GetAvailableExchangeSeatResponse>>> getAvailableExchange(
+        @RequestBody GetAllSeatRequest request,
+        @AuthenticationPrincipal CustomUserDetails customUserDetails) throws BaseException {
+
+            List<List<GetAvailableExchangeSeatResponse>> AvailableExchangeSeatResponse;
+            try {
+                List<List<Seat>> allSeat = getSeatUseCase.getAvailableExchangeSeat(toAllSeatCommand(request,customUserDetails.getUser()));
+                AvailableExchangeSeatResponse = getExchangeSeatResponse(allSeat);
+            } catch (BaseException e) {
+                return new BaseResponse<>(e.getStatus());
+            }
+            return new BaseResponse<>(AvailableExchangeSeatResponse);
+    }
+
 
 
 
@@ -149,4 +167,27 @@ public class GetSeatController {
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
     }
+
+    public GetAvailableExchangeSeatResponse toGetAvailableExcnahgeSeatResponse(Seat seat) {
+        return GetAvailableExchangeSeatResponse.builder()
+                .seatId(seat.getId())
+                .seatNumber(seat.getSeatNumber())
+                .row(seat.getRow())
+                .active(seat.getActive())
+                .enable(seat.getEnable())
+                .reservationId(seat.getReservationId())
+                .price(seat.getPirce())
+                .build();
+    }
+
+    @NotNull
+    private List<List<GetAvailableExchangeSeatResponse>> getExchangeSeatResponse(List<List<Seat>> allSeat) {
+        return allSeat.stream()
+                .map(row -> row.stream()
+                        .filter(Objects::nonNull)
+                        .map(this::toGetAvailableExcnahgeSeatResponse)
+                        .collect(Collectors.toList()))
+                .collect(Collectors.toList());
+    }
+
 }

@@ -6,6 +6,7 @@ import com.gamja.tiggle.common.annotation.PersistenceAdapter;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.SeatEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Response.GetAllSeatPersistentResponse;
+import com.gamja.tiggle.reservation.adapter.out.persistence.Response.GetAvailableExchangeSeatPersistenceResponse;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Response.GetAvailableSeatResponse;
 import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.ReservationRepository;
 import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.SeatRepository;
@@ -134,6 +135,14 @@ public class getSeatAdapter implements GetSeatPort {
         return getSeatList(allSeat);
     }
 
+    @Override
+    public List<Seat> getAvailableExchang(Long programId, Long sectionId, Long timesId, Long userId) {
+        List<GetAvailableExchangeSeatPersistenceResponse> allSeat
+                = seatRepository.findAvailableExchange(programId, timesId, sectionId, userId);
+
+        return getExchangeSeatList(allSeat);
+    }
+
     @NotNull
     private static List<Seat> getSeatList(List<GetAllSeatPersistentResponse> allSeat) {
         return allSeat.stream().map(response ->
@@ -145,6 +154,23 @@ public class getSeatAdapter implements GetSeatPort {
                         .row(response.getRow())
                         .active(response.getActive())
                         .enable(response.getEnable())
+                        .build()
+        ).toList();
+    }
+
+    @NotNull
+    private static List<Seat> getExchangeSeatList(List<GetAvailableExchangeSeatPersistenceResponse> allSeat) {
+        return allSeat.stream().map(response ->
+                Seat
+                        .builder()
+                        .id(response.getSeatId())
+                        .enable(response.getEnable())
+                        .seatNumber(response.getSeatNumber())
+                        .row(response.getRow())
+                        .active(response.getActive())
+                        .enable(response.getEnable())
+                        .reservationId(response.getReservationId())
+                        .pirce(response.getPrice())
                         .build()
         ).toList();
     }
