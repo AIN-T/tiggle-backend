@@ -1,7 +1,9 @@
 package com.gamja.tiggle.reservation.adapter.out.persistence.repositroy;
 
+import com.gamja.tiggle.reservation.adapter.in.web.response.GetAvailableExchangeSeatResponse;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.SeatEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Response.GetAllSeatPersistentResponse;
+import com.gamja.tiggle.reservation.adapter.out.persistence.Response.GetAvailableExchangeSeatPersistenceResponse;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Response.GetAvailableSeatResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -83,5 +85,29 @@ public interface SeatRepository extends JpaRepository<SeatEntity, Long> {
                                                      @Param("timesId") Long timesId,
                                                      @Param("sectionId") Long sectionId);
 
+
+
+//    교환 가능 좌석 조회
+@Query("SELECT NEW com.gamja.tiggle.reservation.adapter.out.persistence.Response.GetAvailableExchangeSeatPersistenceResponse(" +
+        "s.id, s.row, s.seatNumber, s.active, " +
+        "CASE " +
+        "     WHEN r IS NOT NULL AND r.user.id = :userId THEN FALSE " +
+        "     WHEN r IS NOT NULL AND r.status = 'COMPLETED' THEN TRUE " +
+        "     ELSE FALSE END, " +
+        "CASE WHEN r IS NOT NULL THEN r.id ELSE NULL END, " +  // r가 null일 때 자동으로 null 반환
+        "CASE WHEN r IS NOT NULL THEN r.totalPrice ELSE NULL END) " +  // r가 null일 때 자동으로 null 반환
+        "FROM SeatEntity s " +
+        "LEFT JOIN ReservationEntity r ON s.id = r.seatEntity.id " +
+        "AND r.programEntity.id = :programId " +
+        "AND r.timesEntity.id = :timesId " +
+        "AND COALESCE(r.modifiedAt, r.createdAt) = ( " +
+        "  SELECT MAX(COALESCE(r2.modifiedAt, r2.createdAt)) " +
+        "  FROM ReservationEntity r2 " +
+        "  WHERE r2.seatEntity.id = r.seatEntity.id " +
+        "  AND r2.programEntity.id = :programId " +
+        "  AND r2.timesEntity.id = :timesId) " +
+        "WHERE s.sectionEntity.id = :sectionId " +
+        "ORDER BY s.row, s.seatNumber")
+List<GetAvailableExchangeSeatPersistenceResponse> findAvailableExchange(Long programId, Long sectionId, Long timesId, Long userId);
 
 }
