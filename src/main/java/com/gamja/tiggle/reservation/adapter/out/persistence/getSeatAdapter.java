@@ -128,14 +128,6 @@ public class getSeatAdapter implements GetSeatPort {
     }
 
     @Override
-    public List<Seat> getAllSeatWithEnableExchange(Long programId, Long sectionId, Long timesId) throws BaseException {
-
-        List<GetAllSeatPersistentResponse> allSeat
-                = seatRepository.findAllSeatEnableExchange(programId, timesId, sectionId);
-        return getSeatList(allSeat);
-    }
-
-    @Override
     public List<Seat> getAvailableExchang(Long programId, Long sectionId, Long timesId, Long userId) {
         List<GetAvailableExchangeSeatPersistenceResponse> allSeat
                 = seatRepository.findAvailableExchange(programId, timesId, sectionId, userId);

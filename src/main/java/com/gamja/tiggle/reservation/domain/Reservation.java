@@ -23,6 +23,7 @@ public class Reservation {
     private Long timesId;
     private Long sectionId;
     private Long locationId;
+    private Long paymentId;
 
     private String ticketNumber;
     private Integer totalPrice;
@@ -30,8 +31,11 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     private ReservationType status;
 
+    private Boolean available;
+
     private Integer requestLimit;
     private Integer refund;
+
 
     // 예매 받아올 값
     private String programInfo; // 공연 정보

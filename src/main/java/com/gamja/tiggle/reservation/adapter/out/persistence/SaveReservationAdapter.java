@@ -51,14 +51,16 @@ public class SaveReservationAdapter implements SaveReservationPort {
     private static ReservationEntity updateFrom(Reservation reservation) {
         return ReservationEntity.builder()
                 .id(reservation.getId())
-                .user(new UserEntity(reservation.getId()))
                 .programEntity(new ProgramEntity(reservation.getProgramId()))
-                .timesEntity(new TimesEntity(reservation.getTimesId()))
+                .user(new UserEntity(reservation.getUserId()))
                 .seatEntity(new SeatEntity(reservation.getSeatId()))
+                .timesEntity(new TimesEntity(reservation.getTimesId()))
                 .ticketNumber(reservation.getTicketNumber())
                 .totalPrice(reservation.getTotalPrice())
                 .requestLimit(reservation.getRequestLimit())
                 .status(reservation.getStatus())
+                .available(reservation.getAvailable())
+                .payType(reservation.getPayType())
                 .build();
     }
 }
