@@ -12,6 +12,7 @@ import com.gamja.tiggle.reservation.application.port.in.ReadReservationUseCase;
 import com.gamja.tiggle.reservation.domain.Reservation;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
 import com.gamja.tiggle.user.domain.User;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ public class ReadReservationController {
 
     // 예매 상세 정보
     @GetMapping("/read")
+    @Operation(summary = "예매 내역 조회", description = "ReservationId를 입력하여 예매 내역을 조회하는 API 입니다.")
     public BaseResponse<ReadReservationResponse> readReservation(@RequestParam Long reservationId) {
         try {
             // 커맨드 객체 생성
@@ -66,6 +68,7 @@ public class ReadReservationController {
 
 
     @GetMapping("/temporary")
+    @Operation(summary = "임시 예매 내역 조회", description = "ReservationId를 입력하여 진행중인 예매 내역을 조회하는 API 입니다.")
     public BaseResponse<ReadTemporaryReservationResponse> readTemporary(@RequestParam Long reservationId) {
         try {
 
@@ -96,6 +99,7 @@ public class ReadReservationController {
 
 
     @GetMapping("/myRead")
+    @Operation(summary = "예매내역 리스트 조회", description = "특정 사용자의 예매 내역들을 조회하는 API 입니다.")
     public BaseResponse<List<ReadMyReservationResponse>> myRead(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                                                                 @RequestParam Integer page,
                                                                 @RequestParam Integer size) {
