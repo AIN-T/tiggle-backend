@@ -53,23 +53,6 @@ public class GetSeatController {
     }
 
     @PostMapping("/exchange")
-    @Operation(summary = "교환 가능 좌석 조회", description = "특정 공연의 교환 가능 좌석을 조회하는 API 입니다.")
-    public BaseResponse<List<List<GetAllSeatResponse>>> getAllSeatEnableExchange(
-            @RequestBody GetAllSeatRequest request,
-            @AuthenticationPrincipal CustomUserDetails customUserDetails) throws BaseException {
-
-        List<List<GetAllSeatResponse>> AllSeatResponse;
-        try {
-            List<List<Seat>> allSeat = getSeatUseCase.getAllSeatWithEnableExchange(toAllSeatCommand(request,customUserDetails.getUser()));
-            AllSeatResponse = getAllSeatResponse(allSeat);
-        } catch (BaseException e) {
-            return new BaseResponse<>(e.getStatus());
-        }
-        return new BaseResponse<>(AllSeatResponse);
-
-    }
-
-    @PostMapping("/available/exchange")
     @Operation(summary = "교환 가능 좌석 조회", description = "교환 가능 좌석을 조회하는 API 입니다.")
     public BaseResponse<List<List<GetAvailableExchangeSeatResponse>>> getAvailableExchange(
         @RequestBody GetAllSeatRequest request,
@@ -84,8 +67,6 @@ public class GetSeatController {
             }
             return new BaseResponse<>(AvailableExchangeSeatResponse);
     }
-
-
 
 
 
