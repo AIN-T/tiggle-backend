@@ -1,6 +1,8 @@
 package com.gamja.tiggle.user.application.service;
 
 import com.gamja.tiggle.common.BaseException;
+import com.gamja.tiggle.common.BaseResponseStatus;
+import com.gamja.tiggle.user.application.port.in.DuplicatedEmailCommand;
 import com.gamja.tiggle.user.application.port.in.SignupUserCommand;
 import com.gamja.tiggle.user.application.port.in.SignupUserUseCase;
 import com.gamja.tiggle.user.application.port.out.EmailVerifyPort;
@@ -19,6 +21,11 @@ public class SignupUserService implements SignupUserUseCase {
 
     @Override
     public String signup(SignupUserCommand command) throws BaseException {
+
+        if (userPersistencePort.existEmail(command.getEmail())) {
+            throw new BaseException(BaseResponseStatus.EXISTED_EMAIL);
+        }
+
         User user = User.builder()
                 .name(command.getName())
                 .email(command.getEmail())
@@ -36,5 +43,10 @@ public class SignupUserService implements SignupUserUseCase {
         emailVerifyPort.saveVerify(user.getEmail(), uuid);
 
         return uuid;
+    }
+
+    @Override
+    public Boolean duplicatedEmail(DuplicatedEmailCommand command) {
+        return userPersistencePort.existEmail(command.getEmail());
     }
 }
