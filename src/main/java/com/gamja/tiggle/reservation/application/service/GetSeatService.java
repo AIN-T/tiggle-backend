@@ -153,5 +153,41 @@ public class GetSeatService implements GetSeatUseCase {
         return ArraySeat;
     }
 
+    @Override
+    public List<List<Seat>> getAvailableExchangeSeat(GetAllSeatCommand command) throws BaseException {
+        List<Seat> allSeat = getSeatPort.getAvailableExchang(command.getProgramId(),
+                command.getSectionId(), command.getTimesId(), command.getUserId()
+        );
+
+        userPersistencePort.existUser(command.getUserId());
+        Long locationId = programPort.getLocationId(command.getProgramId());
+        programPort.existProgram(command.getProgramId());
+        timesPort.verifyTimes(command.getTimesId(), command.getProgramId());
+        sectionPort.correctSection(command.getSectionId(), locationId);
+
+        Section section = sectionPort.getRowColumn(command.getSectionId());
+        int rowCount = section.getRowCount();
+        int columnCount = section.getColumnCount();
+        List<List<Seat>> ArraySeat = new ArrayList<>();
+
+        for (int i = 0; i < rowCount; i++) {
+            ArraySeat.add(new ArrayList<>(Collections.nCopies(columnCount, null)));
+        }
+
+        for (Seat seat : allSeat) {
+            int rowIndex = seat.getRow().charAt(0) - 'A';
+            int colIndex = seat.getSeatNumber() - 1;
+
+            if (colIndex >= columnCount) throw new BaseException(BaseResponseStatus.NOT_MATCH_ROW);
+
+            if (rowIndex >= rowCount) throw new BaseException(BaseResponseStatus.NOT_MATCH_COLUMN);
+
+            ArraySeat.get(rowIndex).set(colIndex, seat);
+        }
+
+
+        return ArraySeat;
+    }
+
 
 }

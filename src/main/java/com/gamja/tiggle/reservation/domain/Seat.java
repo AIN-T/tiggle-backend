@@ -20,4 +20,7 @@ public class Seat {
 
     private ReservationType status;
     private Boolean enable;
+
+    private Long reservationId;
+    private Integer pirce;
 }
