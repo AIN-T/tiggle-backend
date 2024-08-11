@@ -40,10 +40,10 @@ public class CreateExchangeOfferService implements CreateExchangeOfferUseCase {
         if (exchangePort.find(command))
             throw new BaseException(BaseResponseStatus.EXIST_EXCHANGE_OFFER);
 
-        if(reservation1.getRequestLimit()<1)
-            throw  new BaseException(BaseResponseStatus.NOT_REMAIN_EXCHANGE_OFFER);
+        if (reservation1.getRequestLimit() < 1)
+            throw new BaseException(BaseResponseStatus.NOT_REMAIN_EXCHANGE_OFFER);
 
-        if(Objects.equals(reservation1.getUser().getId(), reservation2.getUser().getId()))
+        if (Objects.equals(reservation1.getUser().getId(), reservation2.getUser().getId()))
             throw new BaseException(BaseResponseStatus.WRONG_EXCHANGE_OFFER);
 
         if (!Objects.equals(reservation1.getProgramEntity().getId(), reservation2.getProgramEntity().getId()) || !Objects.equals(reservation1.getTimesEntity().getId(), reservation2.getTimesEntity().getId()))
@@ -77,6 +77,8 @@ public class CreateExchangeOfferService implements CreateExchangeOfferUseCase {
                 .ticketNumber(reservation1.getTicketNumber())
                 .totalPrice(reservation1.getTotalPrice())
                 .status(reservation1.getStatus())
+                .paymentId(reservation1.getPaymentEntity().getId())
+                .available(reservation1.isAvailable())
                 .requestLimit(reservation1.getRequestLimit() - 1).build());
     }
 

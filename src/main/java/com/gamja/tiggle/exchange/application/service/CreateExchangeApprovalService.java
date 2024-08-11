@@ -79,6 +79,7 @@ public class CreateExchangeApprovalService implements CreateExchangeApprovalUseC
                 .ticketNumber(reservation.getTicketNumber())
                 .totalPrice(reservation.getTotalPrice())
                 .status(ReservationType.EXCHANGED)
+                .available(reservation.isAvailable())
                 .requestLimit(reservation.getRequestLimit()).build();
     }
 
