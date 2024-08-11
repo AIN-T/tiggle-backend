@@ -17,6 +17,23 @@ INSERT INTO tiggle.category (category_name)
 VALUES ('뮤지컬'),
        ('콘서트'),
        ('연극');
+
+-- program_image 테이블
+INSERT INTO tiggle.program_image (id, program_id, img_url) VALUES (null, 1, "https://daqu2024-s3.s3.ap-northeast-2.amazonaws.com/chicago.jpg"),
+                                                                  (null, 2, "https://daqu2024-s3.s3.ap-northeast-2.amazonaws.com/lionKing.jpg"),
+                                                                  (null, 3, "https://daqu2024-s3.s3.ap-northeast-2.amazonaws.com/wicked.jpg"),
+                                                                  (null, 4, "https://daqu2024-s3.s3.ap-northeast-2.amazonaws.com/cats.jpg"),
+                                                                  (null, 5, "https://daqu2024-s3.s3.ap-northeast-2.amazonaws.com/beethoven.jpg"),
+                                                                  (null, 6, "https://daqu2024-s3.s3.ap-northeast-2.amazonaws.com/ramen.jpg"),
+                                                                  (null, 7, "https://daqu2024-s3.s3.ap-northeast-2.amazonaws.com/seungwoo.jpg"),
+                                                                  (null, 8, "https://daqu2024-s3.s3.ap-northeast-2.amazonaws.com/monstaX.jpg"),
+                                                                  (null, 9, "https://daqu2024-s3.s3.ap-northeast-2.amazonaws.com/iu.jpg"),
+                                                                  (null, 10, "https://daqu2024-s3.s3.ap-northeast-2.amazonaws.com/red.jpg"),
+                                                                  (null, 11, "https://daqu2024-s3.s3.ap-northeast-2.amazonaws.com/jun.png"),
+                                                                  (null, 12, "https://daqu2024-s3.s3.ap-northeast-2.amazonaws.com/joel.jpg"),
+                                                                  (null, 13, "https://daqu2024-s3.s3.ap-northeast-2.amazonaws.com/creator.jpg"),
+                                                                  (null, 14, "https://daqu2024-s3.s3.ap-northeast-2.amazonaws.com/summerswim.jpg"),
+                                                                  (null, 15, "https://daqu2024-s3.s3.ap-northeast-2.amazonaws.com/aespa.jpg");
 -- program 테이블
 INSERT INTO tiggle.program (id, age, program_end_date, program_info, program_name, program_start_date,
                             reservation_open_date, runtime, category_id, location_id) VALUES
