@@ -22,6 +22,7 @@ public class Reservation {
     private Long seatId;
     private Long timesId;
     private Long sectionId;
+    private Long locationId;
 
     private String ticketNumber;
     private Integer totalPrice;

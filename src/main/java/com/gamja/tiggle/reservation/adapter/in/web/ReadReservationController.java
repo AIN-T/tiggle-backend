@@ -117,6 +117,7 @@ public class ReadReservationController {
                             .timesId(r.getTimesId())
                             .sectionId(r.getSectionId())
                             .reservationId(r.getId())
+                            .locationId(r.getLocationId())
                             .ticketNumber(r.getTicketNumber())
                             .createdAt(r.getCreatedAt())
                             .date(r.getDate())

@@ -99,6 +99,7 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
                             .timesId(r.getTimesEntity().getId())
                             .programId(r.getProgramEntity().getId())
                             .sectionId(r.getSeatEntity().getSectionEntity().getId())
+                            .locationId(r.getProgramEntity().getLocationEntity().getId())
                             .ticketNumber(r.getTicketNumber())
                             .createdAt(r.getCreatedAt())
                             .date(r.getTimesEntity().getDate())
