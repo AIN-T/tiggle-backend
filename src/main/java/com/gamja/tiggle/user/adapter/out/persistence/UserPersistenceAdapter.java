@@ -97,5 +97,10 @@ public class UserPersistenceAdapter implements UserPersistencePort {
             throw new BaseException(BaseResponseStatus.NOT_FOUND_USER);
         }
     }
+
+    @Override
+    public Boolean existEmail(String email) {
+        return jpaUserRepository.existsByEmail(email);
+    }
 }
 

@@ -16,5 +16,7 @@ public interface UserPersistencePort {
     void savePoint(Long id, Integer point) throws BaseException;
 
     void existUser(Long id) throws BaseException;
+
+    Boolean existEmail(String email);
 }
 

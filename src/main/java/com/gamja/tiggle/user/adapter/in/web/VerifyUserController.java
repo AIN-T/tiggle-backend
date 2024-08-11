@@ -35,4 +35,6 @@ public class VerifyUserController {
         return new BaseResponse(BaseResponseStatus.SUCCESS);
     }
 
+
+
 }
