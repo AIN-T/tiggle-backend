@@ -20,6 +20,7 @@ public class ReadMyReservationResponse {
     private Long timesId;
     private Long sectionId;
     private Long reservationId; // 예매 id
+    private Long locationId;
 
     private String ticketNumber; // 예약 번호
     private LocalDateTime createdAt; // 예약 날짜
