@@ -55,6 +55,7 @@ public class SecurityConfig {
         config.addAllowedOrigin("http://127.0.0.1");
         config.addAllowedOrigin("http://localhost:8081");
         config.addAllowedOrigin("http://localhost:8082");
+        config.addAllowedOrigin("http://www.tiggle.kro.kr.s3-website.ap-northeast-2.amazonaws.com");
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
         config.setAllowCredentials(true);
