@@ -163,6 +163,29 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
     }
 
     @Override
+    public List<Program> searchProgram(ReadProgramCommand command) throws BaseException {
+        Pageable pageable = PageRequest.of(command.getPage(), command.getSize(), Sort.by(Sort.Direction.DESC, "reservationOpenDate"));
+
+        Page<ProgramEntity> result = jpaProgramRepository.findByKeyword(command.getKeyword(), pageable);
+
+        return result.getContent().stream().map(
+                (p) -> Program.builder()
+                        .id(p.getId())
+                        .categoryId(p.getCategoryEntity().getId())
+                        .programName(p.getProgramName())
+                        .programInfo(p.getProgramInfo())
+                        .reservationOpenDate(p.getReservationOpenDate())
+                        .programStartDate(p.getProgramStartDate())
+                        .programEndDate(p.getProgramEndDate())
+                        .imageUrls(p.getProgramImageEntities().stream()
+                                .map(ProgramImageEntity::getImgUrl)
+                                .collect(Collectors.toList()))
+                        .locationName(p.getLocationEntity().getLocationName())
+                        .build()
+        ).collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
     public boolean existProgram(Long id) throws BaseException {
         if(!jpaProgramRepository.existsById(id)){
             throw new BaseException(BaseResponseStatus.NOT_FOUND_PROGRAM);
