@@ -1,6 +1,7 @@
 
 package com.gamja.tiggle.program.adapter.out.persistence.Entity;
 
+import com.gamja.tiggle.like.adapter.out.persistence.LikeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,6 +51,10 @@ public class ProgramEntity {
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
     private LocationEntity locationEntity;
+
+    // Program: Like = 1 : N
+    @OneToMany(mappedBy = "programEntity", fetch = FetchType.LAZY)
+    private List<LikeEntity> likeEntities = new ArrayList<>();
 
 
     public ProgramEntity(Long id) {

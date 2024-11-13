@@ -1,5 +1,6 @@
 package com.gamja.tiggle.user.adapter.out.persistence;
 
+import com.gamja.tiggle.like.adapter.out.persistence.LikeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +9,9 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,6 +37,10 @@ public class UserEntity {
     private Date createdAt;
 
     private Date verifiedAt;
+
+//  User: Like = 1 : N
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
+    private List<LikeEntity> likeEntities = new ArrayList<>();
 
     public UserEntity(Long id) {
         this.id = id;
