@@ -27,21 +27,27 @@ public class ReadProgramController {
     // Category 종류 별로 Program 조회
     @GetMapping("/readCategory")
     @Operation(summary = "카테고리 별 공연 정보 조회")
-    public BaseResponse<List<ReadProgramResponse>> readProgram(@RequestParam Long categoryId) {
+    public BaseResponse<List<ReadProgramResponse>> readProgram(@RequestParam Long categoryId,
+                                                               @RequestParam Integer page,
+                                                               @RequestParam Integer size) {
         try {
             ReadProgramCommand command = ReadProgramCommand.builder()
                     .categoryId(categoryId)
+                    .page(page)
+                    .size(size)
                     .build();
 
             List<Program> program = readUseCase.readProgramAll(command);
             List<ReadProgramResponse> responses = program.stream()
                     .map(p -> ReadProgramResponse.builder()
+                            .programId(p.getId())
                             .programName(p.getProgramName())
                             .reservationOpenDate(p.getReservationOpenDate())
                             .programInfo(p.getProgramInfo())
                             .programStartDate(p.getProgramStartDate())
                             .programEndDate(p.getProgramEndDate())
                             .imageFiles(p.getImageUrls())
+                            .locationName(p.getLocationName())
                             .build())
                     .collect(Collectors.toList());
             return new BaseResponse<>(BaseResponseStatus.SUCCESS, responses);
