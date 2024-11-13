@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ReadProgramPort {
-    List<Program> readProgramAll(Program program) throws BaseException;
+    List<Program> readProgramAll(Program program, ReadProgramCommand command) throws BaseException;
     List<Program> readRealTimeAll(LocalDateTime currentDateTime) throws BaseException;
     List<Program> readRealTimeAllPaged(ReadProgramCommand command) throws BaseException;
 

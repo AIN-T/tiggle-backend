@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -60,18 +61,24 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
 
 
     @Override
-    public List<Program> readProgramAll(Program program) throws BaseException {
+    public List<Program> readProgramAll(Program program, ReadProgramCommand command) throws BaseException {
+        Pageable pageable = PageRequest.of(command.getPage(), command.getSize(), Sort.by(Sort.Direction.DESC, "reservationOpenDate"));
 
-        List<ProgramEntity> result = jpaProgramRepository.findAllByCategoryEntity(program.getCategoryId());
-        List<Program> programs = result.stream().map(
+        Page<ProgramEntity> result = jpaProgramRepository.findAllByCategoryEntity(program.getCategoryId(), pageable);
+
+        List<Program> programs = result.getContent().stream().map(
                 (p) -> Program.builder()
+                        .id(p.getId())
                         .categoryId(p.getCategoryEntity().getId())
                         .programName(p.getProgramName())
                         .programInfo(p.getProgramInfo())
                         .reservationOpenDate(p.getReservationOpenDate())
                         .programStartDate(p.getProgramStartDate())
                         .programEndDate(p.getProgramEndDate())
-                        .imageUrls(p.getProgramImageEntities().stream().map(programImageEntity -> programImageEntity.getImgUrl()).toList())
+                        .imageUrls(p.getProgramImageEntities().stream()
+                                .map(programImageEntity -> programImageEntity.getImgUrl())
+                                .toList())
+                        .locationName(p.getLocationEntity().getLocationName())
                         .build()
         ).collect(Collectors.toUnmodifiableList());
 
