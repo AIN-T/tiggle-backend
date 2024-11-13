@@ -21,7 +21,7 @@ public class ReadProgramService implements ReadProgramUseCase {
         Program program = Program.builder()
                 .categoryId(command.getCategoryId())
                 .build();
-        return readProgramPort.readProgramAll(program);
+        return readProgramPort.readProgramAll(program, command);
     }
 
     @Override
