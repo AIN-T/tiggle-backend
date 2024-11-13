@@ -12,6 +12,7 @@ public class ReadProgramCommand {
     private Long categoryId;
     private Long locationId;
     private LocalDateTime currentDateTime;
+    private String keyword;
 
     // 페이징 처리 하려고
     private Integer page;
