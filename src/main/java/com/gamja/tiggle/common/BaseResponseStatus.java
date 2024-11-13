@@ -60,6 +60,14 @@ public enum BaseResponseStatus {
     INVALID_LOCATION_DATA(false, 3304, "유효하지 않은 로케이션 데이터입니다."),
     PROGRAM_NOT_IN_LOCATION(false, 3305, "해당 공연장에 해당 공연이 존재하지 않습니다."),
 
+    SEARCH_PROGRAM_SUCCESS(true, 3204, "공연 검색을 성공했습니다."),
+    SEARCH_PROGRAM_FAIL(false, 3205, "공연 검색을 실패했습니다."),
+    CATEGORY_PROGRAM_SUCCESS(true, 3206, "카테고리별 공연 검색을 성공했습니다."),
+    CATEGORY_PROGRAM_FAIL(false, 3207, "카테고리별 공연 검색을 실패했습니다."),
+
+    INVALID_PAGE(false, 3400, "유효하지 않은 페이지 번호입니다."),
+    INVALID_SIZE(false, 3401, "유효하지 않은 페이지 크기입니다."),
+
     /**
      * 4000: 결제
      */
