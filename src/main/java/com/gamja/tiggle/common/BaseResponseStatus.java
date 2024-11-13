@@ -19,6 +19,8 @@ public enum BaseResponseStatus {
     EXCHANGE_OFFER_SUCCESS(true, 1002, "교환 요청에 성공하였습니다."),
     EXCHANGE_APPROVAL_SUCCESS(true, 1003, "티켓 교환에 성공하였습니다."),
     EXCHANGE_REJECT_SUCCESS(true, 1004, "티켓 거절에 성공하였습니다."),
+    LIKE_ADD_SUCCESS(true, 1005, "프로그램을 성공적으로 좋아요 목록에 추가했습니다."),
+    LIKE_DELETE_SUCCESS(true, 1006, "프로그램을 좋아요 목록에서 성공적으로 삭제했습니다."),
 
 
     /**
@@ -28,7 +30,7 @@ public enum BaseResponseStatus {
     USER_EMPTY_EMAIL(false, 2001, "이메일 등록란은 필수 항목입니다."),
     USER_EMPTY_NAME(false, 2002, "이름 등록란은 필수 항목입니다."),
     USER_EMPTY_PASSWORD(false, 2003, "패스워드 입력란은 필수 항목입니다."),
-    EXISTED_EMAIL(false,2004,"이미 가입된 이메일(아이디)입니다."),
+    EXISTED_EMAIL(false, 2004, "이미 가입된 이메일(아이디)입니다."),
     POINT_NOT_ENOUGH(false, 2101, "소유 포인트 보다 높은 포인트는 사용할 수 없습니다."),
 
 
@@ -82,9 +84,9 @@ public enum BaseResponseStatus {
     NOT_FOUND_RESERVATION(false, 5001, "결제 정보가 존재하지 않습니다."),
     NOT_FOUND_TIMES(false, 5002, "회차 정보가 존재하지 않습니다."),
     NOT_FOUND_SEAT(false, 5003, "좌석 정보가 존재하지 않습니다."),
-    NOT_MATCH_ROW(false,5004,"행 정보가 일치하지 않습니다."),
-    NOT_MATCH_COLUMN(false,5004,"열 정보가 일치하지 않습니다."),
-    NOT_EXIST_TIMES(false,5005,"공연 회차정보가 존재하지 않습니다."),
+    NOT_MATCH_ROW(false, 5004, "행 정보가 일치하지 않습니다."),
+    NOT_MATCH_COLUMN(false, 5004, "열 정보가 일치하지 않습니다."),
+    NOT_EXIST_TIMES(false, 5005, "공연 회차정보가 존재하지 않습니다."),
 
 
     /**
