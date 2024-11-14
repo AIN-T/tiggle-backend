@@ -31,4 +31,6 @@ public class Program {
     private LocalDateTime programStartDate;
     private LocalDateTime programEndDate;
 
+    private boolean isLike;
+
 }

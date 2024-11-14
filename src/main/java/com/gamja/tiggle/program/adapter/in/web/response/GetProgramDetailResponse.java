@@ -24,4 +24,5 @@ public class GetProgramDetailResponse {
     private int runtime;
     private List<String> imageUrls;
     private String programInfo;
+    private boolean isLike;
 }
