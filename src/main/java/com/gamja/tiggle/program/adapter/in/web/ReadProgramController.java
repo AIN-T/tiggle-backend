@@ -9,8 +9,11 @@ import com.gamja.tiggle.program.adapter.in.web.response.ReadProgramResponse;
 import com.gamja.tiggle.program.application.port.in.ReadProgramCommand;
 import com.gamja.tiggle.program.application.port.in.ReadProgramUseCase;
 import com.gamja.tiggle.program.domain.Program;
+import com.gamja.tiggle.user.domain.CustomUserDetails;
+import com.gamja.tiggle.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -124,9 +127,11 @@ public class ReadProgramController {
     // 프로그램 상세 조회
     @GetMapping
     @Operation(summary = "공연 상세 정보 조회")
-    public BaseResponse<GetProgramDetailResponse> GetProgramDetail(@RequestParam Long id) {
+    public BaseResponse<GetProgramDetailResponse> GetProgramDetail(@RequestParam Long id, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        User user = (customUserDetails != null) ? customUserDetails.getUser() : null;
+
         try {
-            Program program = readUseCase.GetProgramDetail(id);
+            Program program = readUseCase.GetProgramDetail(id, user);
             GetProgramDetailResponse getProgramDetailResponse = from(program);
             System.out.println(getProgramDetailResponse.getReservationOpenDate());
             return new BaseResponse<>(getProgramDetailResponse);
@@ -151,6 +156,7 @@ public class ReadProgramController {
                 .reservationOpenDate(program.getReservationOpenDate())
                 .programInfo(program.getProgramInfo())
                 .runtime(program.getRuntime())
+                .isLike(program.isLike())
                 .build();
     }
 
