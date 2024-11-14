@@ -6,6 +6,7 @@ import com.gamja.tiggle.program.application.port.in.ReadProgramCommand;
 import com.gamja.tiggle.program.application.port.in.ReadProgramUseCase;
 import com.gamja.tiggle.program.application.port.out.ReadProgramPort;
 import com.gamja.tiggle.program.domain.Program;
+import com.gamja.tiggle.user.domain.User;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class ReadProgramService implements ReadProgramUseCase {
     }
 
     @Override
-    public Program GetProgramDetail(Long id) throws BaseException {
-        return readProgramPort.getProgramDetail(id);
+    public Program GetProgramDetail(Long id, User user) throws BaseException {
+        return readProgramPort.getProgramDetail(id, user);
     }
 }
