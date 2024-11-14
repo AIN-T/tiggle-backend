@@ -2,6 +2,7 @@ package com.gamja.tiggle.program.adapter.out.persistence;
 
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponseStatus;
+import com.gamja.tiggle.like.adapter.out.persistence.JpaLikeRepository;
 import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramImageEntity;
 import com.gamja.tiggle.program.application.port.in.ReadProgramCommand;
 import com.gamja.tiggle.common.annotation.PersistenceAdapter;
@@ -12,6 +13,8 @@ import com.gamja.tiggle.program.application.port.out.ProgramPort;
 import com.gamja.tiggle.program.application.port.out.ReadProgramPort;
 import com.gamja.tiggle.program.domain.Program;
 
+import com.gamja.tiggle.user.adapter.out.persistence.UserEntity;
+import com.gamja.tiggle.user.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +34,7 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
     private final JpaProgramRepository jpaProgramRepository;
     private final JpaProgramImageRepository jpaProgramImageRepository;
     private final JpaCategoryRepository jpaCategoryRepository;
+    private final JpaLikeRepository jpaLikeRepository;
 
     @Override
     public void createProgram(Program program) throws BaseException {
@@ -139,9 +143,15 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
     }
 
     @Override
-    public Program getProgramDetail(Long id) throws BaseException {
+    public Program getProgramDetail(Long id, User user) throws BaseException {
         ProgramEntity programEntity = jpaProgramRepository.findById(id).orElseThrow(() ->
                 new BaseException(BaseResponseStatus.NOT_FOUND_PROGRAM));
+
+        boolean isLike = false;
+
+        if (user != null) {
+            isLike = jpaLikeRepository.existsByUserEntityAndProgramEntity(UserEntity.builder().id(user.getId()).build(), ProgramEntity.builder().id(id).build());
+        }
 
         List<String> imgList = new ArrayList<>();
         for (ProgramImageEntity p : programEntity.getProgramImageEntities()) {
@@ -159,6 +169,7 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
                 .runtime(programEntity.getRuntime())
                 .imageUrls(imgList)
                 .programInfo(programEntity.getProgramInfo())
+                .isLike(isLike)
                 .build();
     }
 
@@ -187,7 +198,7 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
 
     @Override
     public boolean existProgram(Long id) throws BaseException {
-        if(!jpaProgramRepository.existsById(id)){
+        if (!jpaProgramRepository.existsById(id)) {
             throw new BaseException(BaseResponseStatus.NOT_FOUND_PROGRAM);
         }
         return true;
@@ -196,7 +207,7 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
     @Override
     public Long getLocationId(Long programId) throws BaseException {
         Long locationIdById = jpaProgramRepository.findLocationIdById(programId);
-        if (locationIdById == null){
+        if (locationIdById == null) {
             throw new BaseException(BaseResponseStatus.NOT_FOUND_LOCATION_ID);
         }
         return locationIdById;
@@ -204,7 +215,7 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
 
     @Override
     public void findByProgramIdAndLocationId(Long programId, Long locationId) throws BaseException {
-        if (!jpaProgramRepository.existsProgramEntityByIdAndLocationEntityId(programId,locationId)) {
+        if (!jpaProgramRepository.existsProgramEntityByIdAndLocationEntityId(programId, locationId)) {
             throw new BaseException(BaseResponseStatus.PROGRAM_NOT_IN_LOCATION);
         }
     }
