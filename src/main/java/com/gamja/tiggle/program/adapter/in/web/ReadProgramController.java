@@ -50,9 +50,9 @@ public class ReadProgramController {
                             .locationName(p.getLocationName())
                             .build())
                     .collect(Collectors.toList());
-            return new BaseResponse<>(BaseResponseStatus.SUCCESS, responses);
+            return new BaseResponse<>(BaseResponseStatus.CATEGORY_PROGRAM_SUCCESS, responses);
         } catch (BaseException e) {
-            return new BaseResponse<>(BaseResponseStatus.FAIL, null);
+            return new BaseResponse<>(BaseResponseStatus.CATEGORY_PROGRAM_FAIL, null);
         }
     }
 
@@ -87,7 +87,39 @@ public class ReadProgramController {
 
     }
 
+    // keyword 별로 공연 검색
+    @GetMapping("/search")
+    @Operation(summary = "공연 검색")
+    public BaseResponse<List<ReadProgramResponse>> search(@RequestParam String keyword,
+                                                          @RequestParam Integer page,
+                                                          @RequestParam Integer size) {
+        try {
+            validatePageRequest(page, size);
 
+            ReadProgramCommand command = ReadProgramCommand.builder()
+                    .keyword(keyword)
+                    .page(page)
+                    .size(size)
+                    .build();
+            List<Program> program = readUseCase.searchPrograms(command);
+            List<ReadProgramResponse> responses = program.stream()
+                    .map(p -> ReadProgramResponse.builder()
+                            .programId(p.getId())
+                            .programName(p.getProgramName())
+                            .reservationOpenDate(p.getReservationOpenDate())
+                            .programInfo(p.getProgramInfo())
+                            .programStartDate(p.getProgramStartDate())
+                            .programEndDate(p.getProgramEndDate())
+                            .imageFiles(p.getImageUrls())
+                            .locationName(p.getLocationName())
+                            .build())
+                    .collect(Collectors.toList());
+
+            return new BaseResponse<>(BaseResponseStatus.SEARCH_PROGRAM_SUCCESS, responses);
+        } catch (BaseException e) {
+            return new BaseResponse<>(BaseResponseStatus.SEARCH_PROGRAM_FAIL, null);
+        }
+    }
 
     // 프로그램 상세 조회
     @GetMapping
@@ -120,6 +152,16 @@ public class ReadProgramController {
                 .programInfo(program.getProgramInfo())
                 .runtime(program.getRuntime())
                 .build();
+    }
+
+    // 다른 페이지 값이 들어올 경우 예외처리
+    private void validatePageRequest(Integer page, Integer size) throws BaseException {
+        if (page == null || page < 0) {
+            throw new BaseException(BaseResponseStatus.INVALID_PAGE);
+        }
+        if (size == null || size <= 0) {
+            throw new BaseException(BaseResponseStatus.INVALID_SIZE);
+        }
     }
 
 }

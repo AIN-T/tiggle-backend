@@ -33,6 +33,11 @@ public class ReadProgramService implements ReadProgramUseCase {
     }
 
     @Override
+    public List<Program> searchPrograms(ReadProgramCommand command) throws BaseException {
+        return readProgramPort.searchProgram(command);
+    }
+
+    @Override
     public List<Program> readRealTimeAllPaged(ReadProgramCommand command) throws BaseException {
         return readProgramPort.readRealTimeAllPaged(command);
     }

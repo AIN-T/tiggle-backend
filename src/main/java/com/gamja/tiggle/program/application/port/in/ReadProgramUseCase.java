@@ -11,6 +11,7 @@ public interface ReadProgramUseCase {
     List<Program> readProgramAll(ReadProgramCommand command) throws BaseException;
     List<Program> readRealTimeAll(ReadProgramCommand command) throws BaseException;
     List<Program> readRealTimeAllPaged(ReadProgramCommand command) throws BaseException;
+    List<Program> searchPrograms(ReadProgramCommand command) throws BaseException;
     Program GetProgramDetail(Long id) throws BaseException;
 }
 
