@@ -4,14 +4,17 @@ import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.PersistenceAdapter;
 import com.gamja.tiggle.like.application.port.in.CreateLikeCommand;
+import com.gamja.tiggle.like.application.port.in.ReadLikeCommand;
 import com.gamja.tiggle.like.application.port.out.LikePort;
 import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramEntity;
 import com.gamja.tiggle.program.adapter.out.persistence.JpaProgramRepository;
 import com.gamja.tiggle.program.domain.Program;
 import com.gamja.tiggle.user.adapter.out.persistence.JpaUserRepository;
 import com.gamja.tiggle.user.adapter.out.persistence.UserEntity;
-import com.gamja.tiggle.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -49,8 +52,9 @@ public class LikePersistenceAdapter implements LikePort {
     }
 
     @Override
-    public List<Program> readMyLikes(User user)  {
-       List<LikeEntity> likes = likeRepository.findLikesWithProgramAndLocationByUserId(user.getId());
+    public List<Program> readMyLikes(ReadLikeCommand command)  {
+        Pageable pageable = PageRequest.of(command.getPage(), command.getSize());
+       Page<LikeEntity> likes = likeRepository.findLikesWithProgramAndLocationByUserId(command.getUser().getId(), pageable);
 
         List<Program> programs = likes.stream().map(
                 l -> Program.builder()

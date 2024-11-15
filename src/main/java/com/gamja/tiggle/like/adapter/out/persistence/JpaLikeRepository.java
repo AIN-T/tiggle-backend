@@ -2,6 +2,8 @@ package com.gamja.tiggle.like.adapter.out.persistence;
 
 import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramEntity;
 import com.gamja.tiggle.user.adapter.out.persistence.UserEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,5 +20,5 @@ public interface JpaLikeRepository extends JpaRepository<LikeEntity, Long> {
             "JOIN FETCH l.programEntity p " +
             "JOIN FETCH p.locationEntity loc " +
             "WHERE l.userEntity.id = :userId")
-    List<LikeEntity> findLikesWithProgramAndLocationByUserId(@Param("userId") Long userId);
+    Page<LikeEntity> findLikesWithProgramAndLocationByUserId(@Param("userId") Long userId, Pageable pageable);
 }
