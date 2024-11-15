@@ -4,12 +4,19 @@ import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.PersistenceAdapter;
 import com.gamja.tiggle.like.application.port.in.CreateLikeCommand;
+import com.gamja.tiggle.like.application.port.in.ReadLikeCommand;
 import com.gamja.tiggle.like.application.port.out.LikePort;
 import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramEntity;
 import com.gamja.tiggle.program.adapter.out.persistence.JpaProgramRepository;
+import com.gamja.tiggle.program.domain.Program;
 import com.gamja.tiggle.user.adapter.out.persistence.JpaUserRepository;
 import com.gamja.tiggle.user.adapter.out.persistence.UserEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 
 @PersistenceAdapter
@@ -42,5 +49,26 @@ public class LikePersistenceAdapter implements LikePort {
     @Override
     public void unlike(CreateLikeCommand command) {
         likeRepository.deleteByUserEntityAndProgramEntity(UserEntity.builder().id(command.getUser().getId()).build(), ProgramEntity.builder().id(command.getProgramId()).build());
+    }
+
+    @Override
+    public List<Program> readMyLikes(ReadLikeCommand command)  {
+        Pageable pageable = PageRequest.of(command.getPage(), command.getSize());
+       Page<LikeEntity> likes = likeRepository.findLikesWithProgramAndLocationByUserId(command.getUser().getId(), pageable);
+
+        List<Program> programs = likes.stream().map(
+                l -> Program.builder()
+                        .locationName(l.getProgramEntity().getLocationEntity().getLocationName())
+                        .programName(l.getProgramEntity().getProgramName())
+                        .programStartDate(l.getProgramEntity().getProgramStartDate())
+                        .programEndDate(l.getProgramEntity().getProgramEndDate())
+                        .id(l.getProgramEntity().getId())
+                        .imageUrls(l.getProgramEntity().getProgramImageEntities().stream()
+                        .map(programImageEntity -> programImageEntity.getImgUrl())
+                        .toList())
+                        .build()
+        ).toList();
+
+        return programs;
     }
 }
