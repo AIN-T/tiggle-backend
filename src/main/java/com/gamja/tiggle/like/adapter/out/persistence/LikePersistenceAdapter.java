@@ -7,9 +7,13 @@ import com.gamja.tiggle.like.application.port.in.CreateLikeCommand;
 import com.gamja.tiggle.like.application.port.out.LikePort;
 import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramEntity;
 import com.gamja.tiggle.program.adapter.out.persistence.JpaProgramRepository;
+import com.gamja.tiggle.program.domain.Program;
 import com.gamja.tiggle.user.adapter.out.persistence.JpaUserRepository;
 import com.gamja.tiggle.user.adapter.out.persistence.UserEntity;
+import com.gamja.tiggle.user.domain.User;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 
 @PersistenceAdapter
@@ -42,5 +46,25 @@ public class LikePersistenceAdapter implements LikePort {
     @Override
     public void unlike(CreateLikeCommand command) {
         likeRepository.deleteByUserEntityAndProgramEntity(UserEntity.builder().id(command.getUser().getId()).build(), ProgramEntity.builder().id(command.getProgramId()).build());
+    }
+
+    @Override
+    public List<Program> readMyLikes(User user)  {
+       List<LikeEntity> likes = likeRepository.findLikesWithProgramAndLocationByUserId(user.getId());
+
+        List<Program> programs = likes.stream().map(
+                l -> Program.builder()
+                        .locationName(l.getProgramEntity().getLocationEntity().getLocationName())
+                        .programName(l.getProgramEntity().getProgramName())
+                        .programStartDate(l.getProgramEntity().getProgramStartDate())
+                        .programEndDate(l.getProgramEntity().getProgramEndDate())
+                        .id(l.getProgramEntity().getId())
+                        .imageUrls(l.getProgramEntity().getProgramImageEntities().stream()
+                        .map(programImageEntity -> programImageEntity.getImgUrl())
+                        .toList())
+                        .build()
+        ).toList();
+
+        return programs;
     }
 }
