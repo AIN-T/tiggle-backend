@@ -2,10 +2,10 @@ package com.gamja.tiggle.like.application.service;
 
 import com.gamja.tiggle.common.annotation.UseCase;
 import com.gamja.tiggle.like.adapter.in.web.response.ReadMyLikeResponse;
+import com.gamja.tiggle.like.application.port.in.ReadLikeCommand;
 import com.gamja.tiggle.like.application.port.in.ReadLikeUseCase;
 import com.gamja.tiggle.like.application.port.out.LikePort;
 import com.gamja.tiggle.program.domain.Program;
-import com.gamja.tiggle.user.domain.User;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -19,8 +19,8 @@ public class ReadLikeService implements ReadLikeUseCase {
     private final LikePort likePort;
 
     @Override
-    public List<ReadMyLikeResponse> readMyLikes(User user) {
-        List<Program> programs = likePort.readMyLikes(user);
+    public List<ReadMyLikeResponse> readMyLikes(ReadLikeCommand command) {
+        List<Program> programs = likePort.readMyLikes(command);
 
         List<ReadMyLikeResponse> responses = programs.stream().map(p -> ReadMyLikeResponse.builder()
                 .title(p.getProgramName())
