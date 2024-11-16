@@ -16,7 +16,7 @@ public interface SectionRepository extends JpaRepository<SectionEntity, Long> {
             " FROM SeatEntity seat " +
             " LEFT JOIN ReservationEntity re ON seat.id = re.seatEntity.id AND re.programEntity.id = :programId " +
             " WHERE seat.sectionEntity.id = s.id AND seat.active = TRUE " +
-            " AND (re.id IS NULL OR re.available = TRUE)) AS remainingCount) " +
+            " AND (re.id IS NULL OR re.available = TRUE))) " + // AS 제거
             "FROM SectionEntity s " +
             "JOIN s.gradeEntity g " +
             "JOIN ProgramGradeEntity pg ON g.id = pg.gradeEntity.id " +
