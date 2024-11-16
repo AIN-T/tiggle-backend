@@ -20,7 +20,7 @@ public class GetSectionAdapter implements GetSectionPort {
 
     @Override
     public List<Section> getSection(Long locationId, Long programId) throws BaseException {
-        List<GetSectionResponse> allByLocationId = sectionRepository.findAllByLocationEntityId(locationId, programId);
+        List<GetSectionResponse> allByLocationId = sectionRepository.findAllByLocationEntityIdWithRemainingCount(locationId, programId);
         if (allByLocationId.isEmpty()) {
             throw new BaseException(BaseResponseStatus.NOT_FOUND_SECTION);
         }
@@ -50,6 +50,7 @@ public class GetSectionAdapter implements GetSectionPort {
                         .gradeName(sectionEntity.getGradeName())
                         .sectionName(sectionEntity.getSectionName())
                         .price(sectionEntity.getPrice())
+                        .remainingCount(sectionEntity.getRemainingCount())
                         .build()
         ).toList();
     }

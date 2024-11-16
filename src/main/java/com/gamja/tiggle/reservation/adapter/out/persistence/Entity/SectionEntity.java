@@ -8,6 +8,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,5 +33,7 @@ public class SectionEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "grade_id")
     private GradeEntity gradeEntity;
+    @OneToMany(mappedBy = "sectionEntity")
+    private List<SeatEntity> seatEntities = new ArrayList<>();
 
 }
