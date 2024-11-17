@@ -13,6 +13,7 @@ public class Section {
     private Long gradeId;
     private String gradeName;
     private int price;
+    private Long remainingCount;
 
     private int rowCount; // 행
     private int columnCount; // 열

@@ -41,6 +41,7 @@ public class GetSectionController {
                         .sectionName(section.getSectionName())
                         .gradeName(section.getGradeName())
                         .price(section.getPrice())
+                        .remainingCount(section.getRemainingCount())
                         .build()
         ).toList();
     }

@@ -12,6 +12,7 @@ public class GetSectionListResponse {
     private Long gradeId;
     private String gradeName;
     private int price;
+    private Long remainingCount;
 
 
 }

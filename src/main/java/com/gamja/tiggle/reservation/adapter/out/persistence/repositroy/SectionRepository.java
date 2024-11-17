@@ -10,16 +10,22 @@ import java.util.List;
 
 public interface SectionRepository extends JpaRepository<SectionEntity, Long> {
 
-    // TODO locationENtity ID
     @Query("SELECT NEW com.gamja.tiggle.reservation.adapter.out.persistence.Response.GetSectionResponse(" +
-            "s.id, s.sectionName, s.gradeEntity.id, s.gradeEntity.gradeName, pg.price) " +
+            "s.id, s.sectionName, s.gradeEntity.id, s.gradeEntity.gradeName, pg.price, " +
+            "(SELECT COUNT(seat.id) " +
+            " FROM SeatEntity seat " +
+            " LEFT JOIN ReservationEntity re ON seat.id = re.seatEntity.id AND re.programEntity.id = :programId " +
+            " WHERE seat.sectionEntity.id = s.id AND seat.active = TRUE " +
+            " AND (re.id IS NULL OR re.available = TRUE))) " + // AS 제거
             "FROM SectionEntity s " +
             "JOIN s.gradeEntity g " +
             "JOIN ProgramGradeEntity pg ON g.id = pg.gradeEntity.id " +
             "JOIN pg.programEntity p " +
             "WHERE s.locationEntity.id = :locationId " +
             "AND p.id = :programId")
-    List<GetSectionResponse> findAllByLocationEntityId(@Param("locationId") Long locationId, @Param("programId") Long ProgramId);
-
+    List<GetSectionResponse> findAllByLocationEntityIdWithRemainingCount(
+            @Param("locationId") Long locationId,
+            @Param("programId") Long programId
+    );
     Boolean existsByIdAndLocationEntityId(Long sectionId, Long LocationId);
 }
