@@ -13,6 +13,8 @@ import com.gamja.tiggle.program.application.port.out.ProgramPort;
 import com.gamja.tiggle.program.application.port.out.ReadProgramPort;
 import com.gamja.tiggle.program.domain.Program;
 
+import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.SectionEntity;
+import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.SectionRepository;
 import com.gamja.tiggle.user.adapter.out.persistence.UserEntity;
 import com.gamja.tiggle.user.domain.User;
 import org.springframework.data.domain.Page;
@@ -35,6 +37,7 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
     private final JpaProgramImageRepository jpaProgramImageRepository;
     private final JpaCategoryRepository jpaCategoryRepository;
     private final JpaLikeRepository jpaLikeRepository;
+    private final SectionRepository sectionRepository;
 
     @Override
     public void createProgram(Program program) throws BaseException {
@@ -157,6 +160,12 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
         for (ProgramImageEntity p : programEntity.getProgramImageEntities()) {
             imgList.add(p.getImgUrl());
         }
+
+        Pageable pageable = PageRequest.of(0, 1);
+        Page<SectionEntity> sections = sectionRepository.findFirstSectionByProgramIdAndLocationId(programEntity.getLocationEntity().getId(), pageable);
+
+        Long firstSectionId = sections.isEmpty() ? null : sections.getContent().get(0).getId();
+
         return Program.builder()
                 .programName(programEntity.getProgramName())
                 .age(programEntity.getAge())
@@ -170,6 +179,7 @@ public class ProgramPersistenceAdapter implements CreateProgramPort, ReadProgram
                 .imageUrls(imgList)
                 .programInfo(programEntity.getProgramInfo())
                 .isLike(isLike)
+                .firstSectionId(firstSectionId)
                 .build();
     }
 

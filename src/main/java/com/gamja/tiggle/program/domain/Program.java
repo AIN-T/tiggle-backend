@@ -32,5 +32,6 @@ public class Program {
     private LocalDateTime programEndDate;
 
     private boolean isLike;
+    private Long firstSectionId;
 
 }
