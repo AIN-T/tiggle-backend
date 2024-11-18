@@ -25,4 +25,5 @@ public class GetProgramDetailResponse {
     private List<String> imageUrls;
     private String programInfo;
     private boolean isLike;
+    private Long firstSectionId;
 }

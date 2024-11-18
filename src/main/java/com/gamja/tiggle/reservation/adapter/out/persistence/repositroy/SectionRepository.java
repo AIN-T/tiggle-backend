@@ -2,6 +2,8 @@ package com.gamja.tiggle.reservation.adapter.out.persistence.repositroy;
 
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.SectionEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Response.GetSectionResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,4 +30,8 @@ public interface SectionRepository extends JpaRepository<SectionEntity, Long> {
             @Param("programId") Long programId
     );
     Boolean existsByIdAndLocationEntityId(Long sectionId, Long LocationId);
+
+    @Query("SELECT s FROM SectionEntity s WHERE s.locationEntity.id = :locationId")
+    Page<SectionEntity> findFirstSectionByProgramIdAndLocationId(@Param("locationId") Long locationId, Pageable pageable);
+
 }

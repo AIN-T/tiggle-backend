@@ -133,7 +133,7 @@ public class ReadProgramController {
         try {
             Program program = readUseCase.GetProgramDetail(id, user);
             GetProgramDetailResponse getProgramDetailResponse = from(program);
-            System.out.println(getProgramDetailResponse.getReservationOpenDate());
+
             return new BaseResponse<>(getProgramDetailResponse);
 
         } catch (BaseException e) {
@@ -157,6 +157,7 @@ public class ReadProgramController {
                 .programInfo(program.getProgramInfo())
                 .runtime(program.getRuntime())
                 .isLike(program.isLike())
+                .firstSectionId(program.getFirstSectionId())
                 .build();
     }
 
