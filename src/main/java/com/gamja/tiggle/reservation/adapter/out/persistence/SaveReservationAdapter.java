@@ -27,20 +27,31 @@ public class SaveReservationAdapter implements SaveReservationPort {
     @Override
     public void save(Reservation reservation) {
 
-        saveToRedis(reservation);
+        saveToRedisReservation(reservation);
+        lockSeat(reservation);
     }
 
-    private void saveToRedis(Reservation reservation) {
+    private void saveToRedisReservation(Reservation reservation) {
         String key = "reservation:" + reservation.getTicketNumber();
 
         Map<String, String> redisData = new HashMap<>();
         redisData.put("userId", reservation.getUserId().toString());
         redisData.put("seatId", reservation.getSeatId().toString());
+        redisData.put("sectionId", reservation.getSectionId().toString());
         redisData.put("programId", reservation.getProgramId().toString());
         redisData.put("timesId", reservation.getTimesId().toString());
+        redisData.put("totalPrice", reservation.getTotalPrice().toString());
         redisData.put("status", "IN_PROGRESS");
 
         redisTemplate.opsForHash().putAll(key, redisData);
+
+        redisTemplate.expire(key, Duration.ofMinutes(10));
+    }
+
+    private void lockSeat(Reservation reservation) {
+        String key = "seat:" + reservation.getProgramId() + ":" + reservation.getTimesId() + ":" + reservation.getSectionId() + ":" + reservation.getTimesId();
+
+        redisTemplate.opsForHash().put(key, "status", "LOCKED");
 
         redisTemplate.expire(key, Duration.ofMinutes(10));
     }
