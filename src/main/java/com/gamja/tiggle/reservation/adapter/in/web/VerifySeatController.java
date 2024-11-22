@@ -42,7 +42,9 @@ public class VerifySeatController {
                 .programId(request.getProgramId())
                 .timesId(request.getTimesId())
                 .seatId(request.getSeatId())
+                .sectionId(request.getSectionId())
                 .userId(userId)
+                .totalPrice(request.getTotalPrice())
                 .build();
     }
 }

@@ -50,6 +50,8 @@ public class VerifySeatService implements VerifySeatUseCase {
                 .seatId(command.getSeatId())
                 .timesId(command.getTimesId())
                 .programId(command.getProgramId())
+                .sectionId(command.getSectionId())
+                .totalPrice(command.getTotalPrice())
                 .ticketNumber(ticketNumber)
                 .build();
     }
