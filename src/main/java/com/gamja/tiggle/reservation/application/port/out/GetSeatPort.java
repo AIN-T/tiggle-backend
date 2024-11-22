@@ -8,8 +8,6 @@ import java.util.List;
 public interface GetSeatPort {
     List<Seat> getAvailableSeatByQuery(Long programId, Long timesId, Long sectionId);
 
-    List<Seat> getAvailableSeatByJpa(Long programId, Long timesId, Long sectionId) throws BaseException;
-
     List<Seat> getAllSeat(Long sectionId) throws BaseException;
 
     List<Seat> getAllSeatWithEnable(Long programId, Long sectionId, Long timesId) throws BaseException;

@@ -28,14 +28,13 @@ public class VerifySeatService implements VerifySeatUseCase {
         //좌석 검증
         Seat seat = Seat.builder().id(command.getSeatId()).build();
         verifySeatPort.verifySeat(seat);
-        // TODO 유저 추가
 
         //검증했으면 예약 임시 저장
         String ticketNumber = getTicketNumber();
         Reservation reservation = from(command, ticketNumber);
-        Long id = saveReservationPort.save(reservation);
+        saveReservationPort.save(reservation);
 
-        return VerifySeatResponse.builder().reservationId(id).build();
+        return VerifySeatResponse.builder().ticketNumber(ticketNumber).build();
     }
 
     private static String getTicketNumber() {
@@ -51,6 +50,8 @@ public class VerifySeatService implements VerifySeatUseCase {
                 .seatId(command.getSeatId())
                 .timesId(command.getTimesId())
                 .programId(command.getProgramId())
+                .sectionId(command.getSectionId())
+                .totalPrice(command.getTotalPrice())
                 .ticketNumber(ticketNumber)
                 .build();
     }

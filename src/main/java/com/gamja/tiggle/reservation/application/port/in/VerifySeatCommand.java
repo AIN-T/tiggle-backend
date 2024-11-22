@@ -11,4 +11,6 @@ public class VerifySeatCommand {
     private Long userId;
     private Long programId;
     private Long timesId;
+    private Long sectionId;
+    private Integer totalPrice;
 }
