@@ -14,6 +14,7 @@ import com.gamja.tiggle.reservation.application.port.out.GetSeatPort;
 import com.gamja.tiggle.reservation.domain.Seat;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class getSeatAdapter implements GetSeatPort {
 
     private final SeatRepository seatRepository;
     private final ReservationRepository reservationRepository;
+    private final RedisTemplate redisTemplate;
 
     /**
      * N+1 성능 문제 해결
@@ -88,6 +90,7 @@ public class getSeatAdapter implements GetSeatPort {
 
     /**
      * 전체 좌석 조회 (예약 가능 여부까지는 X, 단순 좌석 배치도만 보내줌)
+     *
      * @param sectionId
      * @return
      * @throws BaseException
@@ -112,6 +115,7 @@ public class getSeatAdapter implements GetSeatPort {
 
     /**
      * 예약 여부까지  포함해서 전체 좌석을 보내줌
+     *
      * @param programId
      * @param sectionId
      * @param timesId
@@ -124,7 +128,9 @@ public class getSeatAdapter implements GetSeatPort {
 
         List<GetAllSeatPersistentResponse> allSeat
                 = seatRepository.findAllSeat(programId, timesId, sectionId);
-        return getSeatList(allSeat);
+
+        return getSeatListWithRedisStatus(programId, timesId, sectionId, allSeat);
+//        return getSeatList(allSeat);
     }
 
     @Override
@@ -133,6 +139,29 @@ public class getSeatAdapter implements GetSeatPort {
                 = seatRepository.findAvailableExchange(programId, timesId, sectionId, userId);
 
         return getExchangeSeatList(allSeat);
+    }
+
+    @NotNull
+    private List<Seat> getSeatListWithRedisStatus(Long programId, Long timesId, Long sectionId, List<GetAllSeatPersistentResponse> allSeat) {
+        return allSeat.stream().map(response -> {
+            // Redis 키 생성
+            String redisKey = "seat:" + programId + ":" + timesId + ":" + sectionId + ":" + response.getSeatId();
+
+            // Redis에서 좌석 상태 조회
+            String redisStatus = (String) redisTemplate.opsForHash().get(redisKey, "status");
+
+            // Redis에 "LOCKED" 상태가 있으면 enable=false, 없으면 DB 값 사용
+            boolean enable = !"LOCKED".equals(redisStatus) && response.getEnable();
+
+            // Seat 객체 생성
+            return Seat.builder()
+                    .id(response.getSeatId())
+                    .enable(enable) // Redis 상태 반영
+                    .seatNumber(response.getSeatNumber())
+                    .row(response.getRow())
+                    .active(response.getActive())
+                    .build();
+        }).toList();
     }
 
     @NotNull

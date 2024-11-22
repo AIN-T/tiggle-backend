@@ -49,7 +49,7 @@ public class SaveReservationAdapter implements SaveReservationPort {
     }
 
     private void lockSeat(Reservation reservation) {
-        String key = "seat:" + reservation.getProgramId() + ":" + reservation.getTimesId() + ":" + reservation.getSectionId() + ":" + reservation.getTimesId();
+        String key = "seat:" + reservation.getProgramId() + ":" + reservation.getTimesId() + ":" + reservation.getSectionId() + ":" + reservation.getSeatId();
 
         redisTemplate.opsForHash().put(key, "status", "LOCKED");
 
