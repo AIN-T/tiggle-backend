@@ -49,12 +49,14 @@ public class SaveReservationAdapter implements SaveReservationPort {
     }
 
     private void lockSeat(Reservation reservation) {
-        String key = "seat:" + reservation.getProgramId() + ":" + reservation.getTimesId() + ":" + reservation.getSectionId() + ":" + reservation.getSeatId();
+        String key = "reservation:" + reservation.getProgramId() + ":" + reservation.getTimesId() + ":" + reservation.getSectionId();
 
-        redisTemplate.opsForHash().put(key, "status", "LOCKED");
+        redisTemplate.opsForSet().add(key, reservation.getSeatId().toString());
 
+        // 만료 시간 설정
         redisTemplate.expire(key, Duration.ofMinutes(10));
     }
+
 
 
     private static ReservationEntity from(Reservation reservation) {
