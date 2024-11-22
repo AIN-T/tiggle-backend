@@ -5,6 +5,7 @@ import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.UseCase;
 import com.gamja.tiggle.reservation.application.port.in.ReadReservationCommand;
 import com.gamja.tiggle.reservation.application.port.in.ReadReservationUseCase;
+import com.gamja.tiggle.reservation.application.port.in.ReadTemporaryReservationCommand;
 import com.gamja.tiggle.reservation.application.port.out.ReadReservationPort;
 import com.gamja.tiggle.reservation.domain.Reservation;
 import com.gamja.tiggle.user.domain.User;
@@ -26,9 +27,9 @@ public class ReadReservationService implements ReadReservationUseCase {
     }
 
     @Override
-    public Reservation readTemporaryReservation(ReadReservationCommand command) throws BaseException {
+    public Reservation readTemporaryReservation(ReadTemporaryReservationCommand command) throws BaseException {
         Reservation reservation = Reservation.builder()
-                .id(command.getReservationId())
+                .ticketNumber(command.getTicketNumber())
                 .build();
         return readReservationPort.readTemporaryReservation(reservation);
     }

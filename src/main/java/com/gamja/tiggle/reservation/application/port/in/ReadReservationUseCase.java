@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ReadReservationUseCase {
     Reservation readReservation(ReadReservationCommand command) throws BaseException;
-    Reservation readTemporaryReservation(ReadReservationCommand command) throws BaseException;
+    Reservation readTemporaryReservation(ReadTemporaryReservationCommand command) throws BaseException;
     List<Reservation> myRead(ReadReservationCommand command) throws BaseException;
 }

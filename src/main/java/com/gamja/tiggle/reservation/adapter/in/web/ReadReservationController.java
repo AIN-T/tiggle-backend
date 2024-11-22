@@ -9,6 +9,7 @@ import com.gamja.tiggle.reservation.adapter.in.web.response.ReadReservationRespo
 import com.gamja.tiggle.reservation.adapter.in.web.response.ReadTemporaryReservationResponse;
 import com.gamja.tiggle.reservation.application.port.in.ReadReservationCommand;
 import com.gamja.tiggle.reservation.application.port.in.ReadReservationUseCase;
+import com.gamja.tiggle.reservation.application.port.in.ReadTemporaryReservationCommand;
 import com.gamja.tiggle.reservation.domain.Reservation;
 import com.gamja.tiggle.user.domain.CustomUserDetails;
 import com.gamja.tiggle.user.domain.User;
@@ -69,11 +70,12 @@ public class ReadReservationController {
 
     @GetMapping("/temporary")
     @Operation(summary = "임시 예매 내역 조회", description = "ReservationId를 입력하여 진행중인 예매 내역을 조회하는 API 입니다.")
-    public BaseResponse<ReadTemporaryReservationResponse> readTemporary(@RequestParam Long reservationId) {
+    public BaseResponse<ReadTemporaryReservationResponse> readTemporary(@RequestParam String ticketNumber) {
+
         try {
 
-            ReadReservationCommand command = ReadReservationCommand.builder()
-                    .reservationId(reservationId)
+            ReadTemporaryReservationCommand command = ReadTemporaryReservationCommand.builder()
+                    .ticketNumber(ticketNumber)
                     .build();
 
             Reservation reservation = readReservationUseCase.readTemporaryReservation(command);

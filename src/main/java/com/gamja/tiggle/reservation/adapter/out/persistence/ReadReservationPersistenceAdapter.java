@@ -3,19 +3,29 @@ package com.gamja.tiggle.reservation.adapter.out.persistence;
 import com.gamja.tiggle.common.BaseException;
 import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.PersistenceAdapter;
+import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramEntity;
+import com.gamja.tiggle.program.adapter.out.persistence.JpaProgramRepository;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
+import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.SeatEntity;
+import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.TimesEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.ReservationRepository;
+import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.SeatRepository;
+import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.TimesRepository;
 import com.gamja.tiggle.reservation.application.port.in.ReadReservationCommand;
 import com.gamja.tiggle.reservation.application.port.out.ReadReservationPort;
 import com.gamja.tiggle.reservation.domain.Reservation;
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
+import com.gamja.tiggle.user.adapter.out.persistence.JpaUserRepository;
+import com.gamja.tiggle.user.adapter.out.persistence.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -24,6 +34,11 @@ import java.util.stream.Collectors;
 public class ReadReservationPersistenceAdapter implements ReadReservationPort {
 
     private final ReservationRepository reservationRepository;
+    private final RedisTemplate redisTemplate;
+    private final TimesRepository timesRepository;
+    private final SeatRepository  seatRepository;
+    private final JpaProgramRepository jpaProgramRepository;
+    private final JpaUserRepository jpaUserRepository;
 
     @Override
     public ReservationEntity read(Long reservationId) throws BaseException {
@@ -44,7 +59,7 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
                 .locationName(result.getProgramEntity().getLocationEntity().getLocationName())
                 .name(result.getUser().getName())
                 .seatInfo(
-                        result.getSeatEntity().getSectionEntity().getSectionName()+"구역 "+result.getSeatEntity().getRow()+"열 "+result.getSeatEntity().getSeatNumber()+"번")
+                        result.getSeatEntity().getSectionEntity().getSectionName() + "구역 " + result.getSeatEntity().getRow() + "열 " + result.getSeatEntity().getSeatNumber() + "번")
                 .totalPrice(result.getTotalPrice())
                 .gradeName(result.getSeatEntity().getSectionEntity().getGradeEntity().getGradeName())
                 .status(result.getStatus())
@@ -58,20 +73,45 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
         return reservations;
     }
 
+
     @Override
-    public Reservation readTemporaryReservation(Reservation reservation) {
-        ReservationEntity result = reservationRepository.findReservationWithDetails(reservation.getId());
+    public Reservation readTemporaryReservation(Reservation reservation) throws BaseException {
+        String redisKey = "reservation:" + reservation.getTicketNumber();
+
+        Map<Object, Object> redisData = redisTemplate.opsForHash().entries(redisKey);
+
+        if (redisData == null || redisData.isEmpty()) {
+            throw new BaseException(BaseResponseStatus.NOT_FOUND_RESERVATION);
+        }
+
+        Long programId = Long.parseLong((String) redisData.get("programId"));
+        Long seatId = Long.parseLong((String) redisData.get("seatId"));
+        Long timesId = Long.parseLong((String) redisData.get("timesId"));
+        Long userId = Long.parseLong((String) redisData.get("userId"));
+
+        ProgramEntity programEntity = jpaProgramRepository.findById(programId)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_PROGRAM));
+
+        SeatEntity seatEntity = seatRepository.findById(seatId)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_SEAT));
+
+        TimesEntity timesEntity = timesRepository.findById(timesId)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_EXIST_TIMES));
+
+        UserEntity userEntity = jpaUserRepository.findById(userId)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_USER));
+
 
         return Reservation.builder()
-                .ticketNumber(result.getTicketNumber())
-                .date(result.getTimesEntity().getDate())
-                .locationName(result.getProgramEntity().getLocationEntity().getLocationName())
+                .ticketNumber(reservation.getTicketNumber())
+                .date(timesEntity.getDate())
+                .locationName(programEntity.getLocationEntity().getLocationName())
                 .seatInfo(
-                        result.getSeatEntity().getSectionEntity().getSectionName()+"구역 "+result.getSeatEntity().getRow()+"열 "+result.getSeatEntity().getSeatNumber()+"번")
-                .gradeName(result.getSeatEntity().getSectionEntity().getGradeEntity().getGradeName())
-                .programName(result.getProgramEntity().getProgramName())
-                .programInfo(result.getProgramEntity().getProgramInfo())
-                .myPoint(result.getUser().getPoint())
+                        seatEntity.getSectionEntity().getSectionName()+"구역 "+seatEntity.getRow()+"열 "+seatEntity.getSeatNumber()+"번")
+                .gradeName(seatEntity.getSectionEntity().getGradeEntity().getGradeName())
+                .programName(programEntity.getProgramName())
+                .programInfo(programEntity.getProgramInfo())
+                .myPoint(userEntity.getPoint())
                 .build();
     }
 
