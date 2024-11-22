@@ -80,17 +80,17 @@ public class ReadReservationController {
 
             Reservation reservation = readReservationUseCase.readTemporaryReservation(command);
 
-            ReadTemporaryReservationResponse response = new ReadTemporaryReservationResponse(
-                    reservation.getTicketNumber(),
-                    reservation.getDate(),
-                    reservation.getLocationName(),
-                    reservation.getSeatInfo(),
-                    reservation.getTotalPrice(),
-                    reservation.getGradeName(),
-                    reservation.getProgramName(),
-                    reservation.getProgramInfo(),
-                    reservation.getMyPoint()
-            );
+            ReadTemporaryReservationResponse response = ReadTemporaryReservationResponse.builder()
+                    .ticketNumber(reservation.getTicketNumber())
+                    .date(reservation.getDate())
+                    .locationName(reservation.getLocationName())
+                    .seatInfo(reservation.getSeatInfo())
+                    .ticketPrice(reservation.getTotalPrice())
+                    .gradeName(reservation.getGradeName())
+                    .programName(reservation.getProgramName())
+                    .programInfo(reservation.getProgramInfo())
+                    .myPoint(reservation.getMyPoint())
+                    .build();
 
             return new BaseResponse<>(BaseResponseStatus.SUCCESS, response);
         } catch (BaseException e) {
