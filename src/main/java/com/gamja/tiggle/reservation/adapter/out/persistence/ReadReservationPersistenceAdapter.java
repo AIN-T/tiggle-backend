@@ -36,7 +36,7 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
     private final ReservationRepository reservationRepository;
     private final RedisTemplate redisTemplate;
     private final TimesRepository timesRepository;
-    private final SeatRepository  seatRepository;
+    private final SeatRepository seatRepository;
     private final JpaProgramRepository jpaProgramRepository;
     private final JpaUserRepository jpaUserRepository;
 
@@ -88,6 +88,7 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
         Long seatId = Long.parseLong((String) redisData.get("seatId"));
         Long timesId = Long.parseLong((String) redisData.get("timesId"));
         Long userId = Long.parseLong((String) redisData.get("userId"));
+        Integer totalPrice = Integer.parseInt((String) redisData.get("totalPrice"));
 
         ProgramEntity programEntity = jpaProgramRepository.findById(programId)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_PROGRAM));
@@ -104,10 +105,11 @@ public class ReadReservationPersistenceAdapter implements ReadReservationPort {
 
         return Reservation.builder()
                 .ticketNumber(reservation.getTicketNumber())
+                .totalPrice(totalPrice)
                 .date(timesEntity.getDate())
                 .locationName(programEntity.getLocationEntity().getLocationName())
                 .seatInfo(
-                        seatEntity.getSectionEntity().getSectionName()+"구역 "+seatEntity.getRow()+"열 "+seatEntity.getSeatNumber()+"번")
+                        seatEntity.getSectionEntity().getSectionName() + "구역 " + seatEntity.getRow() + "열 " + seatEntity.getSeatNumber() + "번")
                 .gradeName(seatEntity.getSectionEntity().getGradeEntity().getGradeName())
                 .programName(programEntity.getProgramName())
                 .programInfo(programEntity.getProgramInfo())
