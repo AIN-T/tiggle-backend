@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface GetSectionPort {
 
-    List<Section> getSection(Long locationId, Long programId) throws BaseException;
+    List<Section> getSection(Long locationId, Long programId, Long timesId) throws BaseException;
     Section getRowColumn(Long id) throws BaseException;
     void correctSection(Long sectionId, Long locationId) throws BaseException;
 }

@@ -18,8 +18,8 @@ public class GetSectionService implements GetSectionUseCase {
     private final ProgramPort programPort;
 
     @Override
-    public List<Section> getSection(Long locationId, Long programId) throws BaseException {
+    public List<Section> getSection(Long locationId, Long programId, Long timesId) throws BaseException {
         programPort.findByProgramIdAndLocationId(programId,locationId);
-        return getSectionPort.getSection(locationId, programId);
+        return getSectionPort.getSection(locationId, programId, timesId);
     }
 }
