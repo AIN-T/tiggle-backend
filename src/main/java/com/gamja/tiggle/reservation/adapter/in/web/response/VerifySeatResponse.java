@@ -8,5 +8,5 @@ import java.util.List;
 @Getter
 @Builder
 public class VerifySeatResponse {
-    private Long reservationId;
+    private String ticketNumber;
 }

@@ -11,19 +11,38 @@ import com.gamja.tiggle.reservation.domain.Reservation;
 import com.gamja.tiggle.reservation.domain.type.ReservationType;
 import com.gamja.tiggle.user.adapter.out.persistence.UserEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
+
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
 public class SaveReservationAdapter implements SaveReservationPort {
 
     private final ReservationRepository reservationRepository;
+    private final RedisTemplate redisTemplate;
 
     @Override
-    public Long save(Reservation reservation) {
-        ReservationEntity reservationEntity = from(reservation);
-        ReservationEntity savedEntity = reservationRepository.save(reservationEntity);
+    public void save(Reservation reservation) {
 
-        return savedEntity.getId();
+        saveToRedis(reservation);
+    }
+
+    private void saveToRedis(Reservation reservation) {
+        String key = "reservation:" + reservation.getTicketNumber();
+
+        Map<String, String> redisData = new HashMap<>();
+        redisData.put("userId", reservation.getUserId().toString());
+        redisData.put("seatId", reservation.getSeatId().toString());
+        redisData.put("programId", reservation.getProgramId().toString());
+        redisData.put("timesId", reservation.getTimesId().toString());
+        redisData.put("status", "IN_PROGRESS");
+
+        redisTemplate.opsForHash().putAll(key, redisData);
+
+        redisTemplate.expire(key, Duration.ofMinutes(10));
     }
 
 
