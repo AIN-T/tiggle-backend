@@ -1,5 +1,7 @@
 package com.gamja.tiggle.reservation.adapter.out.persistence;
 
+import com.gamja.tiggle.common.BaseException;
+import com.gamja.tiggle.common.BaseResponseStatus;
 import com.gamja.tiggle.common.annotation.PersistenceAdapter;
 import com.gamja.tiggle.program.adapter.out.persistence.Entity.ProgramEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.ReservationEntity;
@@ -8,7 +10,6 @@ import com.gamja.tiggle.reservation.adapter.out.persistence.Entity.TimesEntity;
 import com.gamja.tiggle.reservation.adapter.out.persistence.repositroy.ReservationRepository;
 import com.gamja.tiggle.reservation.application.port.out.SaveReservationPort;
 import com.gamja.tiggle.reservation.domain.Reservation;
-import com.gamja.tiggle.reservation.domain.type.ReservationType;
 import com.gamja.tiggle.user.adapter.out.persistence.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -25,7 +26,7 @@ public class SaveReservationAdapter implements SaveReservationPort {
     private final RedisTemplate redisTemplate;
 
     @Override
-    public void save(Reservation reservation) {
+    public void save(Reservation reservation) throws BaseException {
 
         saveToRedisReservation(reservation);
         lockSeat(reservation);
@@ -48,30 +49,31 @@ public class SaveReservationAdapter implements SaveReservationPort {
         redisTemplate.expire(key, Duration.ofMinutes(10));
     }
 
-    private void lockSeat(Reservation reservation) {
-        String key = "reservation:" + reservation.getProgramId() + ":" + reservation.getTimesId() + ":" + reservation.getSectionId();
 
-        redisTemplate.opsForSet().add(key, reservation.getSeatId().toString());
+    private void lockSeat(Reservation reservation) throws BaseException {
+        String lockKey = "lock:seat:" + reservation.getProgramId() + ":" +
+                reservation.getTimesId() + ":" + reservation.getSectionId() + ":" + reservation.getSeatId();
+        String seatKey = "seat:" + reservation.getProgramId() + ":" +
+                reservation.getTimesId() + ":" + reservation.getSectionId();
 
-        // 만료 시간 설정
-        redisTemplate.expire(key, Duration.ofMinutes(10));
+        boolean lockAcquired = redisTemplate.opsForValue().setIfAbsent(lockKey, "LOCKED", Duration.ofSeconds(5));
+        if (!lockAcquired) {
+            throw new BaseException(BaseResponseStatus.ALREADY_CHOSEN_SEAT);
+        }
+
+        try {
+            Long added = redisTemplate.opsForSet().add(seatKey, reservation.getSeatId().toString());
+            if (added == null || added == 0) {
+                throw new BaseException(BaseResponseStatus.ALREADY_CHOSEN_SEAT);
+            }
+
+        } finally {
+            redisTemplate.delete(lockKey);
+        }
+
+        redisTemplate.expire(seatKey, Duration.ofMinutes(10));
     }
 
-
-
-    private static ReservationEntity from(Reservation reservation) {
-        return ReservationEntity.builder()
-                .programEntity(new ProgramEntity(reservation.getProgramId()))
-                .timesEntity(new TimesEntity(reservation.getTimesId()))
-                .seatEntity(new SeatEntity(reservation.getSeatId()))
-                .ticketNumber(reservation.getTicketNumber())
-                .requestLimit(reservation.getRequestLimit())
-                .totalPrice(reservation.getTotalPrice())
-                .user(new UserEntity(reservation.getUserId()))
-                .ticketNumber(reservation.getTicketNumber())
-                .status(ReservationType.IN_PROGRESS)
-                .build();
-    }
 
     @Override
     public void update(Reservation reservation) {
