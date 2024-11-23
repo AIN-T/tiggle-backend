@@ -50,7 +50,7 @@ public class GetSectionAdapter implements GetSectionPort {
     }
 
     private Long countInProgressReservations(Long programId, Long timesId, Long sectionId) {
-        String redisKey = "reservation:" + programId + ":" + timesId + ":" + sectionId;
+        String redisKey = "seat:" + programId + ":" + timesId + ":" + sectionId;
 
         return redisTemplate.opsForSet().size(redisKey);
     }

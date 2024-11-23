@@ -93,7 +93,7 @@ public class GetSeatAdapter implements GetSeatPort {
     @NotNull
     private List<Seat> getSeatListWithRedisStatus(Long programId, Long timesId, Long sectionId, List<GetAllSeatPersistentResponse> allSeat) {
 
-        String redisKey = "reservation:" + programId + ":" + timesId + ":" + sectionId;
+        String redisKey = "seat:" + programId + ":" + timesId + ":" + sectionId;
 
         return allSeat.stream().map(response -> {
             boolean isLocked = redisTemplate.opsForSet().isMember(redisKey, response.getSeatId().toString());
